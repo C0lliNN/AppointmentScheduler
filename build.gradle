@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'org.beryx.jlink' version '2.12.0'
+}
+
+ext {
+    moduleName = 'appointment_scheduler'
+    mainClass = 'com.raphaelcollin.appointmentscheduler.Main'
+    appName = 'Appointment Scheduler'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/java/com/raphaelcollin/appointmentscheduler/bundle",
+                    "src/main/java/com/raphaelcollin/appointmentscheduler/image",
+                    "src/main/java/com/raphaelcollin/appointmentscheduler/style",
+                    "src/main/java/com/raphaelcollin/appointmentscheduler/view",
+                    "src/main/resources"
+
+        }
+    }
+}
+
+/* set Resources*/
+
+mainClassName = "${mainClass}"
+
+dependencies {
+    implementation 'com.jfoenix:jfoenix:8.0.9'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+jlink {
+    launcher {
+        name = "${appName}"
+    }
+}
