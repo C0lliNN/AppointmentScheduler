@@ -30,6 +30,8 @@ dependencies {
     implementation 'com.jfoenix:jfoenix:8.0.9'
     implementation 'de.jensd:fontawesomefx-commons:8.15'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
 
 
     // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-themify-pack

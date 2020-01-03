@@ -59,7 +59,7 @@ public class BaseConfigurationController implements Initializable {
         minimizeButton.setContentDisplay(ContentDisplay.CENTER);
         minimizeButton.getStyleClass().add("title-button");
 
-        // Commit, Dropshadow, ControlFlow, Resources bundle, button testConnection
+        // Dropshadow, ControlFlow, switch scenes, constants
     }
 
     @FXML

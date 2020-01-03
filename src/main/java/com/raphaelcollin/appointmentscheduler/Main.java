@@ -15,13 +15,27 @@ import javafx.stage.StageStyle;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class Main extends Application {
 
     private static Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+    public static Preferences preferences = Preferences.userNodeForPackage(Main.class);
 
-    public static void main(String[] args) {
-        launch(args);
+
+    // Preferences Key
+    public static final String PREFERENCES_KEY_IP = "db_ip";
+    public static final String PREFERENCES_KEY_PORT = "db_port";
+    public static final String PREFERENCES_KEY_USER = "db_user";
+    public static final String PREFERENCES_KEY_PASSWORD = "db_password";
+
+    @Override
+    public void init() throws Exception {
+        System.out.println("IP Address: " + preferences.get(PREFERENCES_KEY_IP, null));
+        System.out.println("Port: " + preferences.get(PREFERENCES_KEY_PORT, null));
+        System.out.println("User: " + preferences.get(PREFERENCES_KEY_USER, null));
+        System.out.println("Password: " + preferences.get(PREFERENCES_KEY_PASSWORD, null));
+        super.init();
     }
 
     @Override
@@ -37,6 +51,10 @@ public class Main extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
 
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     // Helper Methods
