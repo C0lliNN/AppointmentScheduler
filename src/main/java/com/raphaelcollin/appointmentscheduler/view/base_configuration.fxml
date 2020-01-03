@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is needed to create transitions between scenes -->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml" stylesheets="@base_configuration.css" onMousePressed="#handleMousePressed"
+            onMouseDragged="#handleMouseDragged" fx:controller="com.raphaelcollin.appointmentscheduler.controller.BaseConfigurationController">
+
+    <HBox alignment="CENTER_RIGHT" id="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <JFXButton buttonType="RAISED" fx:id="minimizeButton" onAction="#handleMinimizeWindow"/>
+        <JFXButton buttonType="RAISED" fx:id="closeButton" onAction="#handleCloseWindow"/>
+    </HBox>
+
+</AnchorPane>

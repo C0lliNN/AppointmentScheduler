@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@database_configuration.css"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController">
+
+   <Label fx:id="welcomeLabel" alignment="CENTER" text="%database_configuration_welcomeMessage" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"/>
+   <Label fx:id="dbConfigLabel" text="%database_configuration_databaseConfigurationMessage"/>
+
+   <GridPane fx:id="inputGridPane" alignment="CENTER" AnchorPane.leftAnchor="0.0"
+             AnchorPane.rightAnchor="0.0">
+
+      <Label text="%database_configuration_ipAddress"/>
+      <JFXTextField fx:id="ipAddressField" promptText="EX: 192.183.12.3" GridPane.columnIndex="1"/>
+      <Label text="%database_configuration_port" GridPane.rowIndex="1"/>
+      <JFXTextField fx:id="portField" promptText="EX: 3306" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+      <Label text="%database_configuration_user" GridPane.rowIndex="2"/>
+      <JFXTextField fx:id="userField" promptText="EX: root" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+      <Label text="%database_configuration_password" GridPane.rowIndex="3"/>
+      <JFXPasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+   </GridPane>
+   <HBox fx:id="testConnectionHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <JFXButton fx:id="testConnectionButton" onAction="#handleTestConnection" buttonType="RAISED" ripplerFill="#9e8787"
+                 text="%database_configuration_testConnection"/>
+   </HBox>
+</AnchorPane>

@@ -1,0 +1,25 @@
+
+.label {
+    -fx-font-family: "Comic Sans MS";
+    -fx-text-fill: white;
+}
+
+.jfx-text-field, .jfx-password-field {
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #b5b5b5;
+    -fx-prompt-text-fill: #cfcfcf;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: white;
+
+    -fx-indent: 50;
+    -fx-background-radius: 0;
+}
+
+.jfx-button {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+.jfx-button:hover {
+    -fx-background-color: #0d9900;
+}

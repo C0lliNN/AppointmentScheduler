@@ -28,10 +28,18 @@ mainClassName = "${mainClass}"
 
 dependencies {
     implementation 'com.jfoenix:jfoenix:8.0.9'
+    implementation 'de.jensd:fontawesomefx-commons:8.15'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+
+
+    // https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-themify-pack
+    compile group: 'org.kordamp.ikonli', name: 'ikonli-themify-pack', version: '2.4.0'
+
 }
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

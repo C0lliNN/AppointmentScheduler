@@ -1,0 +1,38 @@
+.root {
+    -fx-effect: dropshadow(three-pass-box, #303030, 10, 0, 4, 4);
+    -fx-background-color: #085394;
+}
+
+#title-bar {
+    -fx-background-color: rgba(255,255,255,0.75);
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+.title-button {
+    -fx-background-color: transparent;
+    -jfx-disable-visual-focus: true;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.title-button:hover {
+    -fx-background-color: rgba(255,255,255,0.4);
+    -fx-cursor: hand;
+}
+
+.close-icon {
+    -glyph-size: 30px;
+    -fx-text-fill: red;
+    -fx-fill: red;
+}
+
+.minimize-icon {
+    -glyph-size: 30px;
+    -fx-text-fill: #303030;
+    -fx-fill: #303030;
+    -fx-background-color: transparent;
+}
