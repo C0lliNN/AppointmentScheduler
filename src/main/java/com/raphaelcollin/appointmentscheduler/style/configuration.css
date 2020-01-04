@@ -41,6 +41,10 @@
     -fx-text-fill: white;
 }
 
+.configuration-subtitle {
+    -fx-text-fill: #c7c7c7;
+}
+
 .jfx-text-field, .jfx-password-field {
     -jfx-focus-color: white;
     -jfx-unfocus-color: #b5b5b5;

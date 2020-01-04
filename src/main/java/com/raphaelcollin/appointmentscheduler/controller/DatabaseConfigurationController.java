@@ -48,12 +48,10 @@ public class DatabaseConfigurationController implements Initializable {
 
     private ResourceBundle resources;
 
-    private static final String BUNDLE_KEY_ERROR_EMPTY_MESSAGE = "database_configuration_errorMessage_empty";
     private static final String REGEX_IP = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$";
     private static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
     private static final String REGEX_PORT = "\\d+$";
     private static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "database_configuration_errorMessage_invalidPort";
-    private static final String BUNDLE_KEY_ERROR_HEADER_TEXT = "database_configuration_errorMessage_headerText";
     private static final String BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT = "database_configuration_errorMessage2_headerText";
     private static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
     private static final String LOCATION_ACCESS_CONTROL = "/access_control_configuration.fxml";
@@ -75,6 +73,7 @@ public class DatabaseConfigurationController implements Initializable {
         AnchorPane.setTopAnchor(welcomeLabel, 15.0);
 
         dbConfigLabel.setFont(Font.font(24));
+        dbConfigLabel.getStyleClass().add(STYLE_CLASS_CONFIGURATION_SUBTITLE);
         AnchorPane.setLeftAnchor(dbConfigLabel, 50.0);
         AnchorPane.setTopAnchor(dbConfigLabel, 90.0);
 
@@ -149,8 +148,8 @@ public class DatabaseConfigurationController implements Initializable {
                     getPreferences().putBoolean(PREFERENCES_KEY_DB_SETUP, true);
                     getPreferences().put(PREFERENCES_KEY_IP, ipAddress);
                     getPreferences().put(PREFERENCES_KEY_PORT, port);
-                    getPreferences().put(PREFERENCES_KEY_USER, user);
-                    getPreferences().put(PREFERENCES_KEY_PASSWORD, password);
+                    getPreferences().put(PREFERENCES_KEY_DB_USER, user);
+                    getPreferences().put(PREFERENCES_KEY_DB_PASSWORD, password);
 
                     AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
                     AnchorPane inRoot = loadView(LOCATION_ACCESS_CONTROL, resources);

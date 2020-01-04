@@ -35,24 +35,43 @@ public class Main extends Application {
     private static Connection connection;
 
     // Preferences Key
+    public static final String PREFERENCES_KEY_LANGUAGE = "language";
     public static final String PREFERENCES_KEY_DB_SETUP = "db_setup";
     public static final String PREFERENCES_KEY_IP = "db_ip";
     public static final String PREFERENCES_KEY_PORT = "db_port";
-    public static final String PREFERENCES_KEY_USER = "db_user";
-    public static final String PREFERENCES_KEY_PASSWORD = "db_password";
+    public static final String PREFERENCES_KEY_DB_USER = "db_user";
+    public static final String PREFERENCES_KEY_DB_PASSWORD = "db_password";
+    public static final String PREFERENCES_KEY_ACCESS_CONTROL = "access_control";
+    public static final String PREFERENCES_KEY_ACCESS_CONTROL_USER = "ac_user";
+    public static final String PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD = "ac_password";
+    public static final String PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION = "ac_security_question";
+    public static final String PREFERENCES_KEY_ACCESS_CONTROL_ANSWER = "ac_answer";
 
     // Global Constants
 
+    public static final String BUNDLE_KEY_APPLICATION_TITLE = "application_title";
     public static final String BUNDLE_KEY_ERROR_ALERT_TITLE = "alert_error_title";
+    public static final String BUNDLE_KEY_ERROR_EMPTY_MESSAGE = "alert_errorMessage_empty";
+    public static final String BUNDLE_KEY_ERROR_HEADER_TEXT = "alert_errorMessage_headerText";
     public static final String STYLE_CLASS_CONFIGURATION_GREEN_BUTTON = "green-button";
+    public static final String LOCATION_DASHBOARD_VIEW = "/dashboard.fxml";
+    public static final String STYLE_CLASS_CONFIGURATION_SUBTITLE = "configuration-subtitle";
+
+    // Class Constants
+
+    private static final String BUNDLE_BASE_NAME = "language";
+    private static final String DEFAULT_LANGUAGE = "en";
+    private static final String LOCATION_CONTAINER_CONFIGURATION = "/container_configuration.fxml";
 
     @Override
     public void init() throws Exception {
         System.out.println("DB Setup: " + preferences.getBoolean(PREFERENCES_KEY_DB_SETUP, false));
         System.out.println("IP Address: " + preferences.get(PREFERENCES_KEY_IP, null));
         System.out.println("Port: " + preferences.get(PREFERENCES_KEY_PORT, null));
-        System.out.println("User: " + preferences.get(PREFERENCES_KEY_USER, null));
-        System.out.println("Password: " + preferences.get(PREFERENCES_KEY_PASSWORD, null));
+        System.out.println("User: " + preferences.get(PREFERENCES_KEY_DB_USER, null));
+        System.out.println("Password: " + preferences.get(PREFERENCES_KEY_DB_PASSWORD, null));
+        System.out.println("Access Control: " + preferences.getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false));
+        System.out.println("Access Control User: " + preferences.get(PREFERENCES_KEY_ACCESS_CONTROL_USER, null));
         super.init();
     }
 
@@ -61,11 +80,12 @@ public class Main extends Application {
 
         System.setProperty("prism.lcdtext", "false");
 
-        ResourceBundle bundle = ResourceBundle.getBundle("language", new Locale("en"));
+        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME,
+                new Locale(preferences.get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
 
-        Parent root = FXMLLoader.load(getClass().getResource("/container_configuration.fxml"), bundle);
+        Parent root = FXMLLoader.load(getClass().getResource(LOCATION_CONTAINER_CONFIGURATION), bundle);
         stage.setScene(new Scene(root));
-        stage.setTitle("Appointment Scheduler");
+        stage.setTitle(bundle.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
 

@@ -7,15 +7,21 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class AccessControlController implements Initializable {
 
@@ -51,6 +57,7 @@ public class AccessControlController implements Initializable {
     private ResourceBundle resources;
 
     private static final String STYLE_CLASS_ORANGE_BUTTON = "orange-button";
+    private static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "access_control_error_password_match";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,6 +74,7 @@ public class AccessControlController implements Initializable {
         AnchorPane.setTopAnchor(accessControlLabel, 15.0);
 
         loginLabel.setFont(Font.font(22));
+        loginLabel.getStyleClass().add(STYLE_CLASS_CONFIGURATION_SUBTITLE);
 
         AnchorPane.setTopAnchor(loginLabel, 65.0);
         AnchorPane.setLeftAnchor(loginLabel, 50.0);
@@ -82,6 +90,7 @@ public class AccessControlController implements Initializable {
         AnchorPane.setTopAnchor(loginGridPane, 95.0);
 
         recoverLabel.setFont(Font.font(22));
+        recoverLabel.getStyleClass().add("configuration-subtitle");
 
         AnchorPane.setTopAnchor(recoverLabel, 265.0);
         AnchorPane.setLeftAnchor(recoverLabel, 50.0);
@@ -108,11 +117,60 @@ public class AccessControlController implements Initializable {
     @FXML
     void handleSave() {
 
+        String user = userField.getText().trim();
+        String password = passwordField.getText().trim();
+        String confirmPassword = confirmPasswordField.getText().trim();
+        String securityQuestion = securityQuestionField.getText().trim();
+        String answer = answerField.getText().trim();
+
+        boolean errorFounded = false;
+        String errorMessage = "";
+
+        if (user.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || securityQuestion.isEmpty() ||
+                answer.isEmpty()) {
+            errorFounded = true;
+            errorMessage = resources.getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
+        }
+
+        if (!errorFounded && !password.equals(confirmPassword)) {
+            errorFounded = true;
+            errorMessage = resources.getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH);
+        }
+
+        if (errorFounded) {
+            showAlert(Alert.AlertType.ERROR,
+                    root,
+                    resources.getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
+                    resources.getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    errorMessage);
+        } else {
+
+            getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, true);
+            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_USER, user);
+            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD, password);
+            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION, securityQuestion);
+            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_ANSWER, answer);
+
+            loadDashboard();
+        }
     }
 
     @FXML
     void handleSkip() {
-
+        loadDashboard();
     }
 
+    private void loadDashboard() {
+
+        Stage currentStage = (Stage) root.getScene().getWindow();
+        currentStage.close();
+
+        Stage newStage = new Stage();
+        newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
+        Parent dashboardRoot = loadView(LOCATION_DASHBOARD_VIEW, resources);
+        if (dashboardRoot != null) {
+            newStage.setScene(new Scene(dashboardRoot));
+            newStage.show();
+        }
+    }
 }
