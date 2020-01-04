@@ -16,22 +16,19 @@ import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.loadView;
 
-/* This Container was created for allow transition between scenes */
+public class ContainerLoginController implements Initializable {
 
-public class ContainerConfigurationController implements Initializable {
-
-    @FXML
-    private AnchorPane root;
     @FXML
     private JFXButton minimizeButton;
     @FXML
     private JFXButton closeButton;
+    @FXML
+    private AnchorPane root;
 
     private double xOffset;
     private double yOffSet;
 
-    private static final String STYLESHEET_CONFIGURATION = "/configuration.css";
-    private static final String LOCATION_DATABASE_CONFIGURATION = "/database_configuration.fxml";
+    private static final String LOCATION_LOGIN = "/login.fxml";
     private static final String STYLE_CLASS_CLOSE_ICON = "close-icon";
     private static final String STYLE_CLASS_CLOSE_BUTTON = "title-button";
     private static final String STYLE_CLASS_MINIMIZE_ICON = "minimize-icon";
@@ -39,20 +36,17 @@ public class ContainerConfigurationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        root.getStylesheets().add(getClass().getResource(STYLESHEET_CONFIGURATION).toExternalForm());
-
         double width = Main.getScreenWidth() * 0.3125;
-        double height = Main.getScreenWidth() * 0.3125 * 0.9166666; // Maintain the aspect radio
+        double height = Main.getScreenWidth() * 0.3125 * 0.666666; // Maintain the aspect radio
 
         root.setPrefSize(width, height);
         root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        AnchorPane databaseConfigurationRoot = loadView(LOCATION_DATABASE_CONFIGURATION, resources);
+        AnchorPane loginRoot = loadView(LOCATION_LOGIN, resources);
 
-        root.getChildren().add(databaseConfigurationRoot);
-        AnchorPane.setTopAnchor(databaseConfigurationRoot, 40.0);
+        root.getChildren().add(loginRoot);
+        AnchorPane.setTopAnchor(loginRoot, 40.0);
 
         FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
         closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
@@ -66,7 +60,6 @@ public class ContainerConfigurationController implements Initializable {
         minimizeButton.setGraphic(minimizeIcon);
         minimizeButton.setContentDisplay(ContentDisplay.CENTER);
         minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
-
     }
 
     @FXML
@@ -92,4 +85,6 @@ public class ContainerConfigurationController implements Initializable {
         stage.setX(mouseEvent.getScreenX() + xOffset);
         stage.setY(mouseEvent.getScreenY() + yOffSet);
     }
+
+
 }

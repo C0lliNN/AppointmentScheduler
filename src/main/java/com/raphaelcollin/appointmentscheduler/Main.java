@@ -1,6 +1,7 @@
 
 package com.raphaelcollin.appointmentscheduler;
 
+import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -62,16 +63,11 @@ public class Main extends Application {
     private static final String BUNDLE_BASE_NAME = "language";
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String LOCATION_CONTAINER_CONFIGURATION = "/container_configuration.fxml";
+    private static final String LOCATION_CONTAINER_LOGIN = "/container_login.fxml";
 
     @Override
     public void init() throws Exception {
-        System.out.println("DB Setup: " + preferences.getBoolean(PREFERENCES_KEY_DB_SETUP, false));
-        System.out.println("IP Address: " + preferences.get(PREFERENCES_KEY_IP, null));
-        System.out.println("Port: " + preferences.get(PREFERENCES_KEY_PORT, null));
-        System.out.println("User: " + preferences.get(PREFERENCES_KEY_DB_USER, null));
-        System.out.println("Password: " + preferences.get(PREFERENCES_KEY_DB_PASSWORD, null));
-        System.out.println("Access Control: " + preferences.getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false));
-        System.out.println("Access Control User: " + preferences.get(PREFERENCES_KEY_ACCESS_CONTROL_USER, null));
+        //preferences.clear();
         super.init();
     }
 
@@ -80,10 +76,41 @@ public class Main extends Application {
 
         System.setProperty("prism.lcdtext", "false");
 
+        boolean databaseConfigured = preferences.getBoolean(PREFERENCES_KEY_DB_SETUP, false);
+
+        String rootLocation;
+
+        if (databaseConfigured) {
+
+            String dbIp = preferences.get(PREFERENCES_KEY_IP, null);
+            String dbPort = preferences.get(PREFERENCES_KEY_PORT, null);
+            String dbUser = preferences.get(PREFERENCES_KEY_DB_USER, null);
+            String dbPassword = preferences.get(PREFERENCES_KEY_DB_PASSWORD, null);
+
+            connection = ConnectionFactory.getConnection(dbIp, dbPort, dbUser, dbPassword);
+
+            if (connection == null) {
+                rootLocation = LOCATION_CONTAINER_CONFIGURATION;
+            } else {
+
+                boolean loginRequired = preferences.getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
+
+                if (loginRequired) {
+                    rootLocation = LOCATION_CONTAINER_LOGIN;
+                } else {
+                    rootLocation = LOCATION_DASHBOARD_VIEW;
+                }
+            }
+
+        } else {
+            rootLocation = LOCATION_CONTAINER_CONFIGURATION;
+        }
+
+
         ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME,
                 new Locale(preferences.get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
 
-        Parent root = FXMLLoader.load(getClass().getResource(LOCATION_CONTAINER_CONFIGURATION), bundle);
+       Parent root = FXMLLoader.load(getClass().getResource(rootLocation), bundle);
         stage.setScene(new Scene(root));
         stage.setTitle(bundle.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);

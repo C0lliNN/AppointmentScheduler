@@ -90,7 +90,7 @@ public class AccessControlController implements Initializable {
         AnchorPane.setTopAnchor(loginGridPane, 95.0);
 
         recoverLabel.setFont(Font.font(22));
-        recoverLabel.getStyleClass().add("configuration-subtitle");
+        recoverLabel.getStyleClass().add(STYLE_CLASS_CONFIGURATION_SUBTITLE);
 
         AnchorPane.setTopAnchor(recoverLabel, 265.0);
         AnchorPane.setLeftAnchor(recoverLabel, 50.0);

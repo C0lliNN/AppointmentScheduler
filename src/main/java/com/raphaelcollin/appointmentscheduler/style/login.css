@@ -55,6 +55,18 @@
     -fx-background-radius: 0;
 }
 
+#label-credentials {
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #c8dfe0;
+}
+
+#label-credentials:hover {
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
 .green-button {
     -fx-background-color: green;
     -fx-text-fill: white;
@@ -62,13 +74,4 @@
 
 .green-button:hover {
     -fx-background-color: #0d9900;
-}
-
-.orange-button {
-    -fx-text-fill: white;
-    -fx-background-color: orange
-}
-
-.orange-button:hover {
-    -fx-background-color: #FF9004;
 }

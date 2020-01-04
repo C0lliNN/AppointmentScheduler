@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raphaelcollin.appointmentscheduler.controller.LoginController">
+
+    <Label fx:id="loginLabel" alignment="CENTER" text="Login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+    <GridPane fx:id="inputGridPane" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+            <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        </rowConstraints>
+
+        <Label fx:id="userLabel" text="%login_userLabel"/>
+        <Label fx:id="passwordLabel" text="%login_passwordLabel" GridPane.rowIndex="1"/>
+
+        <JFXTextField fx:id="userField" promptText="%login_userField_promptText" GridPane.columnIndex="1"/>
+        <JFXPasswordField fx:id="passwordField" promptText="%login_passwordField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    </GridPane>
+
+   <Label fx:id="recoverCredentialsLabel" text="%login_credentialsLabel" onMouseClicked="#handleRecoverCredentials"/>
+
+    <HBox fx:id="buttonHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <JFXButton fx:id="enterButton" text="%login_enterButton" onAction="#handleEnter" buttonType="RAISED"/>
+    </HBox>
+
+</AnchorPane>
