@@ -5,8 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 <?import com.jfoenix.controls.JFXButton?>
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml" stylesheets="@base_configuration.css" onMousePressed="#handleMousePressed"
-            onMouseDragged="#handleMouseDragged" fx:controller="com.raphaelcollin.appointmentscheduler.controller.BaseConfigurationController">
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml" onMousePressed="#handleMousePressed"
+            onMouseDragged="#handleMouseDragged" fx:controller="com.raphaelcollin.appointmentscheduler.controller.ContainerConfigurationController">
 
     <HBox alignment="CENTER_RIGHT" id="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <JFXButton buttonType="RAISED" fx:id="minimizeButton" onAction="#handleMinimizeWindow"/>

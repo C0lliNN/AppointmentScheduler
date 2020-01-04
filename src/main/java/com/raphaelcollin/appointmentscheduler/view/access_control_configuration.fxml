@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller
+        ="com.raphaelcollin.appointmentscheduler.controller.AccessControlController">
+
+   <Label fx:id="accessControlLabel" alignment="CENTER" text="%access_control_accessControlMessage"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+   <Label fx:id="loginLabel" text="Login"/>
+   <GridPane fx:id="loginGridPane" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+      <columnConstraints>
+         <ColumnConstraints hgrow="NEVER"/>
+         <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER"/>
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints fillHeight="false" vgrow="NEVER"/>
+         <RowConstraints vgrow="NEVER"/>
+         <RowConstraints vgrow="NEVER"/>
+      </rowConstraints>
+
+      <Label text="%access_control_user"/>
+      <Label text="%access_control_password" GridPane.rowIndex="1"/>
+      <Label text="%access_control_confirmPassword" GridPane.rowIndex="2"/>
+
+      <JFXTextField fx:id="userField" promptText="%access_control_userPromptText" GridPane.columnIndex="1"/>
+      <JFXPasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+      <JFXPasswordField fx:id="confirmPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+   </GridPane>
+
+   <Label fx:id="recoverLabel" text="%access_control_recover"/>
+
+   <GridPane fx:id="recoverGridPane" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <columnConstraints>
+         <ColumnConstraints hgrow="NEVER"/>
+         <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER"/>
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints fillHeight="false" vgrow="NEVER"/>
+         <RowConstraints fillHeight="false" vgrow="NEVER"/>
+      </rowConstraints>
+
+      <Label text="%access_control_securityQuestion"/>
+      <Label text="%access_control_answer" GridPane.rowIndex="1"/>
+
+      <JFXTextField fx:id="securityQuestionField" promptText="%access_control_securityQuestionPromptText" GridPane.columnIndex="1"/>
+      <JFXTextField fx:id="answerField" promptText="%access_control_answerPromptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+   </GridPane>
+
+   <HBox fx:id="buttonsHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <JFXButton fx:id="skipButton" text="%access_control_button_skip" onAction="#handleSkip" buttonType="RAISED"/>
+      <JFXButton fx:id="saveButton" text="%access_control_button_save" onAction="#handleSave" buttonType="RAISED"/>
+   </HBox>
+
+</AnchorPane>

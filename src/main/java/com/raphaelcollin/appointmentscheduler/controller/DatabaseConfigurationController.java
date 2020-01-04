@@ -5,8 +5,10 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +23,7 @@ import java.util.ResourceBundle;
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class DatabaseConfigurationController implements Initializable {
+
 
     @FXML
     private AnchorPane root;
@@ -53,6 +56,7 @@ public class DatabaseConfigurationController implements Initializable {
     private static final String BUNDLE_KEY_ERROR_HEADER_TEXT = "database_configuration_errorMessage_headerText";
     private static final String BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT = "database_configuration_errorMessage2_headerText";
     private static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
+    private static final String LOCATION_ACCESS_CONTROL = "/access_control_configuration.fxml";
 
 
     @Override
@@ -68,14 +72,14 @@ public class DatabaseConfigurationController implements Initializable {
         root.setMaxSize(width, height);
 
         welcomeLabel.setFont(Font.font(32));
-        AnchorPane.setTopAnchor(welcomeLabel, 25.0);
+        AnchorPane.setTopAnchor(welcomeLabel, 15.0);
 
         dbConfigLabel.setFont(Font.font(24));
         AnchorPane.setLeftAnchor(dbConfigLabel, 50.0);
-        AnchorPane.setTopAnchor(dbConfigLabel, 100.0);
+        AnchorPane.setTopAnchor(dbConfigLabel, 90.0);
 
-        AnchorPane.setTopAnchor(inputGridPane, 175.0);
-        AnchorPane.setBottomAnchor(inputGridPane, 120.0);
+        AnchorPane.setTopAnchor(inputGridPane, 165.0);
+        AnchorPane.setBottomAnchor(inputGridPane, 130.0);
 
         inputGridPane.setHgap(20);
         inputGridPane.setVgap(30);
@@ -84,9 +88,11 @@ public class DatabaseConfigurationController implements Initializable {
            ((Label) inputGridPane.getChildren().get(i)).setFont(Font.font(20));
         }
 
-        AnchorPane.setBottomAnchor(testConnectionHBox, 20.0);
+        AnchorPane.setBottomAnchor(testConnectionHBox, 40.0);
 
         testConnectionButton.setFont(Font.font(20));
+
+        testConnectionButton.getStyleClass().add(STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
     }
 
     @FXML
@@ -116,30 +122,50 @@ public class DatabaseConfigurationController implements Initializable {
         }
 
         if (errorFounded) {
-            Main.showAlert(Alert.AlertType.ERROR, root, resources.getString(BUNDLE_KEY_ERROR_HEADER_TEXT), errorMessage);
+            Main.showAlert(Alert.AlertType.ERROR, root,
+                    resources.getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                    resources.getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    errorMessage);
 
         } else {
 
-            Connection connection = testConnection(ipAddress, port, user, password);
+            Task<Connection> testConnectionTask = new Task<Connection>() {
+                @Override
+                protected Connection call() {
+                    return testConnection(ipAddress, port, user, password);
+                }
+            };
 
-            if (connection == null) {
-                Main.showAlert(Alert.AlertType.ERROR, root,
-                        resources.getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
-                        resources.getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
-            } else {
+            testConnectionTask.setOnSucceeded(event -> {
+                root.setCursor(Cursor.DEFAULT);
+                setConnection(testConnectionTask.getValue());
+                if (getConnection() == null) {
+                    Main.showAlert(Alert.AlertType.ERROR, root,
+                            resources.getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                            resources.getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
+                            resources.getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
+                } else {
 
-                preferences.put(PREFERENCES_KEY_IP, ipAddress);
-                preferences.put(PREFERENCES_KEY_PORT, port);
-                preferences.put(PREFERENCES_KEY_USER, user);
-                preferences.put(PREFERENCES_KEY_PASSWORD, password);
+                    getPreferences().putBoolean(PREFERENCES_KEY_DB_SETUP, true);
+                    getPreferences().put(PREFERENCES_KEY_IP, ipAddress);
+                    getPreferences().put(PREFERENCES_KEY_PORT, port);
+                    getPreferences().put(PREFERENCES_KEY_USER, user);
+                    getPreferences().put(PREFERENCES_KEY_PASSWORD, password);
 
-                // Switch Scenes, constants
+                    AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
+                    AnchorPane inRoot = loadView(LOCATION_ACCESS_CONTROL, resources);
+                    if (containerRoot != null && inRoot != null) {
+                        switchScenes(containerRoot, root, inRoot);
+                    }
+                }
+            });
 
-            }
+            root.setCursor(Cursor.WAIT);
+            new Thread(testConnectionTask).start();
+
         }
     }
 
-    // This method improves software testability
     public Connection testConnection(String ipAddress, String port, String user, String password) {
         return ConnectionFactory.getConnection(ipAddress, port, user, password);
     }

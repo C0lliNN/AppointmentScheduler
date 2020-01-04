@@ -5,18 +5,19 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BaseConfigurationController implements Initializable {
+import static com.raphaelcollin.appointmentscheduler.Main.loadView;
+
+public class ContainerConfigurationController implements Initializable {
+
     @FXML
     private AnchorPane root;
     @FXML
@@ -29,10 +30,18 @@ public class BaseConfigurationController implements Initializable {
 
     private ResourceBundle resources;
 
+    private static final String LOCATION_DATABASE_CONFIGURATION = "/database_configuration.fxml";
+    private static final String STYLE_CLASS_CLOSE_ICON = "close-icon";
+    private static final String STYLE_CLASS_CLOSE_BUTTON = "title-button";
+    private static final String STYLE_CLASS_MINIMIZE_ICON = "minimize-icon";
+    private static final String STYLE_CLASS_MINIMIZE_BUTTON = "title-button";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         this.resources = resources;
+
+        root.getStylesheets().add(getClass().getResource("/configuration.css").toExternalForm());
 
         double width = Main.getScreenWidth() * 0.3125;
         double height = Main.getScreenWidth() * 0.3125 * 0.9166666; // Maintain the aspect radio
@@ -41,25 +50,24 @@ public class BaseConfigurationController implements Initializable {
         root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        AnchorPane databaseConfigurationRoot = loadView("/database_configuration.fxml");
+        AnchorPane databaseConfigurationRoot = loadView(LOCATION_DATABASE_CONFIGURATION, resources);
 
         root.getChildren().add(databaseConfigurationRoot);
-        AnchorPane.setTopAnchor(databaseConfigurationRoot, 25.0);
+        AnchorPane.setTopAnchor(databaseConfigurationRoot, 40.0);
 
         FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
-        closeIcon.getStyleClass().add("close-icon");
+        closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
 
         closeButton.setGraphic(closeIcon);
-        closeButton.getStyleClass().add("title-button");
+        closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
 
         FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
-        minimizeIcon.getStyleClass().add("minimize-icon");
+        minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
 
         minimizeButton.setGraphic(minimizeIcon);
         minimizeButton.setContentDisplay(ContentDisplay.CENTER);
-        minimizeButton.getStyleClass().add("title-button");
+        minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
 
-        // Dropshadow, ControlFlow, switch scenes, constants
     }
 
     @FXML
@@ -70,15 +78,6 @@ public class BaseConfigurationController implements Initializable {
     @FXML
     private void handleCloseWindow() {
         ((Stage) root.getScene().getWindow()).close();
-    }
-
-    private AnchorPane loadView(String location){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(location), resources);
-        try {
-            return loader.load();
-        } catch (IOException e) {
-            return null;
-        }
     }
 
     @FXML

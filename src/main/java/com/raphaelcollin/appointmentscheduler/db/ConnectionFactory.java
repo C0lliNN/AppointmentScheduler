@@ -25,14 +25,17 @@ public class ConnectionFactory {
         }
     }
 
-    public static void closeConnection(Connection connection) {
+    public static boolean closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
+                return true;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+
+        return false;
     }
 
 }

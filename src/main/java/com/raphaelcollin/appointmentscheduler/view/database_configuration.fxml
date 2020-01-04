@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@database_configuration.css"
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController">
 
    <Label fx:id="welcomeLabel" alignment="CENTER" text="%database_configuration_welcomeMessage" AnchorPane.leftAnchor="0.0"
@@ -25,7 +25,7 @@
 
    </GridPane>
    <HBox fx:id="testConnectionHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      <JFXButton fx:id="testConnectionButton" onAction="#handleTestConnection" buttonType="RAISED" ripplerFill="#9e8787"
+      <JFXButton fx:id="testConnectionButton" onAction="#handleTestConnection" defaultButton="true" buttonType="RAISED"
                  text="%database_configuration_testConnection"/>
    </HBox>
 </AnchorPane>
