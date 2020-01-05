@@ -1,6 +1,7 @@
 
 package com.raphaelcollin.appointmentscheduler;
 
+import com.raphaelcollin.appointmentscheduler.controller.ContainerConfigurationController;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -32,10 +33,10 @@ public class Main extends Application {
 
     private static Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
     private static Preferences preferences = Preferences.userNodeForPackage(Main.class);
-
     private static Connection connection;
 
     // Preferences Key
+
     public static final String PREFERENCES_KEY_LANGUAGE = "language";
     public static final String PREFERENCES_KEY_DB_SETUP = "db_setup";
     public static final String PREFERENCES_KEY_IP = "db_ip";
@@ -48,22 +49,52 @@ public class Main extends Application {
     public static final String PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION = "ac_security_question";
     public static final String PREFERENCES_KEY_ACCESS_CONTROL_ANSWER = "ac_answer";
 
-    // Global Constants
+    // File Locations
+
+    public static final String ACCESS_CONTROL_CONFIGURATION_LOCATION = "/access_control_configuration.fxml";
+    public static final String CONTAINER_CONFIGURATION_LOCATION = "/container_configuration.fxml";
+    public static final String CONTAINER_LOGIN_LOCATION = "/container_login.fxml";
+    public static final String DASHBOARD_LOCATION = "/dashboard.fxml";
+    public static final String DATABASE_CONFIGURATION_LOCATION = "/database_configuration.fxml";
+    public static final String LOGIN_LOCATION = "/login.fxml";
+    public static final String RECOVER_CREDENTIALS_LOCATION = "/recover_credentials.fxml";
+
+    // Bundle Keys
 
     public static final String BUNDLE_KEY_APPLICATION_TITLE = "application_title";
     public static final String BUNDLE_KEY_ERROR_ALERT_TITLE = "alert_error_title";
     public static final String BUNDLE_KEY_ERROR_EMPTY_MESSAGE = "alert_errorMessage_empty";
     public static final String BUNDLE_KEY_ERROR_HEADER_TEXT = "alert_errorMessage_headerText";
-    public static final String STYLE_CLASS_CONFIGURATION_GREEN_BUTTON = "green-button";
-    public static final String LOCATION_DASHBOARD_VIEW = "/dashboard.fxml";
+    public static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT2 = "database_configuration_errorMessage3_contentText";
+    public static final String BUNDLE_KEY_CONNECTION_ERROR_LABEL = "database_configuration_errorLabel";
+    public static final String BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT = "database_configuration_errorMessage2_headerText";
+    public static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "access_control_error_password_match";
+    public static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "database_configuration_errorMessage_invalidPort";
+    public static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
+    public static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
+    public static final String BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE = "login_alert_invalid_credentials_message";
+    public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "recover_credentials_invalid_answer";
+
+    // Classes and Ids
+
+    public static final String STYLE_CLASS_GREEN_BUTTON = "green-button";
     public static final String STYLE_CLASS_CONFIGURATION_SUBTITLE = "configuration-subtitle";
+    public static final String STYLE_CLASS_ORANGE_BUTTON = "orange-button";
+    public static final String STYLE_CLASS_CLOSE_ICON = "close-icon";
+    public static final String STYLE_CLASS_CLOSE_BUTTON = "title-button";
+    public static final String STYLE_CLASS_MINIMIZE_ICON = "minimize-icon";
+    public static final String STYLE_CLASS_MINIMIZE_BUTTON = "title-button";
+    public static final String ID_RECOVER_CREDENTIALS_LABEL = "label-credentials";
+
 
     // Class Constants
 
     private static final String BUNDLE_BASE_NAME = "language";
     private static final String DEFAULT_LANGUAGE = "en";
-    private static final String LOCATION_CONTAINER_CONFIGURATION = "/container_configuration.fxml";
-    private static final String LOCATION_CONTAINER_LOGIN = "/container_login.fxml";
+
+    private static ResourceBundle resources;
+    public static int TRANSITION_FROM_LEFT = 1;
+    public static int TRANSITION_FROM_RIGHT = 2;
 
     @Override
     public void init() throws Exception {
@@ -78,7 +109,12 @@ public class Main extends Application {
 
         boolean databaseConfigured = preferences.getBoolean(PREFERENCES_KEY_DB_SETUP, false);
 
-        String rootLocation;
+        resources = ResourceBundle.getBundle(BUNDLE_BASE_NAME,
+                new Locale(preferences.get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setResources(resources);
+        Parent root = null;
 
         if (databaseConfigured) {
 
@@ -90,29 +126,34 @@ public class Main extends Application {
             connection = ConnectionFactory.getConnection(dbIp, dbPort, dbUser, dbPassword);
 
             if (connection == null) {
-                rootLocation = LOCATION_CONTAINER_CONFIGURATION;
+
+                // BUNDLES FOR RECOVER_CREDENTIALS
+
+                loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
+                root = loader.load();
+                ContainerConfigurationController dbController = loader.getController();
+                dbController.setupFields(dbIp, dbPort, dbUser, dbPassword);
             } else {
 
                 boolean loginRequired = preferences.getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
 
                 if (loginRequired) {
-                    rootLocation = LOCATION_CONTAINER_LOGIN;
+                    loader.setLocation(getClass().getResource(CONTAINER_LOGIN_LOCATION));
                 } else {
-                    rootLocation = LOCATION_DASHBOARD_VIEW;
+                    loader.setLocation(getClass().getResource(DASHBOARD_LOCATION));
                 }
             }
 
         } else {
-            rootLocation = LOCATION_CONTAINER_CONFIGURATION;
+            loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
         }
 
+        if (root == null) {
+            root = loader.load();
+        }
 
-        ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME,
-                new Locale(preferences.get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
-
-       Parent root = FXMLLoader.load(getClass().getResource(rootLocation), bundle);
         stage.setScene(new Scene(root));
-        stage.setTitle(bundle.getString(BUNDLE_KEY_APPLICATION_TITLE));
+        stage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
 
@@ -128,14 +169,22 @@ public class Main extends Application {
         return screenSize.getWidth();
     }
 
-    public static double getScreenHeight() {
-        return screenSize.getHeight();
-    }
+//    public static double getScreenHeight() {
+     //   return screenSize.getHeight();
+  //  }
 
-    public static void switchScenes(AnchorPane containerRoot, Parent outRoot, Parent inRoot) {
+    public static void switchScenes(AnchorPane containerRoot, Parent outRoot, Parent inRoot, int option) {
 
-        double translateXInRoot = containerRoot.getScene().getWidth();
-        double translateXOutRoot = -containerRoot.getScene().getWidth();
+        double translateXInRoot;
+        double translateXOutRoot;
+
+        if (option == TRANSITION_FROM_LEFT) {
+            translateXInRoot = -containerRoot.getScene().getWidth();
+            translateXOutRoot = +containerRoot.getScene().getWidth();
+        } else {
+            translateXInRoot = containerRoot.getScene().getWidth();
+            translateXOutRoot = -containerRoot.getScene().getWidth();
+        }
 
         inRoot.setTranslateX(translateXInRoot);
         outRoot.setTranslateX(0.0);
@@ -162,15 +211,33 @@ public class Main extends Application {
         }
     }
 
+    public static void loadDashboardStage() {
+        Parent dashboardRoot = loadView(DASHBOARD_LOCATION, resources);
+
+        assert dashboardRoot != null;
+
+        Stage newStage = new Stage();
+        newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
+        newStage.setScene(new Scene(dashboardRoot));
+        newStage.show();
+    }
+
     public static Optional<ButtonType> showAlert(Alert.AlertType alertType, Parent root, String title, String headerText,
                                                  String contentText) {
         Alert alert = new Alert(alertType);
-        alert.initOwner(root.getScene().getWindow());
+        if (root != null && root.getScene() != null) {
+            // Set icon later
+            alert.initOwner(root.getScene().getWindow());
+        }
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
 
         return alert.showAndWait();
+    }
+
+    public static ResourceBundle getResources() {
+        return resources;
     }
 
     public static Preferences getPreferences() {

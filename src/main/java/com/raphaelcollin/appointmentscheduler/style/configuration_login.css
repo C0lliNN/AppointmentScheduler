@@ -45,14 +45,12 @@
 }
 
 .jfx-text-field, .jfx-password-field {
+    -fx-font-family: Arial;
     -jfx-focus-color: white;
     -jfx-unfocus-color: #b5b5b5;
-    -fx-prompt-text-fill: #cfcfcf;
+    -fx-prompt-text-fill: rgba(230, 230, 230, 0.4);
     -fx-font-size: 1.5em;
-    -fx-text-fill: white;
-
-    -fx-indent: 50;
-    -fx-background-radius: 0;
+    -fx-text-fill: #e3e3e3;
 }
 
 #label-credentials {
@@ -74,4 +72,13 @@
 
 .green-button:hover {
     -fx-background-color: #0d9900;
+}
+
+.orange-button {
+    -fx-text-fill: white;
+    -fx-background-color: orange
+}
+
+.orange-button:hover {
+    -fx-background-color: #FF9004;
 }

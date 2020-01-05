@@ -7,8 +7,6 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,14 +52,9 @@ public class AccessControlController implements Initializable {
     @FXML
     private JFXButton saveButton;
 
-    private ResourceBundle resources;
-
-    private static final String STYLE_CLASS_ORANGE_BUTTON = "orange-button";
-    private static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "access_control_error_password_match";
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.resources = resources;
+
 
         double width = Main.getScreenWidth() * 0.3125;
         double height = Main.getScreenWidth() * 0.3125 * 0.85; // Maintain the aspect radio
@@ -110,7 +103,7 @@ public class AccessControlController implements Initializable {
 
         AnchorPane.setBottomAnchor(buttonsHBox, 35.0);
 
-        saveButton.getStyleClass().add(Main.STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
+        saveButton.getStyleClass().add(Main.STYLE_CLASS_GREEN_BUTTON);
         skipButton.getStyleClass().add(STYLE_CLASS_ORANGE_BUTTON);
     }
 
@@ -129,19 +122,19 @@ public class AccessControlController implements Initializable {
         if (user.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || securityQuestion.isEmpty() ||
                 answer.isEmpty()) {
             errorFounded = true;
-            errorMessage = resources.getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
         }
 
         if (!errorFounded && !password.equals(confirmPassword)) {
             errorFounded = true;
-            errorMessage = resources.getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH);
         }
 
         if (errorFounded) {
             showAlert(Alert.AlertType.ERROR,
                     root,
-                    resources.getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    resources.getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
+                    getResources().getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
                     errorMessage);
         } else {
 
@@ -165,12 +158,6 @@ public class AccessControlController implements Initializable {
         Stage currentStage = (Stage) root.getScene().getWindow();
         currentStage.close();
 
-        Stage newStage = new Stage();
-        newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
-        Parent dashboardRoot = loadView(LOCATION_DASHBOARD_VIEW, resources);
-        if (dashboardRoot != null) {
-            newStage.setScene(new Scene(dashboardRoot));
-            newStage.show();
-        }
+        loadDashboardStage();
     }
 }

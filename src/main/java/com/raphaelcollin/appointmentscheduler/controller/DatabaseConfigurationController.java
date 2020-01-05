@@ -24,7 +24,6 @@ import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class DatabaseConfigurationController implements Initializable {
 
-
     @FXML
     private AnchorPane root;
     @FXML
@@ -46,21 +45,11 @@ public class DatabaseConfigurationController implements Initializable {
     @FXML
     private JFXButton testConnectionButton;
 
-    private ResourceBundle resources;
-
     private static final String REGEX_IP = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$";
-    private static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
     private static final String REGEX_PORT = "\\d+$";
-    private static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "database_configuration_errorMessage_invalidPort";
-    private static final String BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT = "database_configuration_errorMessage2_headerText";
-    private static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
-    private static final String LOCATION_ACCESS_CONTROL = "/access_control_configuration.fxml";
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        this.resources = resources;
 
         double width = Main.getScreenWidth() * 0.3125;
         double height = Main.getScreenWidth() * 0.3125 * 0.85; // Maintain the aspect radio
@@ -91,7 +80,7 @@ public class DatabaseConfigurationController implements Initializable {
 
         testConnectionButton.setFont(Font.font(20));
 
-        testConnectionButton.getStyleClass().add(STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
+        testConnectionButton.getStyleClass().add(STYLE_CLASS_GREEN_BUTTON);
     }
 
     @FXML
@@ -106,24 +95,24 @@ public class DatabaseConfigurationController implements Initializable {
         boolean errorFounded = false;
 
         if (ipAddress.isEmpty() || port.isEmpty() || user.isEmpty()) {
-            errorMessage = resources.getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
             errorFounded = true;
         }
 
         if (!errorFounded && !ipAddress.matches(REGEX_IP)) {
-            errorMessage = resources.getString(BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE);
             errorFounded = true;
         }
 
         if (!errorFounded && !port.matches(REGEX_PORT)) {
-            errorMessage = resources.getString(BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE);
             errorFounded = true;
         }
 
         if (errorFounded) {
             Main.showAlert(Alert.AlertType.ERROR, root,
-                    resources.getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    resources.getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                    getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
                     errorMessage);
 
         } else {
@@ -140,9 +129,9 @@ public class DatabaseConfigurationController implements Initializable {
                 setConnection(testConnectionTask.getValue());
                 if (getConnection() == null) {
                     Main.showAlert(Alert.AlertType.ERROR, root,
-                            resources.getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            resources.getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
-                            resources.getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
+                            getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                            getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
+                            getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
                 } else {
 
                     getPreferences().putBoolean(PREFERENCES_KEY_DB_SETUP, true);
@@ -152,9 +141,9 @@ public class DatabaseConfigurationController implements Initializable {
                     getPreferences().put(PREFERENCES_KEY_DB_PASSWORD, password);
 
                     AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
-                    AnchorPane inRoot = loadView(LOCATION_ACCESS_CONTROL, resources);
+                    AnchorPane inRoot = loadView(ACCESS_CONTROL_CONFIGURATION_LOCATION, getResources());
                     if (containerRoot != null && inRoot != null) {
-                        switchScenes(containerRoot, root, inRoot);
+                        switchScenes(containerRoot, root, inRoot, TRANSITION_FROM_RIGHT);
                     }
                 }
             });

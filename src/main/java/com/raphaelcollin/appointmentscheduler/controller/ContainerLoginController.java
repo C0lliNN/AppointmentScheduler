@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.raphaelcollin.appointmentscheduler.Main.loadView;
+import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class ContainerLoginController implements Initializable {
 
@@ -28,12 +28,6 @@ public class ContainerLoginController implements Initializable {
     private double xOffset;
     private double yOffSet;
 
-    private static final String LOCATION_LOGIN = "/login.fxml";
-    private static final String STYLE_CLASS_CLOSE_ICON = "close-icon";
-    private static final String STYLE_CLASS_CLOSE_BUTTON = "title-button";
-    private static final String STYLE_CLASS_MINIMIZE_ICON = "minimize-icon";
-    private static final String STYLE_CLASS_MINIMIZE_BUTTON = "title-button";
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         double width = Main.getScreenWidth() * 0.3125;
@@ -43,7 +37,7 @@ public class ContainerLoginController implements Initializable {
         root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        AnchorPane loginRoot = loadView(LOCATION_LOGIN, resources);
+        AnchorPane loginRoot = loadView(LOGIN_LOCATION, resources);
 
         root.getChildren().add(loginRoot);
         AnchorPane.setTopAnchor(loginRoot, 40.0);

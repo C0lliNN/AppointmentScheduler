@@ -36,7 +36,7 @@
    <Label fx:id="recoverCredentialsLabel" text="%login_credentialsLabel" onMouseClicked="#handleRecoverCredentials"/>
 
     <HBox fx:id="buttonHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <JFXButton fx:id="enterButton" text="%login_enterButton" onAction="#handleEnter" buttonType="RAISED"/>
+        <JFXButton fx:id="enterButton" text="%login_enterButton" onAction="#handleEnter" defaultButton="true" buttonType="RAISED"/>
     </HBox>
 
 </AnchorPane>
