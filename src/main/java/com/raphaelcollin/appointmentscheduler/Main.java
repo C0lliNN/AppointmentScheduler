@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -58,6 +59,7 @@ public class Main extends Application {
     public static final String DATABASE_CONFIGURATION_LOCATION = "/database_configuration.fxml";
     public static final String LOGIN_LOCATION = "/login.fxml";
     public static final String RECOVER_CREDENTIALS_LOCATION = "/recover_credentials.fxml";
+    public static final String LOCATION_APPLICATION_ICON_TITLE_BAR = "/title-bar-icon.png";
 
     // Bundle Keys
 
@@ -74,6 +76,13 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
     public static final String BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE = "login_alert_invalid_credentials_message";
     public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "recover_credentials_invalid_answer";
+    public static final String BUNDLE_KEY_TAB_TITLE_DASHBOARD = "tab_title_dashboard";
+    public static final String BUNDLE_KEY_TAB_TITLE_APPOINTMENT = "tab_title_appointment";
+    public static final String BUNDLE_KEY_TAB_TITLE_FINANCIAL = "tab_title_financial";
+    public static final String BUNDLE_KEY_TAB_TITLE_PATIENT = "tab_title_patient";
+    public static final String BUNDLE_KEY_TAB_TITLE_DOCTOR = "tab_title_doctor";
+    public static final String BUNDLE_KEY_TAB_TITLE_TOOLS = "tab_title_tools";
+    public static final String BUNDLE_KEY_TAB_TITLE_SETTINGS = "tab_title_settings";
 
     // Classes and Ids
 
@@ -85,12 +94,15 @@ public class Main extends Application {
     public static final String STYLE_CLASS_MINIMIZE_ICON = "minimize-icon";
     public static final String STYLE_CLASS_MINIMIZE_BUTTON = "title-button";
     public static final String ID_RECOVER_CREDENTIALS_LABEL = "label-credentials";
+    public static final String STYLE_CLASS_TAB_ICON = "tab-icon";
+    public static final String ID_APPLICATION_TITLE_LABEL = "application-title";
 
 
     // Class Constants
 
     private static final String BUNDLE_BASE_NAME = "language";
     private static final String DEFAULT_LANGUAGE = "en";
+    private static final String LOCATION_STAGE_ICON = "/stage_icon.png";
 
     private static ResourceBundle resources;
     public static int TRANSITION_FROM_LEFT = 1;
@@ -98,6 +110,7 @@ public class Main extends Application {
 
     @Override
     public void init() throws Exception {
+        //preferences.putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
         //preferences.clear();
         super.init();
     }
@@ -127,8 +140,6 @@ public class Main extends Application {
 
             if (connection == null) {
 
-                // BUNDLES FOR RECOVER_CREDENTIALS
-
                 loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
                 root = loader.load();
                 ContainerConfigurationController dbController = loader.getController();
@@ -153,6 +164,7 @@ public class Main extends Application {
         }
 
         stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(LOCATION_STAGE_ICON)));
         stage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();

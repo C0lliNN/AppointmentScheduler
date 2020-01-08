@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.raphaelcollin.appointmentscheduler.controller.DashboardController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Button text="Test"/>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane fx:controller="com.raphaelcollin.appointmentscheduler.controller.DashboardController" fx:id="root"
+            onMousePressed="#handleMousePressed" onMouseDragged="#handleMouseDragged" stylesheets="@dashboard.css" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+
+      <HBox alignment="CENTER" AnchorPane.bottomAnchor="808" AnchorPane.leftAnchor="12.0">
+         <ImageView fx:id="imageView"/>
+      </HBox>
+
+
+      <Label fx:id="applicationTitleLabel" text="%application_title" alignment="CENTER" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200"
+         AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="804"/>
+
+      <HBox alignment="CENTER_RIGHT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <JFXButton buttonType="RAISED" fx:id="minimizeButton" onAction="#handleMinimizeWindow"/>
+         <JFXButton buttonType="RAISED" fx:id="closeButton" onAction="#handleCloseWindow"/>
+      </HBox>
+
+      <TabPane rotateGraphic="true" fx:id="tabPane" prefHeight="800.0" prefWidth="224.0" side="LEFT" tabClosingPolicy="UNAVAILABLE"
+         AnchorPane.topAnchor="4.0" AnchorPane.rightAnchor="4.0"/>
+
+   </children>
 </AnchorPane>
