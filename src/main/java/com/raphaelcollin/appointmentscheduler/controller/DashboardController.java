@@ -1,21 +1,18 @@
 package com.raphaelcollin.appointmentscheduler.controller;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import com.jfoenix.controls.JFXProgressBar;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,158 +24,85 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
-    private ImageView imageView;
+    private VBox vBoxEarnings;
     @FXML
-    private TabPane tabPane;
+    private VBox vBoxCompletedAppointments;
     @FXML
-    private Label applicationTitleLabel;
+    private VBox vBoxUnconfirmedAppointments;
     @FXML
-    private JFXButton minimizeButton;
+    private VBox vBoxUpcomingAppointments;
     @FXML
-    private JFXButton closeButton;
-
-    private double xOffset;
-    private double yOffSet;
+    private JFXProgressBar completedAppointmentsProgressBar;
+    @FXML
+    private JFXProgressBar unconfirmedAppointmentsProgressBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Title Bar, Wireframes
+        double width = 1000;
+        double height = 800;
 
-        double width = 1208;
-        double height = 845;
-
+        root.setMinSize(width,height);
         root.setPrefSize(width, height);
-        root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        imageView.setImage(new Image(getClass().getResourceAsStream(LOCATION_APPLICATION_ICON_TITLE_BAR)));
-        imageView.setFitWidth(30);
-        imageView.setFitHeight(30);
+        for (Node node : root.getChildren()) {
 
-        applicationTitleLabel.setFont(Font.font(20));
-        applicationTitleLabel.setId(ID_APPLICATION_TITLE_LABEL);
+            double boxWidth = 501;
+            double boxHeight = 401;
 
-        FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
-        closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
+            VBox box = (VBox) node;
 
-        closeButton.setGraphic(closeIcon);
-        closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
+            box.setSpacing(20);
+            box.setPadding(new Insets(75,0,0,0));
+            box.setMinSize(boxWidth, boxHeight);
+            box.setPrefSize(boxWidth, boxHeight);
+            box.setMaxSize(boxWidth, boxHeight);
 
-        FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
-        minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
+            ((Label) box.getChildren().get(0)).setFont(Font.font(32));
 
-        minimizeButton.setGraphic(minimizeIcon);
-        minimizeButton.setContentDisplay(ContentDisplay.CENTER);
-        minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
+            Node nodeValue = (box.getChildren().get(1));
 
-        FontAwesomeIconView dashBoardIcon = new FontAwesomeIconView(FontAwesomeIcon.DASHBOARD);
-        dashBoardIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
+            ObservableList<Label> valueLabels = FXCollections.observableArrayList();
 
-        Tab dashboardTab = new Tab();
-        dashboardTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_DASHBOARD),
-                dashBoardIcon));
+            if (nodeValue instanceof Label) {
+                valueLabels.add((Label) nodeValue);
+            } else if (nodeValue instanceof HBox) {
+                ((HBox) nodeValue).getChildren().forEach(label -> valueLabels.add((Label) label));
+            }
 
-        HBox box = new HBox();
-        box.setStyle("-fx-background-color: #f4f4f4");
-        box.setPrefSize(1200, 800);
-        box.setMinSize(1200, 800);
-        box.setMaxSize(1200, 800);
-        box.getChildren().add(new Button("test"));
-        dashboardTab.setContent(box);
+            valueLabels.forEach(label -> {
+                label.setFont(Font.font(40));
+                label.getStyleClass().add(STYLE_CLASS_DASHBOARD_VALUE_LABEL);
+            });
 
-        FontAwesomeIconView appointmentIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
-        appointmentIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab appointmentTab = new Tab();
-        appointmentTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_APPOINTMENT),
-                appointmentIcon));
+            int buttonIndex = box.getChildren().size() - 1;
+            ((JFXButton) box.getChildren().get(buttonIndex)).setFont(Font.font(22));
 
-        HBox box2 = new HBox();
-        box2.setStyle("-fx-background-color: #f4f4f4");
-        box2.setPrefSize(1200, 800);
-        box2.setMinSize(1200, 800);
-        box2.setMaxSize(1200, 800);
-        box2.getChildren().add(new Button("test"));
-        appointmentTab.setContent(box2);
+        }
 
-        FontAwesomeIconView financialIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);
-        financialIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab financialTab = new Tab();
-        financialTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_FINANCIAL),
-                financialIcon));
+        vBoxUpcomingAppointments.getStyleClass().add(STYLE_CLASS_DASHBOARD_UPCOMING_BOX);
+        vBoxUnconfirmedAppointments.getStyleClass().add(STYLE_CLASS_DASHBOARD_UNCONFIRMED_BOX);
+        vBoxUnconfirmedAppointments.setLayoutX(500);
+        vBoxCompletedAppointments.getStyleClass().add(STYLE_CLASS_DASHBOARD_COMPLETED_BOX);
+        vBoxCompletedAppointments.setLayoutY(400);
+        vBoxEarnings.getStyleClass().add(STYLE_CLASS_DASHBOARD_EARNINGS_BOX);
+        vBoxEarnings.setLayoutX(500);
+        vBoxEarnings.setLayoutY(400);
 
-        FontAwesomeIconView patientIcon = new FontAwesomeIconView(FontAwesomeIcon.ADDRESS_CARD);
-        patientIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab patientTab = new Tab();
-        patientTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_PATIENT),
-                patientIcon));
+        double progressBarWidth = 300;
+        double progressBarHeight = 30;
 
-        FontAwesomeIconView doctorIcon = new FontAwesomeIconView(FontAwesomeIcon.HOSPITAL_ALT);
-        doctorIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab doctorTab = new Tab();
-        doctorTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_DOCTOR),
-                doctorIcon));
+        completedAppointmentsProgressBar.setMinSize(progressBarWidth, progressBarHeight);
+        completedAppointmentsProgressBar.setPrefSize(progressBarWidth, progressBarHeight);
+        completedAppointmentsProgressBar.setMaxSize(progressBarWidth, progressBarHeight);
 
-        FontAwesomeIconView toolsIcon = new FontAwesomeIconView(FontAwesomeIcon.MAGIC);
-        toolsIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab toolsTab = new Tab();
-        toolsTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_TOOLS),
-                toolsIcon));
+        completedAppointmentsProgressBar.setProgress(0.55);
 
-        FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.COG);
-        settingsIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
-        Tab settingsTab = new Tab();
-        settingsTab.setGraphic(createTabHeader(
-                resources.getString(BUNDLE_KEY_TAB_TITLE_SETTINGS),
-                settingsIcon));
+        unconfirmedAppointmentsProgressBar.setMinSize(progressBarWidth, progressBarHeight);
+        unconfirmedAppointmentsProgressBar.setPrefSize(progressBarWidth, progressBarHeight);
+        unconfirmedAppointmentsProgressBar.setMaxSize(progressBarWidth, progressBarHeight);
 
-        tabPane.getTabs().addAll(dashboardTab, appointmentTab, financialTab, patientTab, doctorTab, toolsTab, settingsTab);
-
-        tabPane.setTabMinWidth(50);
-        tabPane.setTabMaxWidth(50);
-        tabPane.setTabMinHeight(200);
-        tabPane.setTabMaxHeight(200);
-
-        AnchorPane.setTopAnchor(tabPane, 40.0);
-        AnchorPane.setLeftAnchor(tabPane, 4.0);
-
-    }
-
-    private StackPane createTabHeader(String text, Node graphics){
-        Label label = new Label(" " + text, graphics);
-        label.setContentDisplay(ContentDisplay.LEFT);
-
-        label.getStyleClass().add("tab-pane-label");
-        return new StackPane(new Group(label));
-    }
-
-    @FXML
-    private void handleMinimizeWindow() {
-        ((Stage) root.getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void handleCloseWindow() {
-        ((Stage) root.getScene().getWindow()).close();
-    }
-
-    @FXML
-    private void handleMousePressed(MouseEvent mouseEvent) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        xOffset = stage.getX() - mouseEvent.getScreenX();
-        yOffSet = stage.getY() - mouseEvent.getScreenY();
-    }
-
-    @FXML
-    private void handleMouseDragged(MouseEvent mouseEvent) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setX(mouseEvent.getScreenX() + xOffset);
-        stage.setY(mouseEvent.getScreenY() + yOffSet);
+        unconfirmedAppointmentsProgressBar.setProgress(0.4);
     }
 }

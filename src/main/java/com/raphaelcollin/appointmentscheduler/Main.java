@@ -2,6 +2,7 @@
 package com.raphaelcollin.appointmentscheduler;
 
 import com.raphaelcollin.appointmentscheduler.controller.ContainerConfigurationController;
+import com.raphaelcollin.appointmentscheduler.controller.MainController;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -55,11 +56,12 @@ public class Main extends Application {
     public static final String ACCESS_CONTROL_CONFIGURATION_LOCATION = "/access_control_configuration.fxml";
     public static final String CONTAINER_CONFIGURATION_LOCATION = "/container_configuration.fxml";
     public static final String CONTAINER_LOGIN_LOCATION = "/container_login.fxml";
-    public static final String DASHBOARD_LOCATION = "/dashboard.fxml";
+    public static final String DASHBOARD_LOCATION = "/main_view.fxml";
     public static final String DATABASE_CONFIGURATION_LOCATION = "/database_configuration.fxml";
     public static final String LOGIN_LOCATION = "/login.fxml";
     public static final String RECOVER_CREDENTIALS_LOCATION = "/recover_credentials.fxml";
     public static final String LOCATION_APPLICATION_ICON_TITLE_BAR = "/title-bar-icon.png";
+    public static final String LOCATION_DASHBOARD_CONTENT = "/dashboard_content.fxml";
 
     // Bundle Keys
 
@@ -96,6 +98,11 @@ public class Main extends Application {
     public static final String ID_RECOVER_CREDENTIALS_LABEL = "label-credentials";
     public static final String STYLE_CLASS_TAB_ICON = "tab-icon";
     public static final String ID_APPLICATION_TITLE_LABEL = "application-title";
+    public static final String STYLE_CLASS_DASHBOARD_VALUE_LABEL = "value-label";
+    public static final String STYLE_CLASS_DASHBOARD_UNCONFIRMED_BOX = "dashboard-tab-unconfirmed-box";
+    public static final String STYLE_CLASS_DASHBOARD_UPCOMING_BOX = "dashboard-tab-upcoming-box";
+    public static final String STYLE_CLASS_DASHBOARD_COMPLETED_BOX = "dashboard-tab-completed-box";
+    public static final String STYLE_CLASS_DASHBOARD_EARNINGS_BOX = "dashboard-tab-earnings-box";
 
 
     // Class Constants
@@ -152,6 +159,9 @@ public class Main extends Application {
                     loader.setLocation(getClass().getResource(CONTAINER_LOGIN_LOCATION));
                 } else {
                     loader.setLocation(getClass().getResource(DASHBOARD_LOCATION));
+                    root = loader.load();
+                    MainController mainController = loader.getController();
+                    mainController.setupTabs();
                 }
             }
 
@@ -219,6 +229,7 @@ public class Main extends Application {
         try {
             return loader.load();
         } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }
