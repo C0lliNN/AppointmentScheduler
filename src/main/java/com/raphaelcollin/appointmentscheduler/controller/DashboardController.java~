@@ -14,14 +14,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
-public class DashboardController implements Initializable, PropertyChangeListener {
+public class DashboardController implements Initializable {
 
     @FXML
     private AnchorPane root;
@@ -106,10 +104,5 @@ public class DashboardController implements Initializable, PropertyChangeListene
         unconfirmedAppointmentsProgressBar.setMaxSize(progressBarWidth, progressBarHeight);
 
         unconfirmedAppointmentsProgressBar.setProgress(0.4);
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-
     }
 }
