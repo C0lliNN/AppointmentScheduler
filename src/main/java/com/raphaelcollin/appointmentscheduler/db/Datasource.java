@@ -84,5 +84,15 @@ public class Datasource {
         return SingletonHelper.instance;
     }
 
+    public ObservableList<Appointment> getAppointments() {
+        return appointments;
+    }
 
+    public ObservableList<Patient> getPatients() {
+        return patients;
+    }
+
+    public ObservableList<Doctor> getDoctors() {
+        return doctors;
+    }
 }

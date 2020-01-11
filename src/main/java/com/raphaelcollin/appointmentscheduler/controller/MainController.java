@@ -110,10 +110,14 @@ public class MainController implements Initializable {
 
         FontAwesomeIconView appointmentIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
         appointmentIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
+
         Tab appointmentTab = new Tab();
         appointmentTab.setGraphic(createTabHeader(
                 getResources().getString(BUNDLE_KEY_TAB_TITLE_APPOINTMENT),
                 appointmentIcon));
+
+        Parent appointmentContent = loadView(LOCATION_APPOINTMENT_CONTENT, getResources());
+        appointmentTab.setContent(appointmentContent);
 
 
         FontAwesomeIconView financialIcon = new FontAwesomeIconView(FontAwesomeIcon.DOLLAR);

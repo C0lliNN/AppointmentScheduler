@@ -80,7 +80,7 @@ public class DatabaseConfigurationController implements Initializable {
 
         testConnectionButton.setFont(Font.font(20));
 
-        testConnectionButton.getStyleClass().add(STYLE_CLASS_GREEN_BUTTON);
+        testConnectionButton.getStyleClass().add(STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
     }
 
     @FXML

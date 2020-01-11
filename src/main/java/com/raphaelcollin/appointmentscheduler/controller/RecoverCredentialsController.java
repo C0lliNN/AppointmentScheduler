@@ -75,7 +75,7 @@ public class RecoverCredentialsController implements Initializable {
         buttonHBox.setSpacing(30);
         AnchorPane.setBottomAnchor(buttonHBox, 25.0);
 
-        recoverButton.getStyleClass().add(STYLE_CLASS_GREEN_BUTTON);
+        recoverButton.getStyleClass().add(STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
         recoverButton.setFont(Font.font(20));
 
         skipButton.getStyleClass().add(STYLE_CLASS_ORANGE_BUTTON);

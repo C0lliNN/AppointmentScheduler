@@ -29,6 +29,7 @@ mainClassName = "${mainClass}"
 
 dependencies {
     implementation 'com.jfoenix:jfoenix:8.0.9'
+    implementation 'com.panemu:tiwulfx:2.0'
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'

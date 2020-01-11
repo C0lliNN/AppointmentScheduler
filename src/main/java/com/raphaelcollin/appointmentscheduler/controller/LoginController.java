@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
         AnchorPane.setBottomAnchor(buttonHBox, 30.0);
 
         enterButton.setFont(Font.font(22));
-        enterButton.getStyleClass().add(Main.STYLE_CLASS_GREEN_BUTTON);
+        enterButton.getStyleClass().add(Main.STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
 
         recoverCredentialsLabel.setId(ID_RECOVER_CREDENTIALS_LABEL);
     }

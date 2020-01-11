@@ -103,7 +103,7 @@ public class AccessControlController implements Initializable {
 
         AnchorPane.setBottomAnchor(buttonsHBox, 35.0);
 
-        saveButton.getStyleClass().add(Main.STYLE_CLASS_GREEN_BUTTON);
+        saveButton.getStyleClass().add(Main.STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
         skipButton.getStyleClass().add(STYLE_CLASS_ORANGE_BUTTON);
     }
 

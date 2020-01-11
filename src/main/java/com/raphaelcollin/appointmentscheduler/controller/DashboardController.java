@@ -2,6 +2,7 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
+import com.raphaelcollin.appointmentscheduler.db.Datasource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -110,6 +111,10 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (Datasource.APPOINTMENTS_CHANGE.equals(evt.getPropertyName())) {
+            // Update Dashboard
+        }
 
+        // Creating Appointment Content View
     }
 }

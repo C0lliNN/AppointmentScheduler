@@ -62,6 +62,7 @@ public class Main extends Application {
     public static final String RECOVER_CREDENTIALS_LOCATION = "/recover_credentials.fxml";
     public static final String LOCATION_APPLICATION_ICON_TITLE_BAR = "/title-bar-icon.png";
     public static final String LOCATION_DASHBOARD_CONTENT = "/dashboard_content.fxml";
+    public static final String LOCATION_APPOINTMENT_CONTENT = "/appointment_content.fxml";
 
     // Bundle Keys
 
@@ -88,7 +89,7 @@ public class Main extends Application {
 
     // Classes and Ids
 
-    public static final String STYLE_CLASS_GREEN_BUTTON = "green-button";
+    public static final String STYLE_CLASS_CONFIGURATION_GREEN_BUTTON = "green-button";
     public static final String STYLE_CLASS_CONFIGURATION_SUBTITLE = "configuration-subtitle";
     public static final String STYLE_CLASS_ORANGE_BUTTON = "orange-button";
     public static final String STYLE_CLASS_CLOSE_ICON = "close-icon";
@@ -103,12 +104,18 @@ public class Main extends Application {
     public static final String STYLE_CLASS_DASHBOARD_UPCOMING_BOX = "dashboard-tab-upcoming-box";
     public static final String STYLE_CLASS_DASHBOARD_COMPLETED_BOX = "dashboard-tab-completed-box";
     public static final String STYLE_CLASS_DASHBOARD_EARNINGS_BOX = "dashboard-tab-earnings-box";
+    public static final String STYLE_CLASS_BLUE_CHECK_BOX = "blue-check-box";
+    public static final String STYLE_CLASS_BLUE_BUTTON = "blue-button";
+    public static final String STYLE_CLASS_MAIN_VIEW_GREEN_BUTTON = "green-button";
+    public static final String STYLE_CLASS_MAIN_VIEW_ORANGE_BUTTON = "orange-button";
+    public static final String STYLE_CLASS_RED_BUTTON = "red-button";
+    public static final String STYLE_CLASS_APPOINTMENT_TAB = "appointment-tab";
 
 
     // Class Constants
 
     private static final String BUNDLE_BASE_NAME = "language";
-    private static final String DEFAULT_LANGUAGE = "en";
+    public static final String DEFAULT_LANGUAGE = "en";
     private static final String LOCATION_STAGE_ICON = "/stage_icon.png";
 
     private static ResourceBundle resources;

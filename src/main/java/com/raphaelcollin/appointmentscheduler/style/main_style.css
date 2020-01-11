@@ -1,3 +1,17 @@
+*{
+    -theme-color1: #085394;
+    -theme-color2: #084889;
+    -theme-color3: #32a852;
+    -theme-color4: #e32a05;
+    -theme-color5: #07de41;
+    -theme-color6: #025c99;
+    -theme-color7: #d42b05;
+    -theme-color8: #329B4D;
+    -theme-color9: #07CE40;
+    -theme-color10: #eeaa06;
+    -theme-color11: #e39f06;
+    -theme-background: #f4f4f4;
+}
 
 .root {
     -fx-background-color: #053259;
@@ -49,7 +63,7 @@
 }
 
 .tab-pane .tab-header-background {
-    -fx-background-color: #085394;
+    -fx-background-color: -theme-color1;
 }
 
 .tab{
@@ -64,29 +78,29 @@
 
 .tab:hover {
     -fx-cursor: hand;
-    -fx-background-color: #084688;
+    -fx-background-color: -theme-color2;
 }
 
 .tab-icon {
     -glyph-size: 25px;
-    -fx-text-fill: #f4f4f4;
-    -fx-fill: #f4f4f4
+    -fx-text-fill: -theme-background;
+    -fx-fill: -theme-background;
 }
 
 .tab:selected {
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: -theme-background;
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: #f4f4f4;
+    -fx-border-color: -theme-background;
     -fx-cursor: default;
 }
 
 .tab:selected .tab-pane-label {
-    -fx-text-fill: #085394;
+    -fx-text-fill: -theme-color1;
 }
 
 .tab:selected .tab-icon {
-    -fx-text-fill: #085394;
-    -fx-fill: #085394
+    -fx-text-fill: -theme-color1;
+    -fx-fill: -theme-color1;
 }
 
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
@@ -94,59 +108,176 @@
 }
 
 .tab-pane-label {
-    -fx-text-fill: #f4f4f4;
+    -fx-text-fill: -theme-background;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-indent: 20px;
 }
 
 .tab-content-area {
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: -theme-background;
 }
 
 .dashboard-tab-upcoming-box {
-    -fx-border-width: 0 1 1 0; -fx-border-color: #085394;
+    -fx-border-width: 0 1 1 0; -fx-border-color: -theme-color1;
 }
 
 .dashboard-tab-upcoming-box .value-label{
-    -fx-text-fill: #025c99;
+    -fx-text-fill: -theme-color6;
 }
 
 .dashboard-tab-upcoming-box .jfx-button {
-    -fx-background-color: #025c99;
+    -fx-background-color: -theme-color6;
     -fx-text-fill: white;
 }
 
+.dashboard-tab-upcoming-box .jfx-button:hover {
+    -fx-background-color: -theme-color2;
+}
+
+
 .dashboard-tab-unconfirmed-box .value-label{
-    -fx-text-fill: #e32a05;
+    -fx-text-fill: -theme-color4;
 }
 
 .dashboard-tab-unconfirmed-box .jfx-button{
-    -fx-background-color: #e32a05;
+    -fx-background-color: -theme-color4;
     -fx-text-fill: white;
+}
+
+.dashboard-tab-unconfirmed-box .jfx-button:hover {
+    -fx-background-color: -theme-color7;
 }
 
 .dashboard-tab-unconfirmed-box .jfx-progress-bar > .bar {
-    -fx-background-color: #e32a05;
+    -fx-background-color: -theme-color4;
 }
 
 .dashboard-tab-completed-box .value-label{
-    -fx-text-fill: #32a852
+    -fx-text-fill: -theme-color3;
 }
 .dashboard-tab-completed-box .jfx-button{
-    -fx-background-color: #32a852;
+    -fx-background-color: -theme-color3;
     -fx-text-fill: white;
+}
+
+.dashboard-tab-completed-box .jfx-button:hover {
+    -fx-background-color: -theme-color8;
 }
 
 .dashboard-tab-earnings-box {
-    -fx-border-width: 1 0 0 1; -fx-border-color: #085394;
+    -fx-border-width: 1 0 0 1;
+    -fx-border-color: -theme-color1;
 }
 
 .dashboard-tab-earnings-box .value-label{
-    -fx-text-fill: #07de41;
+    -fx-text-fill: -theme-color5;
 }
 
 .dashboard-tab-earnings-box .jfx-button{
-    -fx-background-color: #07de41;
+    -fx-background-color: -theme-color5;
     -fx-text-fill: white;
 }
+
+.dashboard-tab-earnings-box .jfx-button:hover {
+    -fx-background-color: -theme-color9;
+}
+
+.appointment-tab .jfx-button{
+    -fx-text-fill: white;
+}
+
+.appointment-tab .jfx-text-field {
+    -fx-prompt-text-fill: rgba(0,0,0,0.3);
+    -fx-text-fill: #303030;
+}
+
+.appointment-tab .jfx-combo-box .list-cell{
+    -fx-font-size: 15px;
+}
+
+.appointment-tab .jfx-combo-box .combo-box-popup .list-cell:hover {
+    -fx-background-color: #f9f9f9;
+    -fx-text-fill: black;
+}
+
+.appointment-tab .jfx-combo-box .combo-box-popup .list-cell:selected {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: black;
+}
+
+.appointment-tab .jfx-combo-box:hover, .appointment-tab .jfx-combo-box .list-cell:hover {
+    -fx-cursor: hand;
+}
+
+.blue-check-box {
+    -jfx-checked-color: -theme-color1;
+}
+
+.blue-check-box:hover {
+    -fx-cursor: hand;
+}
+
+.blue-button {
+    -fx-background-color: -theme-color1;
+}
+
+.blue-button:hover {
+    -fx-background-color: -theme-color2;
+}
+
+.green-button {
+    -fx-background-color: -theme-color3;
+}
+
+.green-button:hover {
+    -fx-background-color: -theme-color8;
+}
+
+.orange-button {
+    -fx-background-color: -theme-color10;
+}
+
+.orange-button:hover {
+    -fx-background-color: -theme-color11;
+}
+
+.red-button {
+    -fx-background-color: -theme-color4;
+}
+
+.red-button:hover {
+    -fx-background-color: -theme-color7;
+}
+
+.tree-table-view .column-header {
+    -fx-border-width: 0 1.5 0 0;
+    -fx-border-color: #aeaeae;
+    -fx-font-size: 15px;
+}
+
+.tree-table-view .column-header .label {
+    -fx-text-fill: #828282;
+}
+
+.tree-table-view .tree-table-cell {
+    -fx-border-width: 0 0 0 0;
+    -fx-alignment: center;
+}
+
+
+
+.tree-table-view:focused .tree-table-row-cell:selected, .tree-table-view:focused .tree-table-row-cell:visited {
+    -fx-background-color: rgba(82, 100, 174, 0.4);
+    -fx-cursor: default;
+}
+
+.tree-table-row-cell {
+    -fx-font-size: 14px;
+}
+
+.tree-table-row-cell:filled:hover {
+    -fx-background-color: #eeeeee;
+    -fx-cursor: hand;
+}
+

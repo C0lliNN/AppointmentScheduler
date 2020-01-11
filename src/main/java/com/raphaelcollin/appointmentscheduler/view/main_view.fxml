@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <AnchorPane fx:controller="com.raphaelcollin.appointmentscheduler.controller.MainController" fx:id="root"
-            onMousePressed="#handleMousePressed" onMouseDragged="#handleMouseDragged" stylesheets="@com/raphaelcollin/appointmentscheduler/style/main_style.css" xmlns:fx="http://javafx.com/fxml/1">
+            onMousePressed="#handleMousePressed" onMouseDragged="#handleMouseDragged" stylesheets="@main_style.css" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
       <HBox alignment="CENTER" AnchorPane.bottomAnchor="808" AnchorPane.leftAnchor="12.0">

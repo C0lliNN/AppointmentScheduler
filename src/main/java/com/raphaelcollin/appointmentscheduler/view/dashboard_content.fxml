@@ -7,35 +7,35 @@
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.DashboardController">
    <VBox fx:id="vBoxUpcomingAppointments" alignment="TOP_CENTER">
 
-      <Label text="Upcoming Appointments"/>
+      <Label text="%tab_dashboard_upcoming"/>
       <Label text="14"/>
 
-      <JFXButton buttonType="RAISED" text="Show"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
 
    </VBox>
    <VBox fx:id="vBoxUnconfirmedAppointments" alignment="TOP_CENTER">
 
-      <Label text="Unconfirmed Appointments"/>
+      <Label text="%tab_dashboard_unconfirmed"/>
       <Label text="4/14"/>
 
       <JFXProgressBar fx:id="unconfirmedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="Show"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
    </VBox>
    <VBox fx:id="vBoxCompletedAppointments" alignment="TOP_CENTER">
 
-      <Label text="Completed Appointments"/>
+      <Label text="%tab_dashboard_completed"/>
       <Label text="8/14"/>
 
       <JFXProgressBar fx:id="completedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="Show"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
    </VBox>
    <VBox fx:id="vBoxEarnings" alignment="TOP_CENTER">
 
-      <Label alignment="CENTER" text="Earnings"/>
+      <Label alignment="CENTER" text="%tab_dashboard_earnings"/>
       <HBox alignment="CENTER">
          <Label text="%currency_symbol"/>
          <Label text="250"/>
       </HBox>
-      <JFXButton buttonType="RAISED" text="Show"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
    </VBox>
 </AnchorPane>
