@@ -107,6 +107,8 @@ public class DashboardController implements Initializable, PropertyChangeListene
         unconfirmedAppointmentsProgressBar.setMaxSize(progressBarWidth, progressBarHeight);
 
         unconfirmedAppointmentsProgressBar.setProgress(0.4);
+
+        Datasource.getInstance().addObserver(this);
     }
 
     @Override

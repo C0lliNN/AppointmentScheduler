@@ -36,6 +36,7 @@ public class Main extends Application {
     private static Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
     private static Preferences preferences = Preferences.userNodeForPackage(Main.class);
     private static Connection connection;
+    private static DatabaseCredentials dbCredentials;
 
     // Preferences Key
 
@@ -150,7 +151,9 @@ public class Main extends Application {
             String dbUser = preferences.get(PREFERENCES_KEY_DB_USER, null);
             String dbPassword = preferences.get(PREFERENCES_KEY_DB_PASSWORD, null);
 
-            connection = ConnectionFactory.getConnection(dbIp, dbPort, dbUser, dbPassword);
+            dbCredentials = new DatabaseCredentials(dbIp, dbPort, dbUser, dbPassword);
+
+            connection = ConnectionFactory.getConnection(dbCredentials);
 
             if (connection == null) {
 

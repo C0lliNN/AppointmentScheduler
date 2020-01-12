@@ -19,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +30,7 @@ import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
-public class AppointmentController implements Initializable {
+public class AppointmentController implements Initializable, PropertyChangeListener {
 
     @FXML
     private TreeTableColumn<Appointment, String> scheduleColumn;
@@ -209,8 +211,12 @@ public class AppointmentController implements Initializable {
         appointmentsTableView.setRoot(item);
         appointmentsTableView.setShowRoot(false);
 
-        // Style TreeView, Create Wireframe for Appointments, Create Datamodel and DAOs
+        // Create Datamodel and DAOs
 
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
 
     }
 

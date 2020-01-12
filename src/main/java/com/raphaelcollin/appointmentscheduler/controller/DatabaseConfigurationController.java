@@ -3,6 +3,7 @@ package com.raphaelcollin.appointmentscheduler.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.raphaelcollin.appointmentscheduler.DatabaseCredentials;
 import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.concurrent.Task;
@@ -155,6 +156,7 @@ public class DatabaseConfigurationController implements Initializable {
     }
 
     public Connection testConnection(String ipAddress, String port, String user, String password) {
-        return ConnectionFactory.getConnection(ipAddress, port, user, password);
+        DatabaseCredentials credentials = new DatabaseCredentials(ipAddress, port, user, password);
+        return ConnectionFactory.getConnection(credentials);
     }
 }

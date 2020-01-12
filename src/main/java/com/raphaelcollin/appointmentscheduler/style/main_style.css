@@ -272,12 +272,16 @@
     -fx-cursor: default;
 }
 
+.tree-table-row-cell:filled:even {
+    -fx-background-color: #f3f3f3;
+}
+
 .tree-table-row-cell {
     -fx-font-size: 14px;
 }
 
 .tree-table-row-cell:filled:hover {
-    -fx-background-color: #eeeeee;
+    -fx-background-color: #cdcdcd;
     -fx-cursor: hand;
 }
 
