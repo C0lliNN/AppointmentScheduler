@@ -3,6 +3,7 @@ package com.raphaelcollin.appointmentscheduler.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.raphaelcollin.appointmentscheduler.ApplicationPreferences;
 import com.raphaelcollin.appointmentscheduler.DatabaseCredentials;
 import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
@@ -17,12 +18,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
 
+import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.PREFERENCES_KEY_ACCESS_CONTROL;
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class DatabaseConfigurationController implements Initializable {
@@ -54,8 +57,8 @@ public class DatabaseConfigurationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        double width = Main.getScreenWidth() * 0.3125;
-        double height = Main.getScreenWidth() * 0.3125 * 0.85; // Maintain the aspect radio
+        double width = 600;
+        double height = 510;
 
         root.setPrefSize(width, height);
         root.setMinSize(width, height);
@@ -139,6 +142,13 @@ public class DatabaseConfigurationController implements Initializable {
 
                     DatabaseCredentials.saveCredentials(ipAddress, port, user, password);
 
+                    boolean accessControlDefined = ApplicationPreferences.getInstance().getPreferences().getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
+
+                    if (accessControlDefined) {
+                        ((Stage) root.getScene().getWindow()).close();
+                        Main.createMainViewStage();
+                    }
+
                     AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
                     AnchorPane inRoot = null;
 
@@ -163,5 +173,20 @@ public class DatabaseConfigurationController implements Initializable {
     public Connection testConnection(String ipAddress, String port, String user, String password) {
         DatabaseCredentials credentials = new DatabaseCredentials(ipAddress, port, user, password);
         return ConnectionFactory.getConnection(credentials);
+    }
+
+    public void setupFields(String ipAddress, String port, String user, String password) {
+
+        welcomeLabel.setText(getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_LABEL));
+
+        ((JFXTextField) inputGridPane.getChildren().get(1)).setText(ipAddress);
+        ((JFXTextField) inputGridPane.getChildren().get(3)).setText(port);
+        ((JFXTextField) inputGridPane.getChildren().get(5)).setText(user);
+        ((JFXPasswordField) inputGridPane.getChildren().get(7)).setText(password);
+
+        showAlert(Alert.AlertType.ERROR, root,
+                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT2));
     }
 }

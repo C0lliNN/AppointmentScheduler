@@ -1,63 +1,30 @@
-.root {
-    -fx-background-color: #085394;
-}
-
-#title-bar {
-    -fx-background-color: rgba(255,255,255,0.75);
-}
-
-.button:hover {
-    -fx-cursor: hand;
-}
-
-.title-button {
-    -fx-background-color: transparent;
-    -jfx-disable-visual-focus: true;
-    -fx-padding: 4;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
-}
-
-.title-button:hover {
-    -fx-background-color: rgba(255,255,255,0.4);
-    -fx-cursor: hand;
-}
-
-.close-icon {
-    -glyph-size: 30px;
-    -fx-text-fill: red;
-    -fx-fill: red;
-}
-
-.minimize-icon {
-    -glyph-size: 30px;
-    -fx-text-fill: #303030;
-    -fx-fill: #303030;
+.root, .content {
+    -fx-background-color: #f4f4f4;
 }
 
 .label {
-    -fx-font-family: "Comic Sans MS";
-    -fx-text-fill: white;
+    -fx-font-family: "Verdana";
+    -fx-text-fill: #303030;
 }
 
 .configuration-subtitle {
-    -fx-text-fill: #c7c7c7;
+    -fx-text-fill: #414141;
 }
 
 .jfx-text-field, .jfx-password-field {
     -fx-font-family: Arial;
-    -jfx-focus-color: white;
-    -jfx-unfocus-color: #b5b5b5;
-    -fx-prompt-text-fill: rgba(230, 230, 230, 0.4);
-    -fx-font-size: 1.5em;
-    -fx-text-fill: #e3e3e3;
+    -jfx-focus-color: #a2a2a2;
+    -jfx-unfocus-color: #848484;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
+    -fx-font-size: 1.7em;
+    -fx-text-fill: #575757;
 }
 
 #label-credentials {
     -fx-font-family: Arial;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-text-fill: #c8dfe0;
+    -fx-text-fill: #3d8718;
 }
 
 #label-credentials:hover {

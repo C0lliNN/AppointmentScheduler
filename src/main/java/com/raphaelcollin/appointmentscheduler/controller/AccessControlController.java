@@ -57,8 +57,8 @@ public class AccessControlController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
-        double width = Main.getScreenWidth() * 0.3125;
-        double height = Main.getScreenWidth() * 0.3125 * 0.85; // Maintain the aspect radio
+        double width = 600;
+        double height = 510;
 
         root.setPrefSize(width, height);
         root.setMinSize(width, height);

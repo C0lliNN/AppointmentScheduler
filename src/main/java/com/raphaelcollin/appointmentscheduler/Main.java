@@ -1,8 +1,8 @@
 
 package com.raphaelcollin.appointmentscheduler;
 
-import com.raphaelcollin.appointmentscheduler.controller.ContainerConfigurationController;
-import com.raphaelcollin.appointmentscheduler.controller.MainController;
+import com.raphaelcollin.appointmentscheduler.controller.ContainerController;
+import com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -10,23 +10,19 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
@@ -34,7 +30,6 @@ public class Main extends Application {
 
     // Global attributes
 
-    private static Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
     private static Connection connection;
     private static ResourceBundle resources;
 
@@ -50,6 +45,7 @@ public class Main extends Application {
     public static final String APPLICATION_ICON_TITLE_BAR_LOCATION = "/title-bar-icon.png";
     public static final String DASHBOARD_CONTENT_LOCATION = "/dashboard_content.fxml";
     public static final String APPOINTMENT_CONTENT_LOCATION = "/appointment_content.fxml";
+    private static final String CONTAINER_LOCATION = "/container.fxml";
 
     // Bundle Keys
 
@@ -101,7 +97,6 @@ public class Main extends Application {
     public static final String STYLE_CLASS_APPOINTMENT_TAB = "appointment-tab";
     public static final String STYLE_CLASS_TAB_PANE_LABEL = "tab-pane-label";
 
-
     // Class Constants
 
     private static final String BUNDLE_BASE_NAME = "language";
@@ -110,11 +105,25 @@ public class Main extends Application {
     public static int TRANSITION_FROM_LEFT = 1;
     public static int TRANSITION_FROM_RIGHT = 2;
 
+    // Appointment Status Constants
+
+    public static final String UNCONFIRMED = "Unconfirmed";
+    public static final String COMPLETED = "Completed";
+    public static final String CANCELED = "Canceled";
+    public static final String CONFIRMED = "Confirmed";
+
+    public static Map<Integer, String> statusMap;
+
     @Override
     public void init() throws Exception {
         //ApplicationPreferences.getInstance().getPreferences().clear();
-        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
+        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, true);
         super.init();
+        statusMap = new HashMap<>(4);
+        statusMap.put(1, UNCONFIRMED);
+        statusMap.put(2, COMPLETED);
+        statusMap.put(3, CANCELED);
+        statusMap.put(4, CONFIRMED);
     }
 
     @Override
@@ -129,7 +138,9 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setResources(resources);
-        Parent root = null;
+        Parent childRoot = null;
+        double rootWidth = 600;
+        double rootHeight = 550;
 
         if (databaseConfigured) {
 
@@ -139,33 +150,39 @@ public class Main extends Application {
 
             if (connection == null) {
 
-                loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
-                root = loader.load();
-                ContainerConfigurationController dbController = loader.getController();
+                loader.setLocation(getClass().getResource(DATABASE_CONFIGURATION_LOCATION));
+                childRoot = loader.load();
+                DatabaseConfigurationController dbController = loader.getController();
                 dbController.setupFields(dbCredentials.getIp(), dbCredentials.getPort(), dbCredentials.getUser(),
                         dbCredentials.getPassword());
+
             } else {
 
                 boolean loginRequired = ApplicationPreferences.getInstance().getPreferences().getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
 
                 if (loginRequired) {
-                    loader.setLocation(getClass().getResource(CONTAINER_LOGIN_LOCATION));
+                    loader.setLocation(getClass().getResource(LOGIN_LOCATION));
+                    rootWidth = 600;
+                    rootHeight = 400;
                 } else {
                     loader.setLocation(getClass().getResource(MAIN_VIEW_LOCATION));
-                    root = loader.load();
-                    MainController mainController = loader.getController();
+                    childRoot = loader.load();
+                    rootWidth = 1208;
+                    rootHeight = 845;
                 }
             }
 
         } else {
-            loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
+            loader.setLocation(getClass().getResource(DATABASE_CONFIGURATION_LOCATION));
         }
 
-        if (root == null) {
-            root = loader.load();
+        if (childRoot == null) {
+            childRoot = loader.load();
         }
 
-        stage.setScene(new Scene(root));
+        Parent containerRoot = createView(rootWidth, rootHeight, childRoot);
+
+        stage.setScene(new Scene(containerRoot));
         stage.getIcons().add(new Image(getClass().getResourceAsStream(LOCATION_STAGE_ICON)));
         stage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);
@@ -178,10 +195,6 @@ public class Main extends Application {
     }
 
     // Helper Methods
-
-    public static double getScreenWidth() {
-        return screenSize.getWidth();
-    }
 
 
     public static void switchScenes(AnchorPane containerRoot, Parent outRoot, Parent inRoot, int option) {
@@ -202,6 +215,8 @@ public class Main extends Application {
 
         containerRoot.getChildren().add(inRoot);
         AnchorPane.setTopAnchor(inRoot, 40.0);
+        AnchorPane.setLeftAnchor(inRoot, 4.0);
+        AnchorPane.setRightAnchor(inRoot, 4.0);
 
         KeyValue keyValue1 = new KeyValue(inRoot.translateXProperty(), 0.0, Interpolator.EASE_IN);
         KeyValue keyValue2 = new KeyValue(outRoot.translateXProperty(), translateXOutRoot);
@@ -215,24 +230,23 @@ public class Main extends Application {
 
     public static void createMainViewStage() {
 
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
-        Parent dashboardRoot = null;
         try {
-            dashboardRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
+            Parent mainViewRoot = loader.load();
+
+            Parent root = createView(1208, 845, mainViewRoot);
+
+            Stage newStage = new Stage();
+            newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
+            newStage.setScene(new Scene(root));
+            newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
+            newStage.initStyle(StageStyle.TRANSPARENT);
+            newStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        assert dashboardRoot != null;
-
-        MainController mainController = loader.getController();
-
-        Stage newStage = new Stage();
-        newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
-        newStage.setScene(new Scene(dashboardRoot));
-        newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
-        newStage.initStyle(StageStyle.TRANSPARENT);
-        newStage.show();
     }
 
     public static Optional<ButtonType> showAlert(Alert.AlertType alertType, Parent root, String title, String headerText,
@@ -249,6 +263,22 @@ public class Main extends Application {
         alert.setContentText(contentText);
 
         return alert.showAndWait();
+    }
+
+    public static AnchorPane createView(double width, double height, Parent childRoot) {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(CONTAINER_LOCATION), resources);
+        AnchorPane root = null;
+        try {
+            root = loader.load();
+            ContainerController containerController = loader.getController();
+            containerController.setSize(width, height);
+            containerController.addChild(childRoot);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return root;
     }
 
     public static ResourceBundle getResources() {

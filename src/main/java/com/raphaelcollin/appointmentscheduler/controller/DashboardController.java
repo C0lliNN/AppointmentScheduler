@@ -3,6 +3,8 @@ package com.raphaelcollin.appointmentscheduler.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
+import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,19 +23,32 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.APPOINTMENTS_CHANGE;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
 
 public class DashboardController implements Initializable, PropertyChangeListener {
 
     @FXML
     private AnchorPane root;
     @FXML
-    private VBox vBoxEarnings;
+    private VBox vBoxUpcomingAppointments;
     @FXML
-    private VBox vBoxCompletedAppointments;
+    private Label upcomingAppointmentsLabel;
     @FXML
     private VBox vBoxUnconfirmedAppointments;
     @FXML
-    private VBox vBoxUpcomingAppointments;
+    private Label unconfirmedAppointmentsLabel;
+    @FXML
+    private VBox vBoxCompletedAppointments;
+    @FXML
+    private Label completedAppointmentsLabel;
+    @FXML
+    private VBox vBoxEarnings;
+    @FXML
+    private Label earningsLabel;
+
+
+
     @FXML
     private JFXProgressBar completedAppointmentsProgressBar;
     @FXML
@@ -113,8 +128,44 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (DataSource.APPOINTMENTS_CHANGE.equals(evt.getPropertyName())) {
-            // Update Dashboard
+        if (evt.getPropertyName().equals(APPOINTMENTS_CHANGE) ||  evt.getPropertyName().equals(INITIAL_DATA_LOADED)) {
+
+            int numberOfAppointments = 0;
+            int numberOfUnconfirmedAppointments = 0;
+            int numberOfCompletedAppointments = 0;
+            double earnings = 0;
+
+            for (Appointment appointment : DataSource.getInstance().getAppointments()) {
+
+                if (appointment.getStatus().equals(UNCONFIRMED)) {
+                    numberOfUnconfirmedAppointments++;
+                }
+                if (appointment.getStatus().equals(COMPLETED)) {
+                    numberOfCompletedAppointments++;
+                }
+
+                earnings += appointment.getPrice();
+
+                numberOfAppointments++;
+            }
+
+            int tempTotalAppointments = numberOfAppointments;
+            int tempTotalUnconfirmedAppointments = numberOfUnconfirmedAppointments;
+            int tempTotalCompletedAppointments = numberOfCompletedAppointments;
+            double tempEarnings = earnings;
+
+            Platform.runLater(() -> {
+
+                upcomingAppointmentsLabel.setText(tempTotalAppointments + "");
+                unconfirmedAppointmentsLabel.setText(tempTotalUnconfirmedAppointments + "/" + tempTotalAppointments);
+                unconfirmedAppointmentsProgressBar.setProgress((double) tempTotalUnconfirmedAppointments / (double) tempTotalAppointments);
+
+                completedAppointmentsLabel.setText(tempTotalCompletedAppointments + "/" + tempTotalAppointments);
+                completedAppointmentsProgressBar.setProgress((double) tempTotalCompletedAppointments / (double) tempTotalAppointments);
+
+                earningsLabel.setText(tempEarnings + "");
+            });
+
         }
 
         // Creating Appointment Content View

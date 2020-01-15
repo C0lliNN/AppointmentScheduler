@@ -51,7 +51,7 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         double width = 600;
-        double height = 350;
+        double height = 355;
 
         root.setPrefSize(width,height);
         root.setMinSize(width,height);

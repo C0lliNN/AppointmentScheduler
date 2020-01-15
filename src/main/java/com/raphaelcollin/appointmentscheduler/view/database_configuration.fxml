@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" styleClass="content" stylesheets="@configuration_login.css"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController">
 
    <Label fx:id="welcomeLabel" alignment="CENTER" text="%database_configuration_welcomeMessage" AnchorPane.leftAnchor="0.0"

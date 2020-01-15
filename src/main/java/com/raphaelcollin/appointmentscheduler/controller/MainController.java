@@ -1,6 +1,5 @@
 package com.raphaelcollin.appointmentscheduler.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSpinner;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -14,14 +13,10 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,66 +28,23 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
-    private ImageView imageView;
-    @FXML
     private TabPane tabPane;
-    @FXML
-    private Label applicationTitleLabel;
-    @FXML
-    private JFXButton minimizeButton;
-    @FXML
-    private JFXButton closeButton;
 
-    private double xOffset;
-    private double yOffSet;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Title Bar, Wireframes
-
-        double width = 1208;
-        double height = 845;
-
-        root.setPrefSize(width, height);
-        root.setMinSize(width, height);
-        root.setMaxSize(width, height);
-
-        imageView.setImage(new Image(getClass().getResourceAsStream(APPLICATION_ICON_TITLE_BAR_LOCATION)));
-        imageView.setFitWidth(30);
-        imageView.setFitHeight(30);
-
-        applicationTitleLabel.setFont(Font.font(20));
-        applicationTitleLabel.setId(ID_APPLICATION_TITLE_LABEL);
-
-        FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
-        closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
-
-        closeButton.setGraphic(closeIcon);
-        closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
-
-        FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
-        minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
-
-        minimizeButton.setGraphic(minimizeIcon);
-        minimizeButton.setContentDisplay(ContentDisplay.CENTER);
-        minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
-
-        double tabPaneWidth = 224;
-        double tabPaneHeight = 800;
+        double tabPaneWidth = 1200;
+        double tabPaneHeight = 801;
 
         tabPane.setPrefSize(tabPaneWidth, tabPaneHeight);
         tabPane.setMinSize(tabPaneWidth, tabPaneHeight);
         tabPane.setMaxSize(tabPaneWidth, tabPaneHeight);
-        
 
         tabPane.setTabMinWidth(50);
         tabPane.setTabMaxWidth(50);
         tabPane.setTabMinHeight(200);
         tabPane.setTabMaxHeight(200);
-
-        AnchorPane.setTopAnchor(tabPane, 40.0);
-        AnchorPane.setLeftAnchor(tabPane, 4.0);
 
         try {
 
@@ -172,15 +124,14 @@ public class MainController implements Initializable {
             box.getChildren().setAll(label, spinner);
             root.getChildren().add(box);
 
-            AnchorPane.setTopAnchor(box, 40.0);
-            AnchorPane.setRightAnchor(box, 4.0);
+            AnchorPane.setLeftAnchor(box, 200.0);
 
             Task<Void> loadInitialDataTask = new Task<Void>() {
                 @Override
                 protected Void call() {
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -201,7 +152,7 @@ public class MainController implements Initializable {
 
             new Thread(loadInitialDataTask).start();
 
-            // DataSource Class, Appointment Filtering/ Ordering, Dashboard,
+            // Appointment Filtering/ Ordering, Dashboard,
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,27 +168,4 @@ public class MainController implements Initializable {
         return new StackPane(new Group(label));
     }
 
-    @FXML
-    private void handleMinimizeWindow() {
-        ((Stage) root.getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void handleCloseWindow() {
-        ((Stage) root.getScene().getWindow()).close();
-    }
-
-    @FXML
-    private void handleMousePressed(MouseEvent mouseEvent) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        xOffset = stage.getX() - mouseEvent.getScreenX();
-        yOffSet = stage.getY() - mouseEvent.getScreenY();
-    }
-
-    @FXML
-    private void handleMouseDragged(MouseEvent mouseEvent) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setX(mouseEvent.getScreenX() + xOffset);
-        stage.setY(mouseEvent.getScreenY() + yOffSet);
-    }
 }

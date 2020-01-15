@@ -10,7 +10,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raphaelcollin.appointmentscheduler.controller.LoginController">
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raphaelcollin.appointmentscheduler.controller.LoginController"
+            stylesheets="@configuration_login.css" styleClass="content">
 
     <Label fx:id="loginLabel" alignment="CENTER" text="Login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 

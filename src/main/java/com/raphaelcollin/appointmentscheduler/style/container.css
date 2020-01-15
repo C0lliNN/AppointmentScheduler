@@ -1,0 +1,38 @@
+
+#container-root {
+    -fx-background-color: #053259;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+#application-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.title-button {
+    -fx-background-color: transparent;
+    -jfx-disable-visual-focus: true;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.title-button:hover {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-cursor: hand;
+}
+
+.close-icon {
+    -glyph-size: 30px;
+    -fx-text-fill: red;
+    -fx-fill: red;
+}
+
+.minimize-icon {
+    -glyph-size: 30px;
+    -fx-text-fill: #f0f0f0;
+    -fx-fill: #f0f0f0;
+}

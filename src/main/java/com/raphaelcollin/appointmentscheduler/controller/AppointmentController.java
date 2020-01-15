@@ -9,6 +9,7 @@ import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -159,6 +160,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
         DataSource.getInstance().addObserver(this);
 
+
     }
 
     @Override
@@ -167,16 +169,50 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         if (evt.getPropertyName().equals(INITIAL_DATA_LOADED) || evt.getPropertyName().equals(APPOINTMENTS_CHANGE)) {
 
             ObservableList<Appointment> appointments = DataSource.getInstance().getAppointments();
-            final TreeItem<Appointment> item = new TreeItem<>();
+
+            ObservableList<TreeItem<Appointment>> items = FXCollections.observableArrayList();
 
             for (Appointment appointment : appointments) {
-                final TreeItem<Appointment> subItem = new TreeItem<>(appointment);
-                item.getChildren().add(subItem);
+                items.add(new TreeItem<>(appointment));
             }
 
-            Platform.runLater(() -> appointmentsTableView.setRoot(item));
-        }
+            FilteredList<TreeItem<Appointment>> filteredList = new FilteredList<>(items);
+            filteredList.setPredicate(treeItem -> {
 
+                boolean show = true;
+
+                if (dateField.isEditable() && dateField.getValue().equals(treeItem.getValue().getDate().toLocalDate())) {
+                    show = false;
+                }
+
+                if (show && !doctorField.getText().trim().isEmpty() &&
+                        !treeItem.getValue().getDoctor().getName().contains(doctorField.getText())) {
+                    show = false;
+                }
+
+                if (show && !patientField.getText().trim().isEmpty() &&
+                        !treeItem.getValue().getPatient().getName().contains(patientField.getText())) {
+                    show = false;
+                }
+
+                if (show && statusField.getSelectionModel().getSelectedIndex() > 0 &&
+                        !statusMap.get(statusField.getSelectionModel().getSelectedIndex()).equals(treeItem.getValue().getStatus())) {
+                    show = false;
+                }
+
+                return show;
+
+            });
+
+            final RecursiveTreeItem<Appointment> item = new RecursiveTreeItem<Appointment>(appointments, RecursiveTreeItem::getTreeItem);
+            item.getChildren().setAll(filteredList);
+
+            item
+
+            Platform.runLater(() ->
+                appointmentsTableView.setRoot(item)
+            );
+        }
 
     }
 
