@@ -8,6 +8,7 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -17,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
@@ -135,14 +137,17 @@ public class DatabaseConfigurationController implements Initializable {
                             getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
                 } else {
 
-                    getPreferences().putBoolean(PREFERENCES_KEY_DB_SETUP, true);
-                    getPreferences().put(PREFERENCES_KEY_IP, ipAddress);
-                    getPreferences().put(PREFERENCES_KEY_PORT, port);
-                    getPreferences().put(PREFERENCES_KEY_DB_USER, user);
-                    getPreferences().put(PREFERENCES_KEY_DB_PASSWORD, password);
+                    DatabaseCredentials.saveCredentials(ipAddress, port, user, password);
 
                     AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
-                    AnchorPane inRoot = loadView(ACCESS_CONTROL_CONFIGURATION_LOCATION, getResources());
+                    AnchorPane inRoot = null;
+
+                    try {
+                        inRoot = FXMLLoader.load(getClass().getResource(ACCESS_CONTROL_CONFIGURATION_LOCATION), getResources());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     if (containerRoot != null && inRoot != null) {
                         switchScenes(containerRoot, root, inRoot, TRANSITION_FROM_RIGHT);
                     }

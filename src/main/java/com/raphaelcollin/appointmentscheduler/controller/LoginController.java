@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.raphaelcollin.appointmentscheduler.Main;
+import com.raphaelcollin.appointmentscheduler.UserCredentials;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -15,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -42,6 +45,7 @@ public class LoginController implements Initializable {
     private HBox buttonHBox;
     @FXML
     private JFXButton enterButton;
+    private UserCredentials credentials;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,6 +80,8 @@ public class LoginController implements Initializable {
         enterButton.getStyleClass().add(Main.STYLE_CLASS_CONFIGURATION_GREEN_BUTTON);
 
         recoverCredentialsLabel.setId(ID_RECOVER_CREDENTIALS_LABEL);
+
+        credentials = UserCredentials.getSavedCredentials();
     }
 
     @FXML
@@ -93,10 +99,7 @@ public class LoginController implements Initializable {
 
         } else {
 
-            String storedUser = getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_USER, null);
-            String storedPassword = getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD, null);
-
-            if (!storedUser.equals(enterUser) || !storedPassword.equals(enterPassword)) {
+            if (!credentials.getUser().equals(enterUser) || !credentials.getPassword().equals(enterPassword)) {
 
                 showAlert(Alert.AlertType.ERROR, root,
                         getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
@@ -108,17 +111,22 @@ public class LoginController implements Initializable {
                 Stage currentStage = (Stage) root.getScene().getWindow();
                 currentStage.close();
 
-                loadDashboardStage();
+                createMainViewStage();
 
             }
         }
     }
 
     @FXML
-    void handleRecoverCredentials() {
-        Parent recoverCredentialsRoot = loadView(RECOVER_CREDENTIALS_LOCATION, getResources());
+    void handleRecoverCredentials() throws IOException {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(RECOVER_CREDENTIALS_LOCATION), getResources());
+
+        Parent recoverCredentialsRoot = loader.load();
         assert recoverCredentialsRoot != null;
+
+        RecoverCredentialsController controller = loader.getController();
+        controller.setUserCredentials(credentials);
 
         AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
 

@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.raphaelcollin.appointmentscheduler.Main;
+import com.raphaelcollin.appointmentscheduler.UserCredentials;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -138,26 +139,23 @@ public class AccessControlController implements Initializable {
                     errorMessage);
         } else {
 
-            getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, true);
-            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_USER, user);
-            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD, password);
-            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION, securityQuestion);
-            getPreferences().put(PREFERENCES_KEY_ACCESS_CONTROL_ANSWER, answer);
 
-            loadDashboard();
+            UserCredentials.saveCredentials(user, password, securityQuestion, answer);
+
+            goToMainView();
         }
     }
 
     @FXML
     void handleSkip() {
-        loadDashboard();
+        goToMainView();
     }
 
-    private void loadDashboard() {
+    private void goToMainView(){
 
         Stage currentStage = (Stage) root.getScene().getWindow();
         currentStage.close();
 
-        loadDashboardStage();
+        createMainViewStage();
     }
 }

@@ -1,17 +1,19 @@
 package com.raphaelcollin.appointmentscheduler.db.model;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
-import static com.raphaelcollin.appointmentscheduler.Main.*;
+import static com.raphaelcollin.appointmentscheduler.Main.BUNDLE_KEY_TIME_FORMAT;
+import static com.raphaelcollin.appointmentscheduler.Main.getResources;
 
-public class Appointment extends RecursiveTreeObject<Appointment> {
-    private int idAppointment;
+public class Appointment extends RecursiveTreeObject<Appointment> implements ObservableValue<Appointment>{
+    private int id;
     private LocalDateTime date;
     private double price;
     private String description;
@@ -27,7 +29,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> {
     private SimpleStringProperty statusProperty;
 
     private Appointment(Builder builder) {
-        this.idAppointment = builder.idAppointment;
+        this.id = builder.id;
         this.date = builder.date;
         this.price = builder.price;
         this.description = builder.description;
@@ -35,17 +37,17 @@ public class Appointment extends RecursiveTreeObject<Appointment> {
         this.doctor = builder.doctor;
         this.patient = builder.patient;
 
-        String currentLanguage = getPreferences().get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE);
-        String schedule = "Error";
+        boolean dateFormat12 = Boolean.parseBoolean(getResources().getString(BUNDLE_KEY_TIME_FORMAT));
+        String schedule;
 
-        if (currentLanguage.equals(Locale.ENGLISH.getLanguage())) {
+        if (dateFormat12) {
 
             if (this.date.getHour() > 12) {
                 schedule = adjustDate(this.date.getHour() - 12) + ":" + adjustDate(this.date.getMinute()) + " PM";
             } else {
                 schedule = adjustDate(this.date.getHour()) + ":" + adjustDate(this.date.getMinute()) + " AM";
             }
-        } else if (currentLanguage.equals("pt")) {
+        } else {
             schedule = adjustDate(this.date.getHour()) + ":" + adjustDate(this.date.getMinute());
         }
 
@@ -57,6 +59,31 @@ public class Appointment extends RecursiveTreeObject<Appointment> {
         this.statusProperty = new SimpleStringProperty(this.status);
     }
 
+
+    @Override
+    public void addListener(ChangeListener<? super Appointment> listener) {
+
+    }
+
+    @Override
+    public void removeListener(ChangeListener<? super Appointment> listener) {
+
+    }
+
+    @Override
+    public Appointment getValue() {
+        return this;
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+
+    }
 
     private String adjustDate(int number) {
         if (number < 10) {
@@ -90,8 +117,66 @@ public class Appointment extends RecursiveTreeObject<Appointment> {
         return statusProperty;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+
+
     public static class Builder {
-        private int idAppointment;
+        private int id;
         private LocalDateTime date;
         private double price;
         private String description;
@@ -103,8 +188,8 @@ public class Appointment extends RecursiveTreeObject<Appointment> {
             return new Appointment(this);
         }
 
-        public Builder setIdAppointment(int idAppointment) {
-            this.idAppointment = idAppointment;
+        public Builder setId(int id) {
+            this.id = id;
             return this;
         }
 

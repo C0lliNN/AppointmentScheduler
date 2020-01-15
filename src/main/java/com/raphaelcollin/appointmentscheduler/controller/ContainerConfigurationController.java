@@ -7,6 +7,7 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
@@ -36,7 +37,7 @@ public class ContainerConfigurationController implements Initializable {
     private double yOffSet;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources){
 
 
         double width = Main.getScreenWidth() * 0.3125;
@@ -46,23 +47,29 @@ public class ContainerConfigurationController implements Initializable {
         root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        AnchorPane databaseConfigurationRoot = loadView(DATABASE_CONFIGURATION_LOCATION, resources);
+        try {
+            AnchorPane databaseConfigurationRoot = FXMLLoader.load(getClass().getResource(DATABASE_CONFIGURATION_LOCATION), resources);
 
-        root.getChildren().add(databaseConfigurationRoot);
-        AnchorPane.setTopAnchor(databaseConfigurationRoot, 40.0);
+            root.getChildren().add(databaseConfigurationRoot);
+            AnchorPane.setTopAnchor(databaseConfigurationRoot, 40.0);
 
-        FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
-        closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
+            FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
+            closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
 
-        closeButton.setGraphic(closeIcon);
-        closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
+            closeButton.setGraphic(closeIcon);
+            closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
 
-        FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
-        minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
+            FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
+            minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
 
-        minimizeButton.setGraphic(minimizeIcon);
-        minimizeButton.setContentDisplay(ContentDisplay.CENTER);
-        minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
+            minimizeButton.setGraphic(minimizeIcon);
+            minimizeButton.setContentDisplay(ContentDisplay.CENTER);
+            minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 

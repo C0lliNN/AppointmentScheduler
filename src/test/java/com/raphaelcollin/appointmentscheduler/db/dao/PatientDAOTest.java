@@ -6,7 +6,6 @@ import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -29,7 +28,7 @@ class PatientDAOTest {
     void testPatientDAO(ArgumentsAccessor accessor) {
 
         Connection connection = ConnectionFactory.getConnection(credentials);
-        DAO<Patient> dao = new PatientDAO(connection);
+        DAO<Patient> dao = DAOFactory.getPatientDAO(connection);
 
         ObservableList<Patient> patients = dao.getAll();
 
@@ -44,7 +43,7 @@ class PatientDAOTest {
                 .setEmail(accessor.getString(7))
                 .setCity(accessor.getString(8))
                 .setZipCode(accessor.getString(9))
-                .setStreetNumber(accessor.getString(10))
+                .setStreetName(accessor.getString(10))
                 .setHouseNumber(accessor.getString(11))
                 .build();
 

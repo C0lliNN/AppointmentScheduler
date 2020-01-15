@@ -12,7 +12,7 @@ public class Patient {
     private String email;
     private String city;
     private String zipCode;
-    private String streetNumber;
+    private String streetName;
     private String houseNumber;
 
     private Patient (Builder builder) {
@@ -24,7 +24,7 @@ public class Patient {
         this.phoneNumber = builder.phoneNumber;
         this.email = builder.email;
         this.zipCode = builder.zipCode;
-        this.streetNumber = builder.streetNumber;
+        this.streetName = builder.streetName;
         this.houseNumber = builder.houseNumber;
         this.city = builder.city;
     }
@@ -65,8 +65,8 @@ public class Patient {
         return zipCode;
     }
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getStreetName() {
+        return streetName;
     }
 
     public String getHouseNumber() {
@@ -113,8 +113,8 @@ public class Patient {
         this.zipCode = zipCode;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public void setHouseNumber(String houseNumber) {
@@ -131,7 +131,7 @@ public class Patient {
         private String email;
         private String city;
         private String zipCode;
-        private String streetNumber;
+        private String streetName;
         private String houseNumber;
 
         public Patient build() {
@@ -183,8 +183,8 @@ public class Patient {
             return this;
         }
 
-        public Builder setStreetNumber(String streetNumber) {
-            this.streetNumber = streetNumber;
+        public Builder setStreetName(String streetName) {
+            this.streetName = streetName;
             return this;
         }
 

@@ -2,8 +2,9 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.raphaelcollin.appointmentscheduler.Main;
+import com.raphaelcollin.appointmentscheduler.UserCredentials;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -13,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,7 +43,7 @@ public class RecoverCredentialsController implements Initializable {
     @FXML
     private JFXButton recoverButton;
 
-    private String correctAnswer;
+    private UserCredentials credentials;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,10 +83,6 @@ public class RecoverCredentialsController implements Initializable {
         skipButton.getStyleClass().add(STYLE_CLASS_ORANGE_BUTTON);
         skipButton.setFont(Font.font(20));
 
-        String securityQuestion = Main.getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION, null);
-        securityQuestionField.setText(securityQuestion);
-
-        correctAnswer = Main.getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_ANSWER, null);
     }
 
     @FXML
@@ -101,7 +99,7 @@ public class RecoverCredentialsController implements Initializable {
 
         } else {
 
-            if (!enteredAnswer.equalsIgnoreCase(correctAnswer)) {
+            if (!enteredAnswer.equalsIgnoreCase(credentials.getAnswer())) {
 
                 showAlert(Alert.AlertType.ERROR, root,
                         getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
@@ -110,13 +108,8 @@ public class RecoverCredentialsController implements Initializable {
 
             } else {
 
-                String user = getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_USER, null);
-                String password = getPreferences().get(PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD, null);
-
-                assert user != null && password != null;
-
-                userField.setText(user);
-                passwordField.setText(password);
+                userField.setText(credentials.getUser());
+                passwordField.setText(credentials.getPassword());
 
                 recoverButton.setDisable(true);
             }
@@ -126,12 +119,22 @@ public class RecoverCredentialsController implements Initializable {
     @FXML
     void handleBack() {
 
-        Parent loginRoot = loadView(LOGIN_LOCATION, getResources());
+        Parent loginRoot = null;
+        try {
+            loginRoot = FXMLLoader.load(getClass().getResource(LOGIN_LOCATION), getResources());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         assert loginRoot != null;
 
         AnchorPane containerRoot = (AnchorPane) root.getScene().getRoot();
         switchScenes(containerRoot, root, loginRoot, TRANSITION_FROM_LEFT);
 
+    }
+
+    void setUserCredentials(UserCredentials credentials) {
+        this.credentials = credentials;
+        securityQuestionField.setText(credentials.getSecurityQuestion());
     }
 }

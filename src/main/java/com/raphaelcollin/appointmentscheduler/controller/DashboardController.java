@@ -2,7 +2,7 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
-import com.raphaelcollin.appointmentscheduler.db.Datasource;
+import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -108,12 +108,12 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
         unconfirmedAppointmentsProgressBar.setProgress(0.4);
 
-        Datasource.getInstance().addObserver(this);
+        DataSource.getInstance().addObserver(this);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (Datasource.APPOINTMENTS_CHANGE.equals(evt.getPropertyName())) {
+        if (DataSource.APPOINTMENTS_CHANGE.equals(evt.getPropertyName())) {
             // Update Dashboard
         }
 

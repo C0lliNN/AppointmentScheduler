@@ -5,6 +5,7 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.input.MouseEvent;
@@ -37,23 +38,28 @@ public class ContainerLoginController implements Initializable {
         root.setMinSize(width, height);
         root.setMaxSize(width, height);
 
-        AnchorPane loginRoot = loadView(LOGIN_LOCATION, resources);
+        try {
+            AnchorPane loginRoot = FXMLLoader.load(getClass().getResource(LOGIN_LOCATION), resources);
 
-        root.getChildren().add(loginRoot);
-        AnchorPane.setTopAnchor(loginRoot, 40.0);
+            root.getChildren().add(loginRoot);
+            AnchorPane.setTopAnchor(loginRoot, 40.0);
 
-        FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
-        closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
+            FontAwesomeIconView closeIcon = new FontAwesomeIconView(FontAwesomeIcon.CLOSE);
+            closeIcon.getStyleClass().add(STYLE_CLASS_CLOSE_ICON);
 
-        closeButton.setGraphic(closeIcon);
-        closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
+            closeButton.setGraphic(closeIcon);
+            closeButton.getStyleClass().add(STYLE_CLASS_CLOSE_BUTTON);
 
-        FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
-        minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
+            FontAwesomeIconView minimizeIcon = new FontAwesomeIconView(FontAwesomeIcon.MINUS);
+            minimizeIcon.getStyleClass().add(STYLE_CLASS_MINIMIZE_ICON);
 
-        minimizeButton.setGraphic(minimizeIcon);
-        minimizeButton.setContentDisplay(ContentDisplay.CENTER);
-        minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
+            minimizeButton.setGraphic(minimizeIcon);
+            minimizeButton.setContentDisplay(ContentDisplay.CENTER);
+            minimizeButton.getStyleClass().add(STYLE_CLASS_MINIMIZE_BUTTON);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML

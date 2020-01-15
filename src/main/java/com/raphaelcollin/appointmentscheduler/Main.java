@@ -27,43 +27,29 @@ import java.sql.Connection;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
+
+import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
 public class Main extends Application {
 
     // Global attributes
 
     private static Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-    private static Preferences preferences = Preferences.userNodeForPackage(Main.class);
     private static Connection connection;
-    private static DatabaseCredentials dbCredentials;
-
-    // Preferences Key
-
-    public static final String PREFERENCES_KEY_LANGUAGE = "language";
-    public static final String PREFERENCES_KEY_DB_SETUP = "db_setup";
-    public static final String PREFERENCES_KEY_IP = "db_ip";
-    public static final String PREFERENCES_KEY_PORT = "db_port";
-    public static final String PREFERENCES_KEY_DB_USER = "db_user";
-    public static final String PREFERENCES_KEY_DB_PASSWORD = "db_password";
-    public static final String PREFERENCES_KEY_ACCESS_CONTROL = "access_control";
-    public static final String PREFERENCES_KEY_ACCESS_CONTROL_USER = "ac_user";
-    public static final String PREFERENCES_KEY_ACCESS_CONTROL_PASSWORD = "ac_password";
-    public static final String PREFERENCES_KEY_ACCESS_CONTROL_SECURITY_QUESTION = "ac_security_question";
-    public static final String PREFERENCES_KEY_ACCESS_CONTROL_ANSWER = "ac_answer";
+    private static ResourceBundle resources;
 
     // File Locations
 
     public static final String ACCESS_CONTROL_CONFIGURATION_LOCATION = "/access_control_configuration.fxml";
     public static final String CONTAINER_CONFIGURATION_LOCATION = "/container_configuration.fxml";
     public static final String CONTAINER_LOGIN_LOCATION = "/container_login.fxml";
-    public static final String DASHBOARD_LOCATION = "/main_view.fxml";
+    public static final String MAIN_VIEW_LOCATION = "/main_view.fxml";
     public static final String DATABASE_CONFIGURATION_LOCATION = "/database_configuration.fxml";
     public static final String LOGIN_LOCATION = "/login.fxml";
     public static final String RECOVER_CREDENTIALS_LOCATION = "/recover_credentials.fxml";
-    public static final String LOCATION_APPLICATION_ICON_TITLE_BAR = "/title-bar-icon.png";
-    public static final String LOCATION_DASHBOARD_CONTENT = "/dashboard_content.fxml";
-    public static final String LOCATION_APPOINTMENT_CONTENT = "/appointment_content.fxml";
+    public static final String APPLICATION_ICON_TITLE_BAR_LOCATION = "/title-bar-icon.png";
+    public static final String DASHBOARD_CONTENT_LOCATION = "/dashboard_content.fxml";
+    public static final String APPOINTMENT_CONTENT_LOCATION = "/appointment_content.fxml";
 
     // Bundle Keys
 
@@ -80,6 +66,7 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
     public static final String BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE = "login_alert_invalid_credentials_message";
     public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "recover_credentials_invalid_answer";
+    public static final String BUNDLE_KEY_LOADING_DATA = "main_controller_loading_data";
     public static final String BUNDLE_KEY_TAB_TITLE_DASHBOARD = "tab_title_dashboard";
     public static final String BUNDLE_KEY_TAB_TITLE_APPOINTMENT = "tab_title_appointment";
     public static final String BUNDLE_KEY_TAB_TITLE_FINANCIAL = "tab_title_financial";
@@ -87,6 +74,7 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_TAB_TITLE_DOCTOR = "tab_title_doctor";
     public static final String BUNDLE_KEY_TAB_TITLE_TOOLS = "tab_title_tools";
     public static final String BUNDLE_KEY_TAB_TITLE_SETTINGS = "tab_title_settings";
+    public static final String BUNDLE_KEY_TIME_FORMAT = "time_format_12hours";
 
     // Classes and Ids
 
@@ -111,6 +99,7 @@ public class Main extends Application {
     public static final String STYLE_CLASS_MAIN_VIEW_ORANGE_BUTTON = "orange-button";
     public static final String STYLE_CLASS_RED_BUTTON = "red-button";
     public static final String STYLE_CLASS_APPOINTMENT_TAB = "appointment-tab";
+    public static final String STYLE_CLASS_TAB_PANE_LABEL = "tab-pane-label";
 
 
     // Class Constants
@@ -118,15 +107,13 @@ public class Main extends Application {
     private static final String BUNDLE_BASE_NAME = "language";
     public static final String DEFAULT_LANGUAGE = "en";
     private static final String LOCATION_STAGE_ICON = "/stage_icon.png";
-
-    private static ResourceBundle resources;
     public static int TRANSITION_FROM_LEFT = 1;
     public static int TRANSITION_FROM_RIGHT = 2;
 
     @Override
     public void init() throws Exception {
-        //preferences.putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
-        //preferences.clear();
+        //ApplicationPreferences.getInstance().getPreferences().clear();
+        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
         super.init();
     }
 
@@ -135,10 +122,10 @@ public class Main extends Application {
 
         System.setProperty("prism.lcdtext", "false");
 
-        boolean databaseConfigured = preferences.getBoolean(PREFERENCES_KEY_DB_SETUP, false);
+        boolean databaseConfigured = ApplicationPreferences.getInstance().getPreferences().getBoolean(PREFERENCES_KEY_DB_SETUP, false);
 
         resources = ResourceBundle.getBundle(BUNDLE_BASE_NAME,
-                new Locale(preferences.get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
+                new Locale(ApplicationPreferences.getInstance().getPreferences().get(PREFERENCES_KEY_LANGUAGE, DEFAULT_LANGUAGE)));
 
         FXMLLoader loader = new FXMLLoader();
         loader.setResources(resources);
@@ -146,12 +133,7 @@ public class Main extends Application {
 
         if (databaseConfigured) {
 
-            String dbIp = preferences.get(PREFERENCES_KEY_IP, null);
-            String dbPort = preferences.get(PREFERENCES_KEY_PORT, null);
-            String dbUser = preferences.get(PREFERENCES_KEY_DB_USER, null);
-            String dbPassword = preferences.get(PREFERENCES_KEY_DB_PASSWORD, null);
-
-            dbCredentials = new DatabaseCredentials(dbIp, dbPort, dbUser, dbPassword);
+            DatabaseCredentials dbCredentials = DatabaseCredentials.getSavedCredentials();
 
             connection = ConnectionFactory.getConnection(dbCredentials);
 
@@ -160,18 +142,18 @@ public class Main extends Application {
                 loader.setLocation(getClass().getResource(CONTAINER_CONFIGURATION_LOCATION));
                 root = loader.load();
                 ContainerConfigurationController dbController = loader.getController();
-                dbController.setupFields(dbIp, dbPort, dbUser, dbPassword);
+                dbController.setupFields(dbCredentials.getIp(), dbCredentials.getPort(), dbCredentials.getUser(),
+                        dbCredentials.getPassword());
             } else {
 
-                boolean loginRequired = preferences.getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
+                boolean loginRequired = ApplicationPreferences.getInstance().getPreferences().getBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
 
                 if (loginRequired) {
                     loader.setLocation(getClass().getResource(CONTAINER_LOGIN_LOCATION));
                 } else {
-                    loader.setLocation(getClass().getResource(DASHBOARD_LOCATION));
+                    loader.setLocation(getClass().getResource(MAIN_VIEW_LOCATION));
                     root = loader.load();
                     MainController mainController = loader.getController();
-                    mainController.setupTabs();
                 }
             }
 
@@ -201,9 +183,6 @@ public class Main extends Application {
         return screenSize.getWidth();
     }
 
-//    public static double getScreenHeight() {
-     //   return screenSize.getHeight();
-  //  }
 
     public static void switchScenes(AnchorPane containerRoot, Parent outRoot, Parent inRoot, int option) {
 
@@ -234,24 +213,25 @@ public class Main extends Application {
 
     }
 
-    public static AnchorPane loadView(String location, ResourceBundle resources){
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource(location), resources);
+    public static void createMainViewStage() {
+
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
+        Parent dashboardRoot = null;
         try {
-            return loader.load();
+            dashboardRoot = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
-    }
-
-    public static void loadDashboardStage() {
-        Parent dashboardRoot = loadView(DASHBOARD_LOCATION, resources);
 
         assert dashboardRoot != null;
+
+        MainController mainController = loader.getController();
 
         Stage newStage = new Stage();
         newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
         newStage.setScene(new Scene(dashboardRoot));
+        newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
+        newStage.initStyle(StageStyle.TRANSPARENT);
         newStage.show();
     }
 
@@ -259,8 +239,10 @@ public class Main extends Application {
                                                  String contentText) {
         Alert alert = new Alert(alertType);
         if (root != null && root.getScene() != null) {
-            // Set icon later
             alert.initOwner(root.getScene().getWindow());
+        } else {
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
         }
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -271,10 +253,6 @@ public class Main extends Application {
 
     public static ResourceBundle getResources() {
         return resources;
-    }
-
-    public static Preferences getPreferences() {
-        return preferences;
     }
 
     public static Connection getConnection() {

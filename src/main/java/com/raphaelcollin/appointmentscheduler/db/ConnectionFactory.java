@@ -18,26 +18,32 @@ public class ConnectionFactory {
         url.append(dbCredentials.getPort()).append("/");
         url.append(DB_NAME);
         url.append("?useTimezone=true&serverTimezone=UTC&useSSL=false");
+
+        Connection connection = null;
+
         try {
             Class.forName(DRIVER);
-            return DriverManager.getConnection(url.toString(), dbCredentials.getUser(), dbCredentials.getPassword());
+            connection = DriverManager.getConnection(url.toString(), dbCredentials.getUser(), dbCredentials.getPassword());
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            System.err.println("Exception in Connection Factory - getConnection - " + e.getMessage());
         }
+
+        return connection;
     }
 
     public static boolean closeConnection(Connection connection) {
+
+        boolean closed = false;
+
         if (connection != null) {
             try {
                 connection.close();
-                return true;
+                closed = true;
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.err.println("Exception in Connection Factory - closeConnection - " + e.getMessage());
             }
         }
-
-        return false;
+        return closed;
     }
 
 }

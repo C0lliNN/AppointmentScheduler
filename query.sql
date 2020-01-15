@@ -20,7 +20,8 @@ create table Patient(
 create table Doctor(
     idDoctor int primary key auto_increment,
     name varchar(50) not null,
-    gender enum('Male', 'Female'),
+    phoneNumber varchar(20) not null,
+    gender enum('Male', 'Female') not null,
     birthDate date not null,
     licenseNumber varchar(60)
 );
@@ -40,6 +41,13 @@ FOREIGN KEY(id_patient) REFERENCES Patient(idPatient);
 
 alter table Appointment add constraint FK_DOCTOR_APPOINTMENT
 FOREIGN KEY(id_doctor) REFERENCES Doctor(idDoctor);
+
+Create view APPOINTMENT_DATA as SELECT Appointment.idAppointment, Appointment.date, Appointment.description, Appointment.status,
+Appointment.price, Patient.idPatient, Patient.firstName, Patient.lastName, Patient.gender as "P_Gender", Patient.birthDate as "P_BIRTHDATE",
+Patient.phoneNumber as "P_PHONE", Patient.email, Patient.city, Patient.zipCode, Patient.streetName, Patient.houseNumber,
+Doctor.idDoctor, Doctor.name, Doctor.phoneNumber, Doctor.gender, Doctor.birthDate, Doctor.licenseNumber
+FROM Appointment INNER JOIN Patient on Appointment.id_patient = Patient.idPatient
+INNER JOIN Doctor on Appointment.id_doctor = Doctor.idDoctor;
 
 /* Sample Data */
 

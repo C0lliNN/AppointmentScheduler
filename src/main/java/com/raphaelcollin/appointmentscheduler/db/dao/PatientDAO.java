@@ -22,7 +22,7 @@ public class PatientDAO extends DAO<Patient> {
     private static final String COLUMN_STREET_NAME = "streetName";
     private static final String COLUMN_HOUSE_NUMBER = "houseNumber";
 
-    public PatientDAO(Connection connection) {
+    PatientDAO(Connection connection) {
         super(connection);
     }
 
@@ -58,7 +58,7 @@ public class PatientDAO extends DAO<Patient> {
             statement.setString(6, item.getEmail());
             statement.setString(7, item.getCity());
             statement.setString(8, item.getZipCode());
-            statement.setString(9, item.getStreetNumber());
+            statement.setString(9, item.getStreetName());
             statement.setString(10, item.getHouseNumber());
 
             if (statement.executeUpdate() > 0) {
@@ -72,7 +72,7 @@ public class PatientDAO extends DAO<Patient> {
 
 
         } catch (SQLException e) {
-            System.err.println("Exception in PatientDAO - Add" + e.getMessage());
+            System.err.println("Exception in PatientDAO - Add - " + e.getMessage());
             generatedKey = -1;
         }
 
@@ -97,11 +97,13 @@ public class PatientDAO extends DAO<Patient> {
         queryBuilder.append(" FROM ");
         queryBuilder.append(TABLE_NAME);
 
+        ObservableList<Patient> patients = null;
+
         try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
 
             ResultSet resultSet = statement.executeQuery();
 
-            ObservableList<Patient> patients = FXCollections.observableArrayList();
+            patients = FXCollections.observableArrayList();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -126,19 +128,18 @@ public class PatientDAO extends DAO<Patient> {
                         setEmail(email).
                         setCity(city).
                         setZipCode(zipCode).
-                        setStreetNumber(streetNumber).
+                        setStreetName(streetNumber).
                         setHouseNumber(houseNumber).
                         build()
                 );
 
             }
 
-            return patients;
-
         } catch (SQLException e) {
-            System.err.println("Exception in PatientDAO - getAll" + e.getMessage());
-            return null;
+            System.err.println("Exception in PatientDAO - getAll - " + e.getMessage());
         }
+
+        return patients;
     }
 
     @Override
@@ -159,6 +160,8 @@ public class PatientDAO extends DAO<Patient> {
         queryBuilder.append(" WHERE ");
         queryBuilder.append(COLUMN_ID).append(" = ").append("?");
 
+        boolean updated;
+
         try (PreparedStatement statement = connection.prepareStatement(queryBuilder.toString())) {
 
             statement.setString(1, item.getFirstName());
@@ -169,17 +172,19 @@ public class PatientDAO extends DAO<Patient> {
             statement.setString(6, item.getEmail());
             statement.setString(7, item.getCity());
             statement.setString(8, item.getZipCode());
-            statement.setString(9, item.getStreetNumber());
+            statement.setString(9, item.getStreetName());
             statement.setString(10, item.getHouseNumber());
             statement.setInt(11, item.getId());
 
-            return statement.executeUpdate() > 0;
+            updated = statement.executeUpdate() > 0;
 
 
         } catch (SQLException e) {
-            System.err.println("Exception in PatientDAO - Update" + e.getMessage());
-            return false;
+            System.err.println("Exception in PatientDAO - Update - " + e.getMessage());
+            updated =  false;
         }
+
+        return updated;
     }
 
     @Override
@@ -187,16 +192,20 @@ public class PatientDAO extends DAO<Patient> {
 
         String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ? ";
 
+        boolean deleted;
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, id);
 
-            return statement.executeUpdate() > 0;
+            deleted = statement.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println("Exception in PatientDAO - Delete" + e.getMessage());
-            return false;
+            System.err.println("Exception in PatientDAO - Delete - " + e.getMessage());
+            deleted = false;
         }
+
+        return deleted;
 
     }
 }

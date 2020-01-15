@@ -2,12 +2,14 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
 import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
 import com.raphaelcollin.appointmentscheduler.db.model.Patient;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,13 +24,13 @@ import javafx.scene.text.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.APPOINTMENTS_CHANGE;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
 
 public class AppointmentController implements Initializable, PropertyChangeListener {
 
@@ -153,80 +155,61 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             return Integer.compare(Integer.parseInt(dateParts1[1]), Integer.parseInt(dateParts2[1]));
         });
 
-
-        ObservableList<Appointment> appointments = FXCollections.observableArrayList(
-
-                new Appointment.Builder().
-                        setIdAppointment(1).
-                        setDate(LocalDateTime.of(LocalDate.of(2020, 1, 11), LocalTime.of(12,0))).
-                        setPrice(100.0).
-                        setDescription("Test").
-                        setStatus("Completed").
-                        setDoctor(new Doctor("Raphael")).
-                        setPatient(new Patient.Builder().
-                                setFirstName("Phillipe").
-                                setLastName("Olivier").
-                                build()).
-                        build(),
-                new Appointment.Builder().
-                        setIdAppointment(2).
-                        setDate(LocalDateTime.of(LocalDate.of(2020, 1, 11), LocalTime.of(13,12))).
-                        setPrice(120.0).
-                        setDescription("Test2").
-                        setStatus("Unconfirmed").
-                        setDoctor(new Doctor("Raphael")).
-                        setPatient(new Patient.Builder().
-                                setFirstName("Christiane").
-                                setLastName("Maria").
-                                build()).
-                        build(),
-                new Appointment.Builder().
-                        setIdAppointment(3).
-                        setDate(LocalDateTime.of(LocalDate.of(2020, 1, 11), LocalTime.of(14,0))).
-                        setPrice(90.0).
-                        setDescription("Test3").
-                        setStatus("Canceled").
-                        setDoctor(new Doctor("Julio")).
-                        setPatient(new Patient.Builder().
-                                setFirstName("John").
-                                setLastName("Len").
-                                build()).
-                        build(),
-                new Appointment.Builder().
-                        setIdAppointment(4).
-                        setDate(LocalDateTime.of(LocalDate.of(2020, 1, 11), LocalTime.of(16,45))).
-                        setPrice(200.0).
-                        setDescription("Test4").
-                        setStatus("Completed").
-                        setDoctor(new Doctor("Pedro")).
-                        setPatient(new Patient.Builder().
-                                setFirstName("Phillipe").
-                                setLastName("Olivier").
-                                build()).
-                        build()
-        );
-
-        final TreeItem<Appointment> item = new RecursiveTreeItem<>(appointments, RecursiveTreeObject::getChildren);
-
-        appointmentsTableView.setRoot(item);
         appointmentsTableView.setShowRoot(false);
 
-        // Create Datamodel and DAOs
+        DataSource.getInstance().addObserver(this);
 
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+        if (evt.getPropertyName().equals(INITIAL_DATA_LOADED) || evt.getPropertyName().equals(APPOINTMENTS_CHANGE)) {
+
+            ObservableList<Appointment> appointments = DataSource.getInstance().getAppointments();
+            final TreeItem<Appointment> item = new TreeItem<>();
+
+            for (Appointment appointment : appointments) {
+                final TreeItem<Appointment> subItem = new TreeItem<>(appointment);
+                item.getChildren().add(subItem);
+            }
+
+            Platform.runLater(() -> appointmentsTableView.setRoot(item));
+        }
+
+
     }
 
     @FXML
-    void handleDeleteAppointment(ActionEvent event) {
+    void handleDeleteAppointment() {
 
+        TreeItem<Appointment> appointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+
+        if (appointment == null) {
+            // Show an Alert
+        } else {
+
+            Task<Boolean> deleteAppointmentTask = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    return DataSource.getInstance().deleteAppointment(appointment.getValue().getId());
+                }
+            };
+
+            deleteAppointmentTask.setOnSucceeded(event -> {
+                if (!deleteAppointmentTask.getValue()) {
+
+                    // Show an Alert
+
+                }
+            });
+
+            new Thread(deleteAppointmentTask).start();
+        }
     }
 
     @FXML
-    void handleNewAppointment(ActionEvent event) {
+    void handleNewAppointment() {
 
     }
 
@@ -236,8 +219,40 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     }
 
     @FXML
-    void handleUpdateAppointment(ActionEvent event) {
+    void handleUpdateAppointment() {
+        TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
+        int selectedIndex = appointmentsTableView.getSelectionModel().getSelectedIndex();
+
+        if (selectedItem == null) {
+            // Show an Alert
+        } else {
+
+            // Open a Dialog Window passing the current Object
+
+            Appointment appointment = selectedItem.getValue();
+            appointment.setStatus("Completed");
+
+            Task<Boolean> updateAppointmentTask = new Task<Boolean>() {
+                @Override
+                protected Boolean call() {
+                    return DataSource.getInstance().updateAppointment(appointment);
+                }
+            };
+
+            updateAppointmentTask.setOnSucceeded(event -> {
+                if (updateAppointmentTask.getValue()) {
+                    Appointment updatedAppointment = new Appointment.Builder().
+                            setStatus("Unconfirmed").
+                            setDate(LocalDateTime.now()).
+                            setDoctor(new Doctor.Builder().setName("Test").build()).
+                            setPatient(new Patient.Builder().setFirstName("Test").setLastName("Test").build()).
+                            build();
+                    appointmentsTableView.getRoot().getChildren().add(new TreeItem<>(updatedAppointment));
+                }
+            });
+
+            new Thread(updateAppointmentTask).start();
+        }
 
     }
 }
-
