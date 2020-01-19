@@ -45,7 +45,7 @@ public class DataSource {
         if (generatedId > 0) {
             appointment.setId(generatedId);
             appointments.add(appointment);
-            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointment);
         }
 
         return generatedId;

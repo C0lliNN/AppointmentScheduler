@@ -131,7 +131,7 @@ public class MainController implements Initializable {
                 protected Void call() {
 
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -151,8 +151,6 @@ public class MainController implements Initializable {
             });
 
             new Thread(loadInitialDataTask).start();
-
-            // Appointment Filtering/ Ordering, Dashboard,
 
         } catch (Exception e) {
             e.printStackTrace();

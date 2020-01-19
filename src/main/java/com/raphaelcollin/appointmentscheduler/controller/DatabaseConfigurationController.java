@@ -51,7 +51,6 @@ public class DatabaseConfigurationController implements Initializable {
     @FXML
     private JFXButton testConnectionButton;
 
-    private static final String REGEX_IP = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$";
     private static final String REGEX_PORT = "\\d+$";
 
     @Override
@@ -102,11 +101,6 @@ public class DatabaseConfigurationController implements Initializable {
 
         if (ipAddress.isEmpty() || port.isEmpty() || user.isEmpty()) {
             errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
-            errorFounded = true;
-        }
-
-        if (!errorFounded && !ipAddress.matches(REGEX_IP)) {
-            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE);
             errorFounded = true;
         }
 

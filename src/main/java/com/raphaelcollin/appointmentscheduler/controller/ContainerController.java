@@ -39,7 +39,7 @@ public class ContainerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        root.setId("container-root");
+        root.setId(ID_CONTAINER_ROOT);
 
         appIconImageView.setImage(new Image(getClass().getResourceAsStream(APPLICATION_ICON_TITLE_BAR_LOCATION)));
         appIconImageView.setFitWidth(30);

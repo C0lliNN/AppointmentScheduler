@@ -10,7 +10,7 @@
       <Label text="%tab_dashboard_upcoming"/>
       <Label fx:id="upcomingAppointmentsLabel"/>
 
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowUpcomingAppointments"/>
 
    </VBox>
    <VBox fx:id="vBoxUnconfirmedAppointments" alignment="TOP_CENTER">
@@ -19,7 +19,7 @@
       <Label fx:id="unconfirmedAppointmentsLabel"/>
 
       <JFXProgressBar fx:id="unconfirmedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowUnconfirmedAppointments"/>
    </VBox>
    <VBox fx:id="vBoxCompletedAppointments" alignment="TOP_CENTER">
 
@@ -27,7 +27,7 @@
       <Label fx:id="completedAppointmentsLabel"/>
 
       <JFXProgressBar fx:id="completedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowCompletedAppointments"/>
    </VBox>
    <VBox fx:id="vBoxEarnings" alignment="TOP_CENTER">
 
@@ -36,6 +36,6 @@
          <Label text="%currency_symbol"/>
          <Label fx:id="earningsLabel"/>
       </HBox>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text"/>
+      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowEarnings"/>
    </VBox>
 </AnchorPane>

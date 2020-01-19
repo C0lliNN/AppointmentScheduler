@@ -22,12 +22,12 @@
          <JFXDatePicker fx:id="dateField" promptText="%tab_appointments_date_promptText"/>
       </HBox>
       <HBox>
-         <Label text="%tab_appointments_doctor_text"/>
-         <JFXTextField fx:id="doctorField" promptText="%tab_appointments_doctor_promptText"/>
-      </HBox>
-      <HBox>
          <Label text="%tab_appointments_patient_text"/>
          <JFXTextField fx:id="patientField" promptText="%tab_appointments_patient_promptText"/>
+      </HBox>
+      <HBox>
+         <Label text="%tab_appointments_doctor_text"/>
+         <JFXTextField fx:id="doctorField" promptText="%tab_appointments_doctor_promptText"/>
       </HBox>
       <HBox>
          <Label text="%tab_appointments_status_text"/>

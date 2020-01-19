@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@configuration_login.css" styleClass="content" fx:controller
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@com/raphaelcollin/appointmentscheduler/style/dialogs_style.css" styleClass="content" fx:controller
         ="com.raphaelcollin.appointmentscheduler.controller.AccessControlController">
 
    <Label fx:id="accessControlLabel" alignment="CENTER" text="%access_control_accessControlMessage"

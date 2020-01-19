@@ -1,18 +1,17 @@
 package com.raphaelcollin.appointmentscheduler.db.model;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.raphaelcollin.appointmentscheduler.Main.BUNDLE_KEY_TIME_FORMAT;
 import static com.raphaelcollin.appointmentscheduler.Main.getResources;
 
-public class Appointment extends RecursiveTreeObject<Appointment> implements ObservableValue<Appointment>{
+public class Appointment extends RecursiveTreeObject<Appointment>{
     private int id;
     private LocalDateTime date;
     private double price;
@@ -39,17 +38,15 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Obs
 
         boolean dateFormat12 = Boolean.parseBoolean(getResources().getString(BUNDLE_KEY_TIME_FORMAT));
         String schedule;
+        String pattern;
 
         if (dateFormat12) {
-
-            if (this.date.getHour() > 12) {
-                schedule = adjustDate(this.date.getHour() - 12) + ":" + adjustDate(this.date.getMinute()) + " PM";
-            } else {
-                schedule = adjustDate(this.date.getHour()) + ":" + adjustDate(this.date.getMinute()) + " AM";
-            }
+            pattern = "hh:mm a";
         } else {
-            schedule = adjustDate(this.date.getHour()) + ":" + adjustDate(this.date.getMinute());
+            pattern = "HH:mm";
         }
+
+        schedule = this.date.toLocalTime().format(DateTimeFormatter.ofPattern(pattern));
 
         this.scheduleProperty = new SimpleStringProperty(schedule);
         this.patientProperty = new SimpleStringProperty(patient.getName());
@@ -59,31 +56,6 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Obs
         this.statusProperty = new SimpleStringProperty(this.status);
     }
 
-
-    @Override
-    public void addListener(ChangeListener<? super Appointment> listener) {
-
-    }
-
-    @Override
-    public void removeListener(ChangeListener<? super Appointment> listener) {
-
-    }
-
-    @Override
-    public Appointment getValue() {
-        return this;
-    }
-
-    @Override
-    public void addListener(InvalidationListener listener) {
-
-    }
-
-    @Override
-    public void removeListener(InvalidationListener listener) {
-
-    }
 
     private String adjustDate(int number) {
         if (number < 10) {

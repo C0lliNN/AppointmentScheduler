@@ -1,7 +1,6 @@
 package com.raphaelcollin.appointmentscheduler.controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXProgressBar;
+import com.jfoenix.controls.*;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
 import javafx.application.Platform;
@@ -12,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
@@ -46,9 +47,6 @@ public class DashboardController implements Initializable, PropertyChangeListene
     private VBox vBoxEarnings;
     @FXML
     private Label earningsLabel;
-
-
-
     @FXML
     private JFXProgressBar completedAppointmentsProgressBar;
     @FXML
@@ -137,16 +135,19 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
             for (Appointment appointment : DataSource.getInstance().getAppointments()) {
 
-                if (appointment.getStatus().equals(UNCONFIRMED)) {
-                    numberOfUnconfirmedAppointments++;
-                }
-                if (appointment.getStatus().equals(COMPLETED)) {
-                    numberOfCompletedAppointments++;
+                if (appointment.getDate().toLocalDate().equals(LocalDate.now())) {
+                    if (appointment.getStatus().equals(UNCONFIRMED)) {
+                        numberOfUnconfirmedAppointments++;
+                    }
+                    if (appointment.getStatus().equals(COMPLETED)) {
+                        numberOfCompletedAppointments++;
+                    }
+
+                    earnings += appointment.getPrice();
+
+                    numberOfAppointments++;
                 }
 
-                earnings += appointment.getPrice();
-
-                numberOfAppointments++;
             }
 
             int tempTotalAppointments = numberOfAppointments;
@@ -158,16 +159,88 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
                 upcomingAppointmentsLabel.setText(tempTotalAppointments + "");
                 unconfirmedAppointmentsLabel.setText(tempTotalUnconfirmedAppointments + "/" + tempTotalAppointments);
-                unconfirmedAppointmentsProgressBar.setProgress((double) tempTotalUnconfirmedAppointments / (double) tempTotalAppointments);
+
+                double unconfirmedAppointmentsProgress = tempTotalAppointments > 0 ? (double) tempTotalUnconfirmedAppointments / (double) tempTotalAppointments : 1;
+                unconfirmedAppointmentsProgressBar.setProgress(unconfirmedAppointmentsProgress);
 
                 completedAppointmentsLabel.setText(tempTotalCompletedAppointments + "/" + tempTotalAppointments);
-                completedAppointmentsProgressBar.setProgress((double) tempTotalCompletedAppointments / (double) tempTotalAppointments);
+
+                double completedAppointmentsProgress = tempTotalAppointments > 0 ? (double) tempTotalCompletedAppointments / (double) tempTotalAppointments : 1;
+                completedAppointmentsProgressBar.setProgress(completedAppointmentsProgress);
 
                 earningsLabel.setText(tempEarnings + "");
             });
 
         }
+    }
 
-        // Creating Appointment Content View
+    @FXML
+    void handleShowUpcomingAppointments() {
+
+        showAppointmentTab(0);
+
+    }
+
+    @FXML
+    void handleShowUnconfirmedAppointments() {
+
+        showAppointmentTab(UNCONFIRMED_INDEX);
+    }
+
+    @FXML
+    void handleShowCompletedAppointments() {
+        showAppointmentTab(COMPLETED_INDEX);
+    }
+
+    @FXML
+    void handleShowEarnings() {
+        // Do later
+    }
+
+    private JFXDatePicker getDateField(AnchorPane contentRoot) {
+        HBox hBoxFilters = (HBox) contentRoot.getChildren().get(0);
+        return ((JFXDatePicker)((HBox) hBoxFilters.getChildren().get(0)).getChildren().get(1));
+    }
+
+    private JFXTextField getPatientField(AnchorPane contentRoot) {
+        HBox hBoxFilters = (HBox) contentRoot.getChildren().get(0);
+        return ((JFXTextField)((HBox) hBoxFilters.getChildren().get(1)).getChildren().get(1));
+    }
+
+    private JFXTextField getDoctorField(AnchorPane contentRoot) {
+        HBox hBoxFilters = (HBox) contentRoot.getChildren().get(0);
+        return ((JFXTextField)((HBox) hBoxFilters.getChildren().get(2)).getChildren().get(1));
+    }
+
+    private JFXComboBox getStatusField(AnchorPane contentRoot) {
+        HBox hBoxFilters = (HBox) contentRoot.getChildren().get(0);
+        return ((JFXComboBox)((HBox) hBoxFilters.getChildren().get(3)).getChildren().get(1));
+    }
+
+    private JFXCheckBox getAllDatesCheckBox(AnchorPane contentRoot) {
+        return (JFXCheckBox) contentRoot.getChildren().get(1);
+    }
+
+    private void showAppointmentTab(int statusIndex) {
+        TabPane tabPane = ((TabPane) root.getParent().getParent());
+
+        AnchorPane appointmentContentRoot = (AnchorPane) tabPane.getTabs().get(1).getContent();
+
+        JFXDatePicker dateField = getDateField(appointmentContentRoot);
+        dateField.setValue(LocalDate.now());
+
+        JFXTextField patientField = getPatientField(appointmentContentRoot);
+        patientField.clear();
+
+        JFXTextField doctorField = getDoctorField(appointmentContentRoot);
+        doctorField.clear();
+
+        JFXComboBox<String> statusField = getStatusField(appointmentContentRoot);
+        statusField.getSelectionModel().select(statusIndex);
+
+        JFXCheckBox checkBox = getAllDatesCheckBox(appointmentContentRoot);
+        checkBox.setSelected(false);
+
+        tabPane.getSelectionModel().select(1);
     }
 }

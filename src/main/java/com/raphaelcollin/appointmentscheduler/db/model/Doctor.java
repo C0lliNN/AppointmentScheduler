@@ -1,6 +1,7 @@
 package com.raphaelcollin.appointmentscheduler.db.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Doctor {
     private int id;
@@ -65,6 +66,19 @@ public class Doctor {
 
     public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Doctor doctor = (Doctor) object;
+        return id == doctor.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public static class Builder {

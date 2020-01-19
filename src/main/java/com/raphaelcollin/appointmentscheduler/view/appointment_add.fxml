@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml" stylesheets="@com/raphaelcollin/appointmentscheduler/style/dialogs_style.css" styleClass="content"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.AppointmentAdd">
+
+    <Label fx:id="titleLabel" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" alignment="CENTER" text="%appointments_add_newAppointment"/>
+    <HBox fx:id="hBoxButtons" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <JFXButton text="%appointments_add_clear" fx:id="clearButton" onAction="#handleClear"/>
+        <JFXButton text="%appointments_add_add" fx:id="addButton" onAction="#handleAdd"/>
+    </HBox>
+
+</AnchorPane>

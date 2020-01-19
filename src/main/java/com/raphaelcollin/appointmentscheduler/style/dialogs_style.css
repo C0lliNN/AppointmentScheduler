@@ -11,7 +11,7 @@
     -fx-text-fill: #414141;
 }
 
-.jfx-text-field, .jfx-password-field {
+.jfx-text-field, .jfx-password-field, .jfx-text-area, .jfx-combo-box .list-cell {
     -fx-font-family: Arial;
     -jfx-focus-color: #a2a2a2;
     -jfx-unfocus-color: #848484;
@@ -19,6 +19,30 @@
     -fx-font-size: 1.7em;
     -fx-text-fill: #575757;
 }
+
+.jfx-combo-box {
+    -jfx-focus-color: #a2a2a2;
+    -jfx-unfocus-color: #848484;
+}
+
+.jfx-combo-box .list-cell:hover {
+    -fx-background-color: #cfd0cf;
+    -fx-cursor: hand;
+}
+
+.jfx-combo-box .combo-box-popup .list-cell:selected {
+    -fx-background-color: #b7b8b7;
+}
+
+.jfx-text-area .content{
+    -fx-background-color: rgba(0,0,0,0.02);
+    -fx-padding: 0 0 5 0;
+}
+
+.jfx-text-area .content:hover {
+    -fx-background-color: rgba(0,0,0,0.04);
+}
+
 
 #label-credentials {
     -fx-font-family: Arial;

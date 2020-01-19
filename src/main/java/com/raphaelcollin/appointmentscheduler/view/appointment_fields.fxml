@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="root" alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.raphaelcollin.appointmentscheduler.controller.AppointmentFieldsController">
+
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+    </rowConstraints>
+
+    <Label text="%appointments_label_date" GridPane.rowIndex="1"/>
+    <JFXDatePicker fx:id="dateField" promptText="%appointments_field_date_promptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="%appointments_label_schedule" GridPane.rowIndex="2"/>
+    <JFXTimePicker fx:id="timeField" promptText="%appointments_field_schedule_promptText" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Label text="%appointments_label_patient" GridPane.rowIndex="3"/>
+    <JFXComboBox fx:id="patientField" GridPane.columnIndex="1"
+                 GridPane.rowIndex="3"/>
+
+    <Label text="%appointments_label_doctor" GridPane.rowIndex="4"/>
+    <JFXComboBox fx:id="doctorField" GridPane.columnIndex="1"
+                 GridPane.rowIndex="4"/>
+
+    <Label text="%appointments_label_price" GridPane.rowIndex="5"/>
+    <JFXTextField fx:id="priceField" promptText="%appointments_field_price_promptText" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+    <Label text="%appointments_label_description" GridPane.rowIndex="6"/>
+    <JFXTextArea fx:id="descriptionField" promptText="%appointments_field_description_promptText"
+                 wrapText="true" prefColumnCount="19" prefRowCount="4"  GridPane.rowIndex="7" GridPane.columnSpan="2"/>
+</GridPane>

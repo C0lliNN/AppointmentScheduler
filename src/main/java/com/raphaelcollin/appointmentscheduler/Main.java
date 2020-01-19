@@ -32,12 +32,11 @@ public class Main extends Application {
 
     private static Connection connection;
     private static ResourceBundle resources;
+    public static Map<Integer, String> statusMap;
 
     // File Locations
 
     public static final String ACCESS_CONTROL_CONFIGURATION_LOCATION = "/access_control_configuration.fxml";
-    public static final String CONTAINER_CONFIGURATION_LOCATION = "/container_configuration.fxml";
-    public static final String CONTAINER_LOGIN_LOCATION = "/container_login.fxml";
     public static final String MAIN_VIEW_LOCATION = "/main_view.fxml";
     public static final String DATABASE_CONFIGURATION_LOCATION = "/database_configuration.fxml";
     public static final String LOGIN_LOCATION = "/login.fxml";
@@ -45,7 +44,9 @@ public class Main extends Application {
     public static final String APPLICATION_ICON_TITLE_BAR_LOCATION = "/title-bar-icon.png";
     public static final String DASHBOARD_CONTENT_LOCATION = "/dashboard_content.fxml";
     public static final String APPOINTMENT_CONTENT_LOCATION = "/appointment_content.fxml";
-    private static final String CONTAINER_LOCATION = "/container.fxml";
+    public static final String CONTAINER_LOCATION = "/container.fxml";
+    public static final String APPOINTMENT_FIELDS_LOCATION = "/appointment_fields.fxml";
+    public static final String APPOINTMENT_ADD_LOCATION ="/appointment_add.fxml" ;
 
     // Bundle Keys
 
@@ -59,7 +60,6 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "access_control_error_password_match";
     public static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "database_configuration_errorMessage_invalidPort";
     public static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
-    public static final String BUNDLE_KEY_ERROR_IP_INVALID_MESSAGE = "database_configuration_errorMessage_invalidIP";
     public static final String BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE = "login_alert_invalid_credentials_message";
     public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "recover_credentials_invalid_answer";
     public static final String BUNDLE_KEY_LOADING_DATA = "main_controller_loading_data";
@@ -71,6 +71,18 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_TAB_TITLE_TOOLS = "tab_title_tools";
     public static final String BUNDLE_KEY_TAB_TITLE_SETTINGS = "tab_title_settings";
     public static final String BUNDLE_KEY_TIME_FORMAT = "time_format_12hours";
+    public static final String BUNDLE_KEY_STATUS_ALL = "tab_appointments_status_all";
+    public static final String BUNDLE_KEY_STATUS_UNCONFIRMED = "tab_appointments_status_unconfirmed";
+    public static final String BUNDLE_KEY_STATUS_CONFIRMED = "tab_appointments_status_confirmed";
+    public static final String BUNDLE_KEY_STATUS_CANCEL ="tab_appointments_status_canceled" ;
+    public static final String BUNDLE_KEY_STATUS_COMPLETED = "tab_appointments_status_completed";
+    public static final String BUNDLE_KEY_STATUS_TEXT = "tab_appointments_status_text";
+    public static final String BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT = "alert_database_error_headerText";
+    public static final String BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT = "alert_database_error_contentText";
+    public static final String BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE = "alert_appointment_field_message";
+    public static final String BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE2 = "alert_appointment_field_priceMessage";
+    public static final String BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT = "alert_invalid_selection_headerText";
+    public static final String BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT = "alert_invalid_selection_contentText";
 
     // Classes and Ids
 
@@ -96,6 +108,7 @@ public class Main extends Application {
     public static final String STYLE_CLASS_RED_BUTTON = "red-button";
     public static final String STYLE_CLASS_APPOINTMENT_TAB = "appointment-tab";
     public static final String STYLE_CLASS_TAB_PANE_LABEL = "tab-pane-label";
+    public static final String ID_CONTAINER_ROOT = "container-root";
 
     // Class Constants
 
@@ -111,19 +124,25 @@ public class Main extends Application {
     public static final String COMPLETED = "Completed";
     public static final String CANCELED = "Canceled";
     public static final String CONFIRMED = "Confirmed";
+    public static final int UNCONFIRMED_INDEX = 1;
+    public static final int CONFIRMED_INDEX = 2;
+    public static final int CANCELED_INDEX = 3;
+    public static final int COMPLETED_INDEX = 4;
 
-    public static Map<Integer, String> statusMap;
+
 
     @Override
     public void init() throws Exception {
         //ApplicationPreferences.getInstance().getPreferences().clear();
-        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, true);
+        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
         super.init();
         statusMap = new HashMap<>(4);
-        statusMap.put(1, UNCONFIRMED);
-        statusMap.put(2, COMPLETED);
-        statusMap.put(3, CANCELED);
-        statusMap.put(4, CONFIRMED);
+        statusMap.put(UNCONFIRMED_INDEX, UNCONFIRMED);
+        statusMap.put(COMPLETED_INDEX, COMPLETED);
+        statusMap.put(CANCELED_INDEX, CANCELED);
+        statusMap.put(CONFIRMED_INDEX, CONFIRMED);
+
+
     }
 
     @Override

@@ -70,10 +70,10 @@ insert into Doctor
 insert into Appointment
 (date, description, status, price, id_patient, id_doctor)
     values
-('2020-01-13 13:00:00', 'Test', 'Unconfirmed', 120.0, 1, 2),
-('2020-01-13 14:00:00', 'Test2', 'Completed', 80.0, 4, 1),
-('2020-01-13 16:30:00', 'Test3', 'Canceled', 100.0, 2, 1),
-('2020-01-14 08:030:00', 'Test4', 'Completed', 110.0, 3, 3),
-('2020-01-14 12:00:00', 'Test5', 'Confirmed', 200.0, 5, 2),
-('2020-01-15 14:00:00', 'Test6', 'Confirmed', 220.0, 4, 3),
-('2020-01-15 16:00:00', 'Test7', 'Unconfirmed', 300.0, 2, 3);
+('2020-01-17 13:00:00', 'Test', 'Unconfirmed', 120.0, 1, 2),
+('2020-01-17 14:00:00', 'Test2', 'Completed', 80.0, 4, 1),
+('2020-01-17 16:30:00', 'Test3', 'Canceled', 100.0, 2, 1),
+('2020-01-17 08:030:00', 'Test4', 'Completed', 110.0, 3, 3),
+('2020-01-17 12:00:00', 'Test5', 'Confirmed', 200.0, 5, 2),
+('2020-01-17 14:00:00', 'Test6', 'Confirmed', 220.0, 4, 3),
+('2020-01-7 16:00:00', 'Test7', 'Unconfirmed', 300.0, 2, 3);

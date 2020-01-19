@@ -2,6 +2,8 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
 import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
@@ -9,28 +11,30 @@ import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
-import static com.raphaelcollin.appointmentscheduler.db.DataSource.APPOINTMENTS_CHANGE;
 import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
 
 public class AppointmentController implements Initializable, PropertyChangeListener {
@@ -85,6 +89,9 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     @FXML
     private JFXButton deleteAppointmentButton;
 
+    private static final String REMOVE_NON_DIGITS_REGEX = "[^\\d]";
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         double width = 1000;
@@ -109,16 +116,18 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         dateField.setStyle("-fx-font-size: 15px");
         patientField.setFont(Font.font(15));
         doctorField.setFont(Font.font(15));
-        statusField.setValue("All");
-        statusField.setItems(FXCollections.observableList(Arrays.asList("All", "Scheduled", "Confirmed", "Completed")));
-
-        dateField.disableProperty().bind(allDatesCheckBox.selectedProperty());
+        statusField.setValue(resources.getString(BUNDLE_KEY_STATUS_ALL));
+        statusField.setItems(FXCollections.observableList(Arrays.asList(
+                resources.getString(BUNDLE_KEY_STATUS_ALL),
+                resources.getString(BUNDLE_KEY_STATUS_UNCONFIRMED),
+                resources.getString(BUNDLE_KEY_STATUS_CONFIRMED),
+                resources.getString(BUNDLE_KEY_STATUS_CANCEL),
+                resources.getString(BUNDLE_KEY_STATUS_COMPLETED))));
 
         allDatesCheckBox.setFont(Font.font(14));
         allDatesCheckBox.getStyleClass().add(STYLE_CLASS_BLUE_CHECK_BOX);
         AnchorPane.setTopAnchor(allDatesCheckBox, 87.0);
         AnchorPane.setLeftAnchor(allDatesCheckBox,20.0);
-
 
         showDetailsButton.getStyleClass().add(STYLE_CLASS_BLUE_BUTTON);
         newAppointmentButton.getStyleClass().add(STYLE_CLASS_MAIN_VIEW_GREEN_BUTTON);
@@ -146,8 +155,11 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                 return 1;
             }
 
-            String [] dateParts1 = date1.trim().split(":");
-            String [] dateParts2 = date2.trim().split(":");
+            String [] dateParts1 = date1.substring(0, date1.length() - 2).split(":");
+            String [] dateParts2 = date2.substring(0, date2.length() - 2).split(":");
+
+            dateParts1[1] = dateParts1[1].replaceAll(REMOVE_NON_DIGITS_REGEX, "");
+            dateParts2[1] = dateParts2[1].replaceAll(REMOVE_NON_DIGITS_REGEX, "");
 
             if (!dateParts1[0].equals(dateParts2[0])) {
                 return Integer.compare(Integer.parseInt(dateParts1[0]), Integer.parseInt(dateParts2[0]));
@@ -160,58 +172,69 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
         DataSource.getInstance().addObserver(this);
 
+        dateField.disableProperty().bind(allDatesCheckBox.selectedProperty());
 
+        patientField.textProperty().addListener(((observable, oldValue, newValue) ->
+                appointmentsTableView.setPredicate(this::filterItem)
+        ));
+
+        doctorField.textProperty().addListener(((observable, oldValue, newValue) ->
+                appointmentsTableView.setPredicate(this::filterItem)));
+
+        dateField.valueProperty().addListener(((observable, oldValue, newValue) ->
+                appointmentsTableView.setPredicate(this::filterItem)));
+
+        dateField.disableProperty().addListener(((observable, oldValue, newValue) ->
+                appointmentsTableView.setPredicate(this::filterItem)));
+
+        statusField.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
+                appointmentsTableView.setPredicate(this::filterItem));
+
+
+    }
+
+    private boolean filterItem(TreeItem<Appointment> treeItem) {
+        boolean show = true;
+
+        if (dateField != null && doctorField != null && patientField != null && statusField != null) {
+            if (!dateField.isDisable() && dateField.getValue() != null && !dateField.getValue()
+                    .equals(treeItem.getValue().getDate().toLocalDate())) {
+                show = false;
+            }
+
+            if (show && !doctorField.getText().trim().isEmpty() &&
+                    !treeItem.getValue().getDoctor().getName().contains(doctorField.getText())) {
+                show = false;
+            }
+
+            if (show && !patientField.getText().trim().isEmpty() &&
+                    !treeItem.getValue().getPatient().getName().contains(patientField.getText())) {
+                show = false;
+            }
+
+            if (statusField.getSelectionModel().getSelectedIndex() > 0 &&
+                    !statusMap.get(statusField.getSelectionModel().getSelectedIndex()).equals(treeItem.getValue().getStatus())) {
+                show = false;
+            }
+        }
+
+        return show;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
-        if (evt.getPropertyName().equals(INITIAL_DATA_LOADED) || evt.getPropertyName().equals(APPOINTMENTS_CHANGE)) {
+        if (evt.getPropertyName().equals(INITIAL_DATA_LOADED)) {
 
             ObservableList<Appointment> appointments = DataSource.getInstance().getAppointments();
 
-            ObservableList<TreeItem<Appointment>> items = FXCollections.observableArrayList();
+            final RecursiveTreeItem<Appointment> root = new RecursiveTreeItem<>(appointments, RecursiveTreeObject::getChildren);
 
-            for (Appointment appointment : appointments) {
-                items.add(new TreeItem<>(appointment));
-            }
-
-            FilteredList<TreeItem<Appointment>> filteredList = new FilteredList<>(items);
-            filteredList.setPredicate(treeItem -> {
-
-                boolean show = true;
-
-                if (dateField.isEditable() && dateField.getValue().equals(treeItem.getValue().getDate().toLocalDate())) {
-                    show = false;
-                }
-
-                if (show && !doctorField.getText().trim().isEmpty() &&
-                        !treeItem.getValue().getDoctor().getName().contains(doctorField.getText())) {
-                    show = false;
-                }
-
-                if (show && !patientField.getText().trim().isEmpty() &&
-                        !treeItem.getValue().getPatient().getName().contains(patientField.getText())) {
-                    show = false;
-                }
-
-                if (show && statusField.getSelectionModel().getSelectedIndex() > 0 &&
-                        !statusMap.get(statusField.getSelectionModel().getSelectedIndex()).equals(treeItem.getValue().getStatus())) {
-                    show = false;
-                }
-
-                return show;
-
+            Platform.runLater(() -> {
+                appointmentsTableView.setRoot(root);
+                dateField.setValue(LocalDate.now());
+                appointmentsTableView.setPredicate(this::filterItem);
             });
-
-            final RecursiveTreeItem<Appointment> item = new RecursiveTreeItem<Appointment>(appointments, RecursiveTreeItem::getTreeItem);
-            item.getChildren().setAll(filteredList);
-
-            item
-
-            Platform.runLater(() ->
-                appointmentsTableView.setRoot(item)
-            );
         }
 
     }
@@ -222,7 +245,12 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         TreeItem<Appointment> appointment = appointmentsTableView.getSelectionModel().getSelectedItem();
 
         if (appointment == null) {
-            // Show an Alert
+
+            showAlert(Alert.AlertType.ERROR, root,
+                    getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                    getResources().getString(BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT));
+
         } else {
 
             Task<Boolean> deleteAppointmentTask = new Task<Boolean>() {
@@ -235,10 +263,14 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             deleteAppointmentTask.setOnSucceeded(event -> {
                 if (!deleteAppointmentTask.getValue()) {
 
-                    // Show an Alert
+                    showAlert(Alert.AlertType.ERROR, root,
+                            getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
+                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
 
                 }
             });
+
 
             new Thread(deleteAppointmentTask).start();
         }
@@ -246,6 +278,37 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
     @FXML
     void handleNewAppointment() {
+
+        Task<Parent> task = new Task<Parent>() {
+            @Override
+            protected Parent call() {
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_ADD_LOCATION), getResources());
+                    Parent addAppointmentParent = loader.load();
+
+                    return Main.createView(600, 750, addAppointmentParent);
+
+
+                } catch (IOException e) {
+                    System.err.println("Error in AppointmentController - handleNewAppointment() " + e.getMessage());
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            Scene scene = new Scene(task.getValue());
+            Stage newStage = new Stage();
+            newStage.initOwner(root.getScene().getWindow());
+            newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
+            newStage.setScene(scene);
+            newStage.initStyle(StageStyle.TRANSPARENT);
+            newStage.show();
+        });
+
+        new Thread(task).start();
 
     }
 
