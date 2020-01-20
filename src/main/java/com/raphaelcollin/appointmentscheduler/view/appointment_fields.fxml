@@ -27,6 +27,7 @@
         <RowConstraints fillHeight="false" vgrow="NEVER"/>
         <RowConstraints fillHeight="false" vgrow="NEVER"/>
         <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
     </rowConstraints>
 
     <Label text="%appointments_label_date" GridPane.rowIndex="1"/>

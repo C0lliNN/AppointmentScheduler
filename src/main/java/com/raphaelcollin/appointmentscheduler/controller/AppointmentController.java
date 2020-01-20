@@ -7,8 +7,6 @@ import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
 import com.raphaelcollin.appointmentscheduler.db.model.ComboBoxItemHelper;
-import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
-import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -31,10 +29,10 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.APPOINTMENTS_CHANGE;
 import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
 
 public class AppointmentController implements Initializable, PropertyChangeListener {
@@ -256,6 +254,16 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             });
         }
 
+        if (evt.getPropertyName().equals(APPOINTMENTS_CHANGE)) {
+            Platform.runLater(() -> {
+                if (appointmentsTableView.getColumns().contains(dateColumn)) {
+                    appointmentsTableView.getSortOrder().add(dateColumn);
+                } else {
+                    appointmentsTableView.getSortOrder().add(scheduleColumn);
+                }
+            });
+        }
+
     }
 
     @FXML
@@ -355,31 +363,47 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             showSelectionErrorAlert();
         } else {
 
-            // Open a Dialog Window passing the current Object
 
             Appointment appointment = selectedItem.getValue();
-            appointment.setStatus("Completed");
 
-            Task<Boolean> updateAppointmentTask = new Task<Boolean>() {
-                @Override
-                protected Boolean call() {
-                    return DataSource.getInstance().updateAppointment(appointment);
-                }
-            };
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointment_update.fxml"), getResources());
+                Parent updateRoot =  loader.load();
 
-            updateAppointmentTask.setOnSucceeded(event -> {
-                if (updateAppointmentTask.getValue()) {
-                    Appointment updatedAppointment = new Appointment.Builder().
-                            setStatus("Unconfirmed").
-                            setDate(LocalDateTime.now()).
-                            setDoctor(new Doctor.Builder().setName("Test").build()).
-                            setPatient(new Patient.Builder().setFirstName("Test").setLastName("Test").build()).
-                            build();
-                    appointmentsTableView.getRoot().getChildren().add(new TreeItem<>(updatedAppointment));
-                }
-            });
+                AppointmentUpdateController controller = loader.getController();
+                controller.setAppointment(appointment);
 
-            new Thread(updateAppointmentTask).start();
+                Parent container = Main.createView(600, 800, updateRoot);
+
+                createNewStage(container);
+
+            } catch (IOException e) {
+                System.err.println("Error in AppointmentController - handleUpdateAppointment(): + " + e.getMessage());
+            }
+
+
+
+
+//            Task<Boolean> updateAppointmentTask = new Task<Boolean>() {
+//                @Override
+//                protected Boolean call() {
+//                    return DataSource.getInstance().updateAppointment(appointment);
+//                }
+//            };
+//
+//            updateAppointmentTask.setOnSucceeded(event -> {
+//                if (updateAppointmentTask.getValue()) {
+//                    Appointment updatedAppointment = new Appointment.Builder().
+//                            setStatus("Unconfirmed").
+//                            setDate(LocalDateTime.now()).
+//                            setDoctor(new Doctor.Builder().setName("Test").build()).
+//                            setPatient(new Patient.Builder().setFirstName("Test").setLastName("Test").build()).
+//                            build();
+//                    appointmentsTableView.getRoot().getChildren().add(new TreeItem<>(updatedAppointment));
+//                }
+//            });
+//
+//            new Thread(updateAppointmentTask).start();
         }
 
     }

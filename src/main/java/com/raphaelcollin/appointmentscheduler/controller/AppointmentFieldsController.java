@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
@@ -45,19 +46,22 @@ public class AppointmentFieldsController implements Initializable {
     private static final String REGEX_PRICE = "^\\d+([.,]\\d+)?$";
 
     private Appointment appointment;
-    private ComboBox<ComboBoxItemHelper> statusField;
+    private JFXComboBox<ComboBoxItemHelper> statusField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        root.setVgap(30);
+        root.setVgap(25);
         root.setHgap(20);
-        root.setPadding(new Insets(10));
+        root.setPadding(new Insets(10,10,0,10));
 
         for (int i = 0; i < root.getChildren().size(); i = i + 2) {
             ((Label) root.getChildren().get(i)).setFont(Font.font(20));
         }
 
-        if (!Boolean.parseBoolean(getResources().getString(BUNDLE_KEY_TIME_FORMAT))) {
+        dateField.setDefaultColor(Color.valueOf("#085394"));
+        timeField.setDefaultColor(Color.valueOf("#085394"));
+
+        if (getResources().getString(BUNDLE_KEY_TIME_FORMAT).contains("HH")) {
             timeField.set24HourView(true);
         }
 
@@ -110,7 +114,8 @@ public class AppointmentFieldsController implements Initializable {
         Label statusLabel = new Label(getResources().getString(BUNDLE_KEY_STATUS_TEXT));
         statusLabel.setFont(Font.font(20));
 
-        statusField = new ComboBox<>();
+        statusField = new JFXComboBox<>();
+        statusField.setPrefSize(230, 25);
         statusField.setItems(statusList);
 
         statusField.setCellFactory(new Callback<ListView<ComboBoxItemHelper>, ListCell<ComboBoxItemHelper>>() {
@@ -131,16 +136,23 @@ public class AppointmentFieldsController implements Initializable {
 
         statusField.setButtonCell(statusField.getCellFactory().call(null));
 
-        root.getChildren().addAll(statusLabel, statusField);
-        GridPane.setConstraints(statusLabel, 3,0);
-        GridPane.setConstraints(statusField, 3,1);
+        int index = -1;
 
-        for (int i = 6; i < root.getChildren().size(); i++) {
-            int rowIndex = GridPane.getRowIndex(root.getChildren().get(i));
-            int columnIndex = GridPane.getColumnIndex(root.getChildren().get(i));
-
-            GridPane.setConstraints(root.getChildren().get(i), rowIndex + 1, columnIndex);
+        for (int i = 0; i < statusList.size(); i++) {
+            if (statusList.get(i).getDbName().equals(appointment.getStatus())) {
+                index = i;
+                break;
+            }
         }
+
+        statusField.getSelectionModel().select(index);
+
+        for (int i = 4; i < root.getChildren().size(); i++) {
+            int rowIndex = GridPane.getRowIndex(root.getChildren().get(i));
+            GridPane.setRowIndex(root.getChildren().get(i), rowIndex + 1);
+        }
+
+        root.addRow(3, statusLabel, statusField);
 
         this.appointment = appointment;
     }

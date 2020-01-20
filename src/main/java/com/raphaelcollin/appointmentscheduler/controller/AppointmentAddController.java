@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
-public class AppointmentAdd implements Initializable {
+public class AppointmentAddController implements Initializable {
 
     @FXML
     private AnchorPane root;

@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
@@ -137,7 +138,18 @@ public class Appointment extends RecursiveTreeObject<Appointment>{
         this.patient = patient;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Appointment that = (Appointment) object;
+        return id == that.id;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public static class Builder {
         private int id;
