@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<AnchorPane fx:id="root"  xmlns:fx="http://javafx.com/fxml/1" stylesheets="@dialogs_style.css" styleClass="content"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.AppointmentDetailsController">
+   <JFXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+      <Tab fx:id="appointmentTab" text="Appointment">
+
+         <AnchorPane>
+
+            <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+            <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+               <columnConstraints>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
+
+               <Label text="Date"/>
+
+               <JFXDatePicker fx:id="appointmentDateField" GridPane.columnIndex="1"/>
+
+               <Label text="Schedule" GridPane.rowIndex="1"/>
+
+               <JFXTimePicker fx:id="appointmentTimeField" GridPane.columnIndex="1"
+                              GridPane.rowIndex="1"/>
+
+               <Label text="Status" GridPane.rowIndex="2"/>
+
+               <JFXTextField fx:id="appointmentStatusField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+               <Label text="Price" GridPane.rowIndex="3"/>
+
+               <JFXTextField fx:id="appointmentPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+               <Label text="Description" GridPane.rowIndex="4"/>
+
+               <JFXTextArea fx:id="appointmentDescriptionField" prefColumnCount="18" GridPane.columnSpan="2"
+                            GridPane.rowIndex="5" GridPane.rowSpan="2"/>
+            </GridPane>
+         </AnchorPane>
+      </Tab>
+      <Tab fx:id="patientTab" text="Patient">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+            <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+            <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+               <columnConstraints>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
+
+               <Label text="Name"/>
+               <JFXTextField fx:id="patientNameField" GridPane.columnIndex="1"/>
+
+               <Label text="Gender" GridPane.rowIndex="1"/>
+               <JFXTextField fx:id="patientGenderField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+               <Label text="Birth Date" GridPane.rowIndex="2"/>
+               <JFXDatePicker fx:id="patientBirthDateField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+               <Label text="Phone" GridPane.rowIndex="3"/>
+               <JFXTextField fx:id="patientPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+               <Label text="Email" GridPane.rowIndex="4"/>
+               <JFXTextField fx:id="patientEmailField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+               <Label text="Address" GridPane.rowIndex="5"/>
+               <JFXTextField fx:id="patientAddressField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+               <Label text="Appointments" GridPane.rowIndex="6"/>
+               <JFXTextField fx:id="patientAppointmentsField" GridPane.columnIndex="1"
+                             GridPane.rowIndex="6"/>
+               <Label text="Amount Spent" GridPane.rowIndex="7"/>
+               <JFXTextField fx:id="patientAmountField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+            </GridPane>
+         </AnchorPane>
+      </Tab>
+      <Tab fx:id="doctorTab" text="Doctor">
+         <AnchorPane>
+
+            <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+            <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+               <columnConstraints>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+                  <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
+
+               <Label text="Name"/>
+               <JFXTextField fx:id="doctorNameField" GridPane.columnIndex="1"/>
+
+               <Label text="Gender" GridPane.rowIndex="1"/>
+               <JFXTextField fx:id="doctorGenderField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+               <Label text="Birth Date" GridPane.rowIndex="2"/>
+               <JFXDatePicker fx:id="doctorBirthDateField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+               <Label text="Phone" GridPane.rowIndex="3"/>
+               <JFXTextField fx:id="doctorPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+               <Label text="License Number" GridPane.rowIndex="4"/>
+               <JFXTextField fx:id="doctorLicenseNumberField" GridPane.columnIndex="1"
+                             GridPane.rowIndex="4"/>
+               <Label text="Appointments" GridPane.rowIndex="5"/>
+               <JFXTextField fx:id="doctorAppointmentsField" GridPane.columnIndex="1"
+                             GridPane.rowIndex="5"/>
+
+               <Label text="Amount earned" GridPane.rowIndex="6"/>
+               <JFXTextField fx:id="doctorAmountField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            </GridPane>
+         </AnchorPane>
+      </Tab>
+   </JFXTabPane>
+</AnchorPane>

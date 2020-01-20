@@ -62,7 +62,7 @@
     -fx-border-width: 0;
 }
 
-.tab-pane .tab-header-background {
+.tab-pane .tab-header-background, .tab-pane .tab-header-area {
     -fx-background-color: -theme-color1;
 }
 

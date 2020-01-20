@@ -8,10 +8,10 @@ import javafx.beans.value.ObservableValue;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.raphaelcollin.appointmentscheduler.Main.BUNDLE_KEY_TIME_FORMAT;
-import static com.raphaelcollin.appointmentscheduler.Main.getResources;
+import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class Appointment extends RecursiveTreeObject<Appointment>{
+
     private int id;
     private LocalDateTime date;
     private double price;
@@ -20,6 +20,7 @@ public class Appointment extends RecursiveTreeObject<Appointment>{
     private Doctor doctor;
     private Patient patient;
 
+    private SimpleStringProperty dateProperty;
     private SimpleStringProperty scheduleProperty;
     private SimpleStringProperty patientProperty;
     private SimpleStringProperty descriptionProperty;
@@ -36,18 +37,14 @@ public class Appointment extends RecursiveTreeObject<Appointment>{
         this.doctor = builder.doctor;
         this.patient = builder.patient;
 
-        boolean dateFormat12 = Boolean.parseBoolean(getResources().getString(BUNDLE_KEY_TIME_FORMAT));
-        String schedule;
-        String pattern;
 
-        if (dateFormat12) {
-            pattern = "hh:mm a";
-        } else {
-            pattern = "HH:mm";
-        }
+        String datePattern = getResources().getString(BUNDLE_KEY_DATE_FORMAT).trim();
+        String stringDate = this.date.toLocalDate().format(DateTimeFormatter.ofPattern(datePattern));
 
-        schedule = this.date.toLocalTime().format(DateTimeFormatter.ofPattern(pattern));
+        String timePattern = getResources().getString(BUNDLE_KEY_TIME_FORMAT).trim();
+        String schedule = this.date.toLocalTime().format(DateTimeFormatter.ofPattern(timePattern));
 
+        this.dateProperty = new SimpleStringProperty(stringDate);
         this.scheduleProperty = new SimpleStringProperty(schedule);
         this.patientProperty = new SimpleStringProperty(patient.getName());
         this.descriptionProperty = new SimpleStringProperty(this.description);
@@ -56,13 +53,8 @@ public class Appointment extends RecursiveTreeObject<Appointment>{
         this.statusProperty = new SimpleStringProperty(this.status);
     }
 
-
-    private String adjustDate(int number) {
-        if (number < 10) {
-            return "0" + number;
-        }
-
-        return String.format("%d", number);
+    public ObservableValue<String> getDateProperty() {
+        return dateProperty;
     }
 
     public ObservableValue<String> getScheduleProperty() {

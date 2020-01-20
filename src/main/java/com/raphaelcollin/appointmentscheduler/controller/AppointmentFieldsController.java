@@ -3,17 +3,16 @@ package com.raphaelcollin.appointmentscheduler.controller;
 import com.jfoenix.controls.*;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
+import com.raphaelcollin.appointmentscheduler.db.model.ComboBoxItemHelper;
 import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
 import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -46,7 +45,7 @@ public class AppointmentFieldsController implements Initializable {
     private static final String REGEX_PRICE = "^\\d+([.,]\\d+)?$";
 
     private Appointment appointment;
-    private ComboBox<String> statusField;
+    private ComboBox<ComboBoxItemHelper> statusField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -112,7 +111,25 @@ public class AppointmentFieldsController implements Initializable {
         statusLabel.setFont(Font.font(20));
 
         statusField = new ComboBox<>();
-        statusField.getItems().setAll(statusMap.values());
+        statusField.setItems(statusList);
+
+        statusField.setCellFactory(new Callback<ListView<ComboBoxItemHelper>, ListCell<ComboBoxItemHelper>>() {
+            @Override
+            public ListCell<ComboBoxItemHelper> call(ListView<ComboBoxItemHelper> param) {
+                return new ListCell<ComboBoxItemHelper>(){
+                    @Override
+                    protected void updateItem(ComboBoxItemHelper item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item != null && !empty) {
+                            setText(getResources().getString(item.getBundleKey()));
+                        }
+                    }
+                };
+            }
+        });
+
+        statusField.setButtonCell(statusField.getCellFactory().call(null));
 
         root.getChildren().addAll(statusLabel, statusField);
         GridPane.setConstraints(statusLabel, 3,0);
@@ -168,9 +185,11 @@ public class AppointmentFieldsController implements Initializable {
             }
 
             if (this.statusField != null) {
-                builder.setStatus(statusField.getSelectionModel().getSelectedItem());
+
+                builder.setStatus(statusField.getSelectionModel().getSelectedItem().getDbName());
             } else {
-                builder.setStatus(statusMap.get(UNCONFIRMED_INDEX));
+
+                builder.setStatus(getResources().getString(BUNDLE_KEY_STATUS_UNCONFIRMED));
             }
 
             appointment = builder

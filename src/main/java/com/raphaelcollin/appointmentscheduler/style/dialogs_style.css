@@ -1,3 +1,8 @@
+* {
+    -theme-gray-1: #a2a2a2;
+    -theme-gray-2: #848484;
+}
+
 .root, .content {
     -fx-background-color: #f4f4f4;
 }
@@ -13,16 +18,16 @@
 
 .jfx-text-field, .jfx-password-field, .jfx-text-area, .jfx-combo-box .list-cell {
     -fx-font-family: Arial;
-    -jfx-focus-color: #a2a2a2;
-    -jfx-unfocus-color: #848484;
+    -jfx-focus-color: -theme-gray-1;
+    -jfx-unfocus-color: -theme-gray-2;
     -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
     -fx-font-size: 1.7em;
     -fx-text-fill: #575757;
 }
 
 .jfx-combo-box {
-    -jfx-focus-color: #a2a2a2;
-    -jfx-unfocus-color: #848484;
+    -jfx-focus-color: -theme-gray-1;
+    -jfx-unfocus-color: -theme-gray-2;
 }
 
 .jfx-combo-box .list-cell:hover {
@@ -72,4 +77,29 @@
 
 .orange-button:hover {
     -fx-background-color: #FF9004;
+}
+
+.jfx-tab-pane .jfx-rippler {
+    -jfx-rippler-fill: white;
+}
+
+.jfx-tab-pane:top .depth-container .tab-header-area .headers-region .tab-selected-line {
+    -fx-background-color: white;
+}
+
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #085394;
+}
+
+.tab {
+    -fx-background-color: #085394;
+}
+
+.tab:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #084889;
+}
+
+.tab .tab-label {
+    -fx-font-size: 18px;
 }

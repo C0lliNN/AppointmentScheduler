@@ -6,13 +6,12 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.raphaelcollin.appointmentscheduler.Main;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
+import com.raphaelcollin.appointmentscheduler.db.model.ComboBoxItemHelper;
 import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
 import com.raphaelcollin.appointmentscheduler.db.model.Patient;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,9 +20,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
@@ -39,6 +39,34 @@ import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_
 
 public class AppointmentController implements Initializable, PropertyChangeListener {
 
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private HBox filtersHBox;
+    @FXML
+    private JFXDatePicker dateField;
+    @FXML
+    private JFXTextField doctorField;
+    @FXML
+    private JFXTextField patientField;
+    @FXML
+    private JFXComboBox<ComboBoxItemHelper> statusField;
+    @FXML
+    private JFXCheckBox allDatesCheckBox;
+    @FXML
+    private HBox buttonsHBox;
+    @FXML
+    private JFXButton showDetailsButton;
+    @FXML
+    private JFXButton newAppointmentButton;
+    @FXML
+    private JFXButton updateAppointmentButton;
+    @FXML
+    private JFXButton deleteAppointmentButton;
+    @FXML
+    private JFXTreeTableView<Appointment> appointmentsTableView;
+    @FXML
+    private TreeTableColumn<Appointment, String> dateColumn;
     @FXML
     private TreeTableColumn<Appointment, String> scheduleColumn;
     @FXML
@@ -51,43 +79,6 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     private TreeTableColumn<Appointment, Double> priceColumn;
     @FXML
     private TreeTableColumn<Appointment, String> statusColumn;
-    @FXML
-    private AnchorPane root;
-    @FXML
-    private HBox filtersHBox;
-
-    @FXML
-    private JFXDatePicker dateField;
-
-    @FXML
-    private JFXTextField doctorField;
-
-    @FXML
-    private JFXTextField patientField;
-
-    @FXML
-    private JFXComboBox<String> statusField;
-
-    @FXML
-    private JFXTreeTableView<Appointment> appointmentsTableView;
-
-    @FXML
-    private JFXCheckBox allDatesCheckBox;
-
-    @FXML
-    private HBox buttonsHBox;
-
-    @FXML
-    private JFXButton showDetailsButton;
-
-    @FXML
-    private JFXButton newAppointmentButton;
-
-    @FXML
-    private JFXButton updateAppointmentButton;
-
-    @FXML
-    private JFXButton deleteAppointmentButton;
 
     private static final String REMOVE_NON_DIGITS_REGEX = "[^\\d]";
 
@@ -114,15 +105,32 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         AnchorPane.setTopAnchor(filtersHBox, 50.0);
 
         dateField.setStyle("-fx-font-size: 15px");
+        dateField.setDefaultColor(Color.valueOf("#085394"));
         patientField.setFont(Font.font(15));
         doctorField.setFont(Font.font(15));
-        statusField.setValue(resources.getString(BUNDLE_KEY_STATUS_ALL));
-        statusField.setItems(FXCollections.observableList(Arrays.asList(
-                resources.getString(BUNDLE_KEY_STATUS_ALL),
-                resources.getString(BUNDLE_KEY_STATUS_UNCONFIRMED),
-                resources.getString(BUNDLE_KEY_STATUS_CONFIRMED),
-                resources.getString(BUNDLE_KEY_STATUS_CANCEL),
-                resources.getString(BUNDLE_KEY_STATUS_COMPLETED))));
+
+        statusField.setItems(statusList);
+
+        statusField.setCellFactory(new Callback<ListView<ComboBoxItemHelper>, ListCell<ComboBoxItemHelper>>() {
+            @Override
+            public ListCell<ComboBoxItemHelper> call(ListView<ComboBoxItemHelper> param) {
+                return new ListCell<ComboBoxItemHelper>() {
+                    @Override
+                    protected void updateItem(ComboBoxItemHelper item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item != null && !empty) {
+                            setText(getResources().getString(item.getBundleKey()));
+                        }
+
+                    }
+                };
+            }
+        });
+
+        statusField.setButtonCell(statusField.getCellFactory().call(null));
+
+        statusField.getSelectionModel().selectFirst();
 
         allDatesCheckBox.setFont(Font.font(14));
         allDatesCheckBox.getStyleClass().add(STYLE_CLASS_BLUE_CHECK_BOX);
@@ -140,6 +148,9 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
         AnchorPane.setTopAnchor(appointmentsTableView, 200.0);
 
+        appointmentsTableView.getColumns().remove(dateColumn);
+
+        dateColumn.setCellValueFactory(param -> param.getValue().getValue().getDateProperty());
         scheduleColumn.setCellValueFactory(param -> param.getValue().getValue().getScheduleProperty());
         patientColumn.setCellValueFactory(param -> param.getValue().getValue().getPatientProperty());
         descriptionColumn.setCellValueFactory(param -> param.getValue().getValue().getDescriptionProperty());
@@ -171,6 +182,14 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         appointmentsTableView.setShowRoot(false);
 
         DataSource.getInstance().addObserver(this);
+
+        allDatesCheckBox.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue) {
+                appointmentsTableView.getColumns().add(0, dateColumn);
+            } else {
+                appointmentsTableView.getColumns().remove(dateColumn);
+            }
+        }));
 
         dateField.disableProperty().bind(allDatesCheckBox.selectedProperty());
 
@@ -213,7 +232,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             }
 
             if (statusField.getSelectionModel().getSelectedIndex() > 0 &&
-                    !statusMap.get(statusField.getSelectionModel().getSelectedIndex()).equals(treeItem.getValue().getStatus())) {
+                    !statusField.getSelectionModel().getSelectedItem().getDbName().equals(treeItem.getValue().getStatus())) {
                 show = false;
             }
         }
@@ -263,10 +282,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             deleteAppointmentTask.setOnSucceeded(event -> {
                 if (!deleteAppointmentTask.getValue()) {
 
-                    showAlert(Alert.AlertType.ERROR, root,
-                            getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+                    showSelectionErrorAlert();
 
                 }
             });
@@ -299,13 +315,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         };
 
         task.setOnSucceeded(event -> {
-            Scene scene = new Scene(task.getValue());
-            Stage newStage = new Stage();
-            newStage.initOwner(root.getScene().getWindow());
-            newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
-            newStage.setScene(scene);
-            newStage.initStyle(StageStyle.TRANSPARENT);
-            newStage.show();
+            createNewStage(task.getValue());
         });
 
         new Thread(task).start();
@@ -313,17 +323,36 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     }
 
     @FXML
-    void handleShowDetails(ActionEvent event) {
+    void handleShowDetails() {
+        TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
 
+        if (selectedItem == null) {
+            showSelectionErrorAlert();
+        } else {
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_DETAILS_LOCATION));
+                Parent detailsViewRoot = loader.load();
+
+                AppointmentDetailsController controller = loader.getController();
+                controller.setAppointment(selectedItem.getValue());
+
+                Parent containerRoot = Main.createView(608, 650, detailsViewRoot);
+                createNewStage(containerRoot);
+
+            } catch (IOException e) {
+                System.err.println("Error in AppointmentController - handleShowDetails(): + " + e.getMessage());
+            }
+        }
     }
 
     @FXML
     void handleUpdateAppointment() {
         TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
-        int selectedIndex = appointmentsTableView.getSelectionModel().getSelectedIndex();
+
 
         if (selectedItem == null) {
-            // Show an Alert
+            showSelectionErrorAlert();
         } else {
 
             // Open a Dialog Window passing the current Object
@@ -353,5 +382,22 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             new Thread(updateAppointmentTask).start();
         }
 
+    }
+
+    private void showSelectionErrorAlert() {
+        showAlert(Alert.AlertType.ERROR, root,
+                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+    }
+
+    private void createNewStage(Parent sceneRoot) {
+        Scene scene = new Scene(sceneRoot);
+        Stage newStage = new Stage();
+        newStage.initOwner(root.getScene().getWindow());
+        newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
+        newStage.setScene(scene);
+        newStage.initStyle(StageStyle.TRANSPARENT);
+        newStage.show();
     }
 }

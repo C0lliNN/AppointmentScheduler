@@ -4,11 +4,14 @@ package com.raphaelcollin.appointmentscheduler;
 import com.raphaelcollin.appointmentscheduler.controller.ContainerController;
 import com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController;
 import com.raphaelcollin.appointmentscheduler.db.ConnectionFactory;
+import com.raphaelcollin.appointmentscheduler.db.model.ComboBoxItemHelper;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,7 +35,8 @@ public class Main extends Application {
 
     private static Connection connection;
     private static ResourceBundle resources;
-    public static Map<Integer, String> statusMap;
+    public static ObservableList<ComboBoxItemHelper> statusList;
+    public static ObservableList<ComboBoxItemHelper> genderList;
 
     // File Locations
 
@@ -46,7 +50,8 @@ public class Main extends Application {
     public static final String APPOINTMENT_CONTENT_LOCATION = "/appointment_content.fxml";
     public static final String CONTAINER_LOCATION = "/container.fxml";
     public static final String APPOINTMENT_FIELDS_LOCATION = "/appointment_fields.fxml";
-    public static final String APPOINTMENT_ADD_LOCATION ="/appointment_add.fxml" ;
+    public static final String APPOINTMENT_ADD_LOCATION ="/appointment_add.fxml";
+    public static final String APPOINTMENT_DETAILS_LOCATION = "/appointment_details.fxml";
 
     // Bundle Keys
 
@@ -70,11 +75,11 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_TAB_TITLE_DOCTOR = "tab_title_doctor";
     public static final String BUNDLE_KEY_TAB_TITLE_TOOLS = "tab_title_tools";
     public static final String BUNDLE_KEY_TAB_TITLE_SETTINGS = "tab_title_settings";
-    public static final String BUNDLE_KEY_TIME_FORMAT = "time_format_12hours";
+    public static final String BUNDLE_KEY_TIME_FORMAT = "time_format";
     public static final String BUNDLE_KEY_STATUS_ALL = "tab_appointments_status_all";
     public static final String BUNDLE_KEY_STATUS_UNCONFIRMED = "tab_appointments_status_unconfirmed";
     public static final String BUNDLE_KEY_STATUS_CONFIRMED = "tab_appointments_status_confirmed";
-    public static final String BUNDLE_KEY_STATUS_CANCEL ="tab_appointments_status_canceled" ;
+    public static final String BUNDLE_KEY_STATUS_CANCELED ="tab_appointments_status_canceled" ;
     public static final String BUNDLE_KEY_STATUS_COMPLETED = "tab_appointments_status_completed";
     public static final String BUNDLE_KEY_STATUS_TEXT = "tab_appointments_status_text";
     public static final String BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT = "alert_database_error_headerText";
@@ -83,6 +88,9 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE2 = "alert_appointment_field_priceMessage";
     public static final String BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT = "alert_invalid_selection_headerText";
     public static final String BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT = "alert_invalid_selection_contentText";
+    public static final String BUNDLE_KEY_GENDER_MALE = "gender_male";
+    public static final String BUNDLE_KEY_GENDER_FEMALE = "gender_female";
+    public static final String BUNDLE_KEY_DATE_FORMAT = "date_format";
 
     // Classes and Ids
 
@@ -129,6 +137,13 @@ public class Main extends Application {
     public static final int CANCELED_INDEX = 3;
     public static final int COMPLETED_INDEX = 4;
 
+    // Gender Constants
+
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
+    public static final int MALE_INDEX = 1;
+    public static final int FEMALE_INDEX = 2;
+
 
 
     @Override
@@ -136,11 +151,19 @@ public class Main extends Application {
         //ApplicationPreferences.getInstance().getPreferences().clear();
         //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
         super.init();
-        statusMap = new HashMap<>(4);
-        statusMap.put(UNCONFIRMED_INDEX, UNCONFIRMED);
-        statusMap.put(COMPLETED_INDEX, COMPLETED);
-        statusMap.put(CANCELED_INDEX, CANCELED);
-        statusMap.put(CONFIRMED_INDEX, CONFIRMED);
+
+        statusList = FXCollections.observableList(Arrays.asList(
+                new ComboBoxItemHelper("", 0, BUNDLE_KEY_STATUS_ALL),
+                new ComboBoxItemHelper(UNCONFIRMED, UNCONFIRMED_INDEX, BUNDLE_KEY_STATUS_UNCONFIRMED),
+                new ComboBoxItemHelper(COMPLETED, COMPLETED_INDEX, BUNDLE_KEY_STATUS_COMPLETED),
+                new ComboBoxItemHelper(CANCELED, CANCELED_INDEX, BUNDLE_KEY_STATUS_CANCELED),
+                new ComboBoxItemHelper(CONFIRMED, CONFIRMED_INDEX, BUNDLE_KEY_STATUS_CONFIRMED)
+        ));
+
+        genderList = FXCollections.observableList(Arrays.asList(
+                new ComboBoxItemHelper(MALE, MALE_INDEX, BUNDLE_KEY_GENDER_MALE),
+                new ComboBoxItemHelper(FEMALE, FEMALE_INDEX, BUNDLE_KEY_GENDER_FEMALE)
+        ));
 
 
     }

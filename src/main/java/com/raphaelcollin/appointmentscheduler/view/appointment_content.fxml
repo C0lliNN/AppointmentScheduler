@@ -40,6 +40,7 @@
    <JFXTreeTableView fx:id="appointmentsTableView" tableMenuButtonVisible="true"
                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <columns>
+         <TreeTableColumn fx:id="dateColumn" text="%tab_appointments_column_header0"/>
          <TreeTableColumn fx:id="scheduleColumn" text="%tab_appointments_column_header1"/>
          <TreeTableColumn fx:id="patientColumn" text="%tab_appointments_column_header2"/>
          <TreeTableColumn fx:id="descriptionColumn" text="%tab_appointments_column_header3"/>
