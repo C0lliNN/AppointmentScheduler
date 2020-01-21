@@ -155,9 +155,9 @@ public class Main extends Application {
         statusList = FXCollections.observableList(Arrays.asList(
                 new ComboBoxItemHelper("", 0, BUNDLE_KEY_STATUS_ALL),
                 new ComboBoxItemHelper(UNCONFIRMED, UNCONFIRMED_INDEX, BUNDLE_KEY_STATUS_UNCONFIRMED),
-                new ComboBoxItemHelper(COMPLETED, COMPLETED_INDEX, BUNDLE_KEY_STATUS_COMPLETED),
+                new ComboBoxItemHelper(CONFIRMED, CONFIRMED_INDEX, BUNDLE_KEY_STATUS_CONFIRMED),
                 new ComboBoxItemHelper(CANCELED, CANCELED_INDEX, BUNDLE_KEY_STATUS_CANCELED),
-                new ComboBoxItemHelper(CONFIRMED, CONFIRMED_INDEX, BUNDLE_KEY_STATUS_CONFIRMED)
+                new ComboBoxItemHelper(COMPLETED, COMPLETED_INDEX, BUNDLE_KEY_STATUS_COMPLETED)
         ));
 
         genderList = FXCollections.observableList(Arrays.asList(

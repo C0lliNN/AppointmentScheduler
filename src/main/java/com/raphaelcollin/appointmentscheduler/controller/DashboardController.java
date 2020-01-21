@@ -141,9 +141,8 @@ public class DashboardController implements Initializable, PropertyChangeListene
                     }
                     if (appointment.getStatus().equals(COMPLETED)) {
                         numberOfCompletedAppointments++;
+                        earnings += appointment.getPrice();
                     }
-
-                    earnings += appointment.getPrice();
 
                     numberOfAppointments++;
                 }

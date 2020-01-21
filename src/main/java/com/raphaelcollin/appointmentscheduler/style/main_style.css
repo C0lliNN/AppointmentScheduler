@@ -265,8 +265,6 @@
     -fx-alignment: center;
 }
 
-
-
 .tree-table-view:focused .tree-table-row-cell:selected, .tree-table-view:focused .tree-table-row-cell:visited {
     -fx-background-color: rgba(82, 100, 174, 0.4);
     -fx-cursor: default;
@@ -284,4 +282,51 @@
     -fx-background-color: #cdcdcd;
     -fx-cursor: hand;
 }
+
+.chart {
+    -fx-padding: 10px;
+}
+
+.chart-title {
+    -fx-font-size: 2em;
+}
+
+.axis-label {
+    -fx-font-size: 1.5em;
+}
+
+.chart-legend-item-symbol{
+    -fx-background-radius: 0;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #006ecf; }
+.default-color0.chart-pie { -fx-pie-color: #006ecf; }
+.default-color1.chart-pie { -fx-pie-color: #3086d1; }
+.default-color2.chart-pie { -fx-pie-color: #5195cf; }
+.default-color3.chart-pie { -fx-pie-color: #649ccc; }
+.default-color4.chart-pie { -fx-pie-color: #81a8c9; }
+
+.chart-pie-label {
+    -fx-font-size: 1.4em;
+}
+
+.chart-legend {
+    -fx-font-size: 1.2em;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: rgba(50,120,250, 0.4);
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgba(50,120,250, 0.4);
+}
+.chart-alternative-row-fill {
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
 

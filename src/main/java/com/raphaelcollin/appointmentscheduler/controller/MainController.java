@@ -77,6 +77,10 @@ public class MainController implements Initializable {
                     getResources().getString(BUNDLE_KEY_TAB_TITLE_FINANCIAL),
                     financialIcon));
 
+            Parent financialContent = FXMLLoader.load(getClass().getResource("/financial_view.fxml"), getResources());
+            financialTab.setContent(financialContent);
+
+
             FontAwesomeIconView patientIcon = new FontAwesomeIconView(FontAwesomeIcon.USER);
             patientIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab patientTab = new Tab();

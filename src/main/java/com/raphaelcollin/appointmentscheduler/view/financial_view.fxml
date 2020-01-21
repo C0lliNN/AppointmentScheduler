@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane fx:id="root" fx:controller="com.raphaelcollin.appointmentscheduler.controller.FinancialController"
+            xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css">
+
+    <LineChart fx:id="lineChart" axisSortingPolicy="NONE" title="%financial_line_chart_title">
+      <xAxis>
+          <NumberAxis side="BOTTOM"/>
+      </xAxis>
+      <yAxis>
+          <NumberAxis side="LEFT" label="%financial_line_chart_axis"/>
+      </yAxis>
+    </LineChart>
+    <PieChart fx:id="pieChart" title="%financial_pie_chart_title"/>
+
+    <Label fx:id="titleLabel" alignment="CENTER" text="%financial_label_title"/>
+
+    <GridPane fx:id="gridPaneFields" alignment="CENTER_LEFT" >
+        <columnConstraints>
+            <ColumnConstraints hgrow="NEVER"/>
+            <ColumnConstraints hgrow="NEVER"/>
+            <ColumnConstraints hgrow="NEVER"/>
+            <ColumnConstraints hgrow="NEVER"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+        </rowConstraints>
+
+        <Label text="%financial_label_year"/>
+        <Label text="%financial_label_month" GridPane.rowIndex="1"/>
+        <Label text="%financial_label_start_day" GridPane.rowIndex="2"/>
+        <Label text="%financial_label_end_day" GridPane.rowIndex="3"/>
+
+        <JFXComboBox fx:id="yearField" GridPane.columnIndex="3"/>
+        <JFXComboBox fx:id="monthField" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <JFXTextField fx:id="startDayField" promptText="%financial_field_day" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+        <JFXTextField fx:id="endDayField" promptText="%financial_field_day" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+    </GridPane>
+    <VBox fx:id="resultsVBox" alignment="CENTER_LEFT" fillWidth="false">
+
+        <Label text="%financial_label_appointments"/>
+        <JFXTextField  fx:id="appointmentsField"/>
+
+        <Label text="%financial_label_total_earned">
+            <VBox.margin>
+                <Insets top="10"/>
+            </VBox.margin>
+        </Label>
+        <JFXTextField fx:id="totalEarnedField"/>
+    </VBox>
+</AnchorPane>
