@@ -205,6 +205,27 @@ public class DataSource {
 
 
     }
+    // Returns the Year of the oldest appointment
+    public int getFirstYear() {
+        int oldestYear = Integer.MIN_VALUE;
+        for (Appointment appointment : appointments) {
+            if (appointment.getDate().getYear() > oldestYear) {
+                oldestYear = appointment.getDate().getYear();
+            }
+        }
+        return oldestYear;
+    }
+
+    // Returns the Year of the most recent appointment
+    public int getLastYear() {
+        int mostRecentYear = Integer.MAX_VALUE;
+        for (Appointment appointment : appointments) {
+            if (appointment.getDate().getYear() < mostRecentYear) {
+                mostRecentYear = appointment.getDate().getYear();
+            }
+        }
+        return mostRecentYear;
+    }
 
     private static class SingletonHelper {
         private static DataSource instance = new DataSource();

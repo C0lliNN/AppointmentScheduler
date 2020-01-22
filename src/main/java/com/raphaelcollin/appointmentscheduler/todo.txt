@@ -1,1 +1,2 @@
-Financial Tab
+Dashboard Button
+Patient and Doctor Tabs

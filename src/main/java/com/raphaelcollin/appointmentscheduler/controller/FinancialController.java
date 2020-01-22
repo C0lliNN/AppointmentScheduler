@@ -2,25 +2,52 @@ package com.raphaelcollin.appointmentscheduler.controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.raphaelcollin.appointmentscheduler.db.DataSource;
+import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
+import com.raphaelcollin.appointmentscheduler.db.model.Doctor;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.chart.*;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
-public class FinancialController implements Initializable {
+import static com.raphaelcollin.appointmentscheduler.Main.COMPLETED;
+import static com.raphaelcollin.appointmentscheduler.Main.getResources;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.*;
+
+public class FinancialController implements Initializable, PropertyChangeListener {
 
 
+    private static final String JANUARY = "january";
+    private static final String FEBRUARY = "february";
+    private static final String MARCH = "march";
+    private static final String APRIL = "april";
+    private static final String MAY = "may";
+    private static final String JUNE = "june";
+    private static final String JULY = "july";
+    private static final String AUGUST = "august";
+    private static final String SEPTEMBER = "september";
+    private static final String OCTOBER = "october";
+    private static final String NOVEMBER = "november";
+    private static final String DECEMBER = "december";
     @FXML
     private AnchorPane root;
     @FXML
@@ -28,7 +55,7 @@ public class FinancialController implements Initializable {
     @FXML
     private GridPane gridPaneFields;
     @FXML
-    private JFXComboBox<String> yearField;
+    private JFXComboBox<Integer> yearField;
     @FXML
     private JFXComboBox<String> monthField;
     @FXML
@@ -42,9 +69,11 @@ public class FinancialController implements Initializable {
     @FXML
     private VBox resultsVBox;
     @FXML
-    private LineChart<Integer, Number> lineChart;
+    private LineChart<Integer, Double> lineChart;
     @FXML
     private PieChart pieChart;
+
+    private static final String REGEX_DAY = "^[0-31]+";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,31 +92,6 @@ public class FinancialController implements Initializable {
         AnchorPane.setTopAnchor(lineChart, 500.0);
         lineChart.setPrefSize(990, 280);
 
-
-        XYChart.Series<Integer, Number> series = new XYChart.Series<>();
-        series.setName("Actual Result");
-        series.getData().add(new XYChart.Data<>(1, 53213.9));
-        series.getData().add(new XYChart.Data<>(2, 43213.3));
-        series.getData().add(new XYChart.Data<>(3, 55713.1));
-        series.getData().add(new XYChart.Data<>(4, 48713.9));
-        series.getData().add(new XYChart.Data<>(5, 53213.9));
-        series.getData().add(new XYChart.Data<>(6, 15213.9));
-        series.getData().add(new XYChart.Data<>(7, 23213.9));
-        series.getData().add(new XYChart.Data<>(8, 35213.9));
-        series.getData().add(new XYChart.Data<>(9, 65213.9));
-        series.getData().add(new XYChart.Data<>(10, 42213.9));
-        series.getData().add(new XYChart.Data<>(11, 2213.9));
-        series.getData().add(new XYChart.Data<>(12, 53213.9));
-        series.getData().add(new XYChart.Data<>(13, 33213.9));
-        series.getData().add(new XYChart.Data<>(14, 43213.3));
-        series.getData().add(new XYChart.Data<>(15, 15713.1));
-        series.getData().add(new XYChart.Data<>(16, 48713.9));
-        series.getData().add(new XYChart.Data<>(17, 53213.9));
-        series.getData().add(new XYChart.Data<>(18, 43213.3));
-        series.getData().add(new XYChart.Data<>(19, 55713.1));
-        series.getData().add(new XYChart.Data<>(20, 48713.9));
-
-
         lineChart.getXAxis().setAutoRanging(true);
         lineChart.getXAxis().setTickMarkVisible(false);
         lineChart.getXAxis().setTickLabelsVisible(false);
@@ -96,21 +100,11 @@ public class FinancialController implements Initializable {
         lineChart.getYAxis().setTickMarkVisible(false);
         lineChart.getYAxis().setTickLabelFont(Font.font(15));
 
-        lineChart.getData().add(series);
         lineChart.setLegendVisible(false);
         lineChart.setCreateSymbols(false);
 
         AnchorPane.setTopAnchor(pieChart, 20.0);
         AnchorPane.setLeftAnchor(pieChart, 500.0);
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Grapefruit", 13),
-                        new PieChart.Data("Oranges", 25),
-                        new PieChart.Data("Plums", 10),
-                        new PieChart.Data("Pears", 22),
-                        new PieChart.Data("Apples", 30));
-        pieChart.setData(pieChartData);
 
         gridPaneFields.setPadding(new Insets(0, 0, 0, 40));
         gridPaneFields.setHgap(10);
@@ -145,34 +139,152 @@ public class FinancialController implements Initializable {
                 ((Label) resultsVBox.getChildren().get(j)).setFont(Font.font(22));
             } else {
                 ((JFXTextField) node).setPrefSize(200, 25);
-                ((JFXTextField) node).setFont(Font.font(18));
+                ((JFXTextField) node).setFont(Font.font(22));
             }
 
         }
 
+        totalEarnedField.setStyle("-fx-text-fill: #006700");
+        appointmentsField.setStyle("-fx-text-fill: #1671b0");
+
         AnchorPane.setLeftAnchor(resultsVBox, 0.0);
         AnchorPane.setRightAnchor(resultsVBox, 530.0);
         AnchorPane.setTopAnchor(resultsVBox, 350.0);
+
+        monthField.setItems(FXCollections.observableList(Arrays.asList(
+                resources.getString(JANUARY),
+                resources.getString(FEBRUARY),
+                resources.getString(MARCH),
+                resources.getString(APRIL),
+                resources.getString(MAY),
+                resources.getString(JUNE),
+                resources.getString(JULY),
+                resources.getString(AUGUST),
+                resources.getString(SEPTEMBER),
+                resources.getString(OCTOBER),
+                resources.getString(NOVEMBER),
+                resources.getString(DECEMBER)
+        )));
+
+        monthField.getSelectionModel().selectFirst();
 
         appointmentsField.setEditable(false);
         totalEarnedField.setEditable(false);
 
         yearField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setupData());
         monthField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setupData());
-        startDayField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue) {
+        startDayField.textProperty().addListener((observable, oldValue, newValue) -> {
+
                 setupData();
-            }
+
         });
-        endDayField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue) {
+        endDayField.textProperty().addListener((observable, oldValue, newValue) -> {
+
                 setupData();
-            }
+
         });
+
+        DataSource.getInstance().addObserver(this);
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(INITIAL_DATA_LOADED)) {
+
+            Platform.runLater(() -> {
+                int mostRecentYear = DataSource.getInstance().getFirstYear();
+                int oldestYear = DataSource.getInstance().getFirstYear();
+
+                if (mostRecentYear > Integer.MIN_VALUE && oldestYear < Integer.MAX_VALUE) {
+                    ObservableList<Integer> years = FXCollections.observableArrayList();
+
+                    for (int i = mostRecentYear; i <= oldestYear; i++) {
+                        years.add(i);
+                    }
+
+                    yearField.setItems(years);
+
+                }
+
+                yearField.getSelectionModel().selectFirst();
+            });
+
+        }
+        if (evt.getPropertyName().equals(APPOINTMENTS_CHANGE) || evt.getPropertyName().equals(DOCTORS_CHANGE)) {
+            Platform.runLater(this::setupData);
+
+        }
+    }
 
     private void setupData() {
+
+        String startDay = startDayField.getText().trim();
+        String endDay = endDayField.getText().trim();
+
+        if (startDay.matches(REGEX_DAY) && endDay.matches(REGEX_DAY)) {
+            Map<Doctor, Integer> doctorsAppointments = new HashMap<>();
+            for (Doctor doctor: DataSource.getInstance().getDoctors()) {
+                doctorsAppointments.put(doctor, 0);
+            }
+
+            int appointmentsCount = 0;
+            double totalEarnings = 0;
+
+            Map<Integer, Double> daysEarnings = new HashMap<>();
+
+            for (Appointment appointment : DataSource.getInstance().getAppointments()) {
+
+                if (appointment.getStatus().equals(COMPLETED)) {
+                    int appointmentYear = appointment.getDate().getYear();
+                    int appointmentMonth = appointment.getDate().getMonthValue();
+                    int appointmentDay = appointment.getDate().getDayOfMonth();
+
+                    if (appointmentYear == yearField.getSelectionModel().getSelectedItem() &&
+                            appointmentMonth == monthField.getSelectionModel().getSelectedIndex() + 1 &&
+                            appointmentDay >= Integer.parseInt(startDay) && appointmentDay <= Integer.parseInt(endDay)) {
+
+                        double price = appointment.getPrice();
+
+                        if (daysEarnings.containsKey(appointmentDay)) {
+                            price += daysEarnings.get(appointmentDay);
+                        }
+
+                        daysEarnings.put(appointmentDay, price);
+
+                        doctorsAppointments.put(appointment.getDoctor(), doctorsAppointments.get(appointment.getDoctor()) + 1);
+                        appointmentsCount++;
+                        totalEarnings += appointment.getPrice();
+
+                    }
+                }
+            }
+
+            XYChart.Series<Integer, Double> series = new XYChart.Series<>();
+
+            daysEarnings.forEach((key, value) -> series.getData().add(new XYChart.Data<>(key, value)));
+
+            if (lineChart.getData().isEmpty()) {
+                lineChart.getData().add(series);
+            } else {
+                lineChart.getData().set(0, series);
+            }
+
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+            final int totalAppointments = appointmentsCount;
+
+            if (totalAppointments > 0) {
+                doctorsAppointments.forEach((key, value) -> {
+                    pieChartData.add(new PieChart.Data(key.getName(), Math.abs(100 * value / totalAppointments)));
+                });
+
+                pieChart.setData(pieChartData);
+            }
+
+            appointmentsField.setText(totalAppointments + "");
+            totalEarnedField.setText(getResources().getString("currency_symbol") + totalEarnings);
+
+        }
 
     }
 

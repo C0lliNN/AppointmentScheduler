@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -193,7 +194,21 @@ public class DashboardController implements Initializable, PropertyChangeListene
 
     @FXML
     void handleShowEarnings() {
-        // Do later
+
+        TabPane tabpane = (TabPane) root.getParent().getParent();
+        AnchorPane financialContentRoot = (AnchorPane) tabpane.getTabs().get(2).getContent();
+
+        GridPane fields = (GridPane) financialContentRoot.getChildren().get(3);
+
+        LocalDate today = LocalDate.now();
+
+        ((JFXComboBox<Integer>) fields.getChildren().get(4)).getSelectionModel().select(new Integer(today.getYear()));
+        ((JFXComboBox) fields.getChildren().get(5)).getSelectionModel().select(today.getMonthValue() - 1);
+        ((JFXTextField) fields.getChildren().get(6)).setText(today.getDayOfMonth() + "");
+        ((JFXTextField) fields.getChildren().get(7)).setText(today.getDayOfMonth() + "");
+
+        tabpane.getSelectionModel().select(2);
+
     }
 
     private JFXDatePicker getDateField(AnchorPane contentRoot) {
