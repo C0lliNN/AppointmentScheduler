@@ -193,7 +193,7 @@ public class FinancialController implements Initializable, PropertyChangeListene
 
             Platform.runLater(() -> {
                 int mostRecentYear = DataSource.getInstance().getFirstYear();
-                int oldestYear = DataSource.getInstance().getFirstYear();
+                int oldestYear = DataSource.getInstance().getLastYear();
 
                 if (mostRecentYear > Integer.MIN_VALUE && oldestYear < Integer.MAX_VALUE) {
                     ObservableList<Integer> years = FXCollections.observableArrayList();
@@ -207,6 +207,8 @@ public class FinancialController implements Initializable, PropertyChangeListene
                 }
 
                 yearField.getSelectionModel().selectFirst();
+                startDayField.setText("0");
+                endDayField.setText("31");
             });
 
         }

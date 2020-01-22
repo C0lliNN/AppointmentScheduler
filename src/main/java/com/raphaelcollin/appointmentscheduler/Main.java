@@ -30,7 +30,6 @@ import java.util.*;
 import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
 public class Main extends Application {
-
     // Global attributes
 
     private static Connection connection;
@@ -52,6 +51,8 @@ public class Main extends Application {
     public static final String APPOINTMENT_FIELDS_LOCATION = "/appointment_fields.fxml";
     public static final String APPOINTMENT_ADD_LOCATION ="/appointment_add.fxml";
     public static final String APPOINTMENT_DETAILS_LOCATION = "/appointment_details.fxml";
+    public static final String FINANCIAL_VIEW_LOCATION = "/financial_view.fxml";
+    public static final String PATIENT_VIEW_LOCATION = "/patient_view.fxml";
 
     // Bundle Keys
 
@@ -117,6 +118,7 @@ public class Main extends Application {
     public static final String STYLE_CLASS_APPOINTMENT_TAB = "appointment-tab";
     public static final String STYLE_CLASS_TAB_PANE_LABEL = "tab-pane-label";
     public static final String ID_CONTAINER_ROOT = "container-root";
+    public static final String STYLE_CLASS_BUTTON_ICON = "button-icon";
 
     // Class Constants
 

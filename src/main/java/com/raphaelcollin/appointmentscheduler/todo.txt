@@ -1,2 +1,3 @@
-Dashboard Button
 Patient and Doctor Tabs
+
+Test Patient with all Fields

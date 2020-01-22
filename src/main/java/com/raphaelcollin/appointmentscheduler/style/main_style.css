@@ -329,4 +329,8 @@
     -fx-stroke-width: 0;
 }
 
-
+.button-icon {
+    -glyph-size: 22px;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}

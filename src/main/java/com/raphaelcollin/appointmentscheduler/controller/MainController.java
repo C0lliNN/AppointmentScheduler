@@ -77,7 +77,7 @@ public class MainController implements Initializable {
                     getResources().getString(BUNDLE_KEY_TAB_TITLE_FINANCIAL),
                     financialIcon));
 
-            Parent financialContent = FXMLLoader.load(getClass().getResource("/financial_view.fxml"), getResources());
+            Parent financialContent = FXMLLoader.load(getClass().getResource(FINANCIAL_VIEW_LOCATION), getResources());
             financialTab.setContent(financialContent);
 
 
@@ -87,6 +87,9 @@ public class MainController implements Initializable {
             patientTab.setGraphic(createTabHeader(
                     getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT),
                     patientIcon));
+
+            Parent patientContent = FXMLLoader.load(getClass().getResource(PATIENT_VIEW_LOCATION), resources);
+            patientTab.setContent(patientContent);
 
             FontAwesomeIconView doctorIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_MD);
             doctorIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);

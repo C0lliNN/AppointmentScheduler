@@ -1,9 +1,16 @@
 package com.raphaelcollin.appointmentscheduler.db.model;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Patient {
+import static com.raphaelcollin.appointmentscheduler.Main.*;
+
+public class Patient extends RecursiveTreeObject<Patient> {
     private int id;
     private String firstName;
     private String lastName;
@@ -15,6 +22,13 @@ public class Patient {
     private String zipCode;
     private String streetName;
     private String houseNumber;
+
+    private SimpleStringProperty nameProperty;
+    private SimpleStringProperty genderProperty;
+    private SimpleStringProperty birthDateProperty;
+    private SimpleStringProperty phoneNumberProperty;
+    private SimpleStringProperty emailProperty;
+    private SimpleStringProperty addressProperty;
 
     private Patient (Builder builder) {
         this.id = builder.id;
@@ -28,6 +42,24 @@ public class Patient {
         this.streetName = builder.streetName;
         this.houseNumber = builder.houseNumber;
         this.city = builder.city;
+
+        nameProperty = new SimpleStringProperty(this.firstName + " " + this.lastName);
+        if (this.gender.equals(MALE)) {
+            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_MALE));
+        } else {
+            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_FEMALE));
+        }
+        birthDateProperty = new SimpleStringProperty(this.birthDate.format(DateTimeFormatter.ofPattern(getResources().
+                getString(BUNDLE_KEY_DATE_FORMAT))));
+        phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
+        emailProperty = new SimpleStringProperty(this.email == null ? "" : email);
+
+        if (zipCode == null || streetName == null || houseNumber == null || city == null) {
+            addressProperty = new SimpleStringProperty("");
+        } else {
+            addressProperty = new SimpleStringProperty(this.city + ", " + this.streetName + " " + this.houseNumber + " - " + this.zipCode);
+        }
+
     }
 
     public int getId() {
@@ -120,6 +152,25 @@ public class Patient {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public ObservableValue<String> getNameProperty() {
+        return nameProperty;
+    }
+    public ObservableValue<String> getGenderProperty() {
+        return genderProperty;
+    }
+    public ObservableValue<String> getBirthDateProperty() {
+        return birthDateProperty;
+    }
+    public ObservableValue<String> getPhoneProperty() {
+        return phoneNumberProperty;
+    }
+    public ObservableValue<String> getEmailProperty() {
+        return emailProperty;
+    }
+    public ObservableValue<String> getAddressProperty() {
+        return addressProperty;
     }
 
     @Override
