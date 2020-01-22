@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.DoctorController">
+
+    <JFXTextField fx:id="searchField" promptText="%search_field_promptText"/>
+
+    <JFXButton fx:id="addButton" buttonType="RAISED" onAction="#handleAdd" text="%button_add"/>
+    <JFXButton fx:id="editButton" buttonType="RAISED" onAction="#handleEdit" text="%button_edit"/>
+    <JFXButton fx:id="deleteButton" buttonType="RAISED" onAction="#handleDelete" text="%button_delete"/>
+
+    <JFXTreeTableView fx:id="patientsTableView" showRoot="false" AnchorPane.bottomAnchor="0.0"
+                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
+        <columns>
+            <TreeTableColumn fx:id="nameColumn" text="%doctor_column0"/>
+            <TreeTableColumn fx:id="genderColumn" text="%doctor_column1"/>
+            <TreeTableColumn fx:id="birthDateColumn" text="%doctor_column2"/>
+            <TreeTableColumn fx:id="phoneColumn" text="%doctor_column3"/>
+            <TreeTableColumn fx:id="licenseNumberColumn" text="%doctor_column4"/>
+
+        </columns>
+        <columnResizePolicy>
+            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </JFXTreeTableView>
+</AnchorPane>

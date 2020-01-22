@@ -98,6 +98,9 @@ public class MainController implements Initializable {
                     getResources().getString(BUNDLE_KEY_TAB_TITLE_DOCTOR),
                     doctorIcon));
 
+            Parent doctorContent = FXMLLoader.load(getClass().getResource(DOCTOR_VIEW_LOCATION), resources);
+            doctorTab.setContent(doctorContent);
+
             FontAwesomeIconView toolsIcon = new FontAwesomeIconView(FontAwesomeIcon.WRENCH);
             toolsIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab toolsTab = new Tab();

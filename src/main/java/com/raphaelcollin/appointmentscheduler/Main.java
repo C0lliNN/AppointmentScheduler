@@ -53,6 +53,7 @@ public class Main extends Application {
     public static final String APPOINTMENT_DETAILS_LOCATION = "/appointment_details.fxml";
     public static final String FINANCIAL_VIEW_LOCATION = "/financial_view.fxml";
     public static final String PATIENT_VIEW_LOCATION = "/patient_view.fxml";
+    public static final String DOCTOR_VIEW_LOCATION = "/doctor_view.fxml";
 
     // Bundle Keys
 
