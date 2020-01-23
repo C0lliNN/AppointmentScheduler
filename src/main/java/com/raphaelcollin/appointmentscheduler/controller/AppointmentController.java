@@ -14,14 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import java.beans.PropertyChangeEvent;
@@ -251,6 +248,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                 appointmentsTableView.setRoot(root);
                 dateField.setValue(LocalDate.now());
                 appointmentsTableView.setPredicate(this::filterItem);
+                appointmentsTableView.getSortOrder().add(scheduleColumn);
             });
         }
 
@@ -273,16 +271,13 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
         if (appointment == null) {
 
-            showAlert(Alert.AlertType.ERROR, root,
-                    getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT),
-                    getResources().getString(BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT));
+            showSelectionErrorAlert(root);
 
         } else {
 
             Task<Boolean> deleteAppointmentTask = new Task<Boolean>() {
                 @Override
-                protected Boolean call() throws Exception {
+                protected Boolean call(){
                     return DataSource.getInstance().deleteAppointment(appointment.getValue().getId());
                 }
             };
@@ -290,7 +285,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             deleteAppointmentTask.setOnSucceeded(event -> {
                 if (!deleteAppointmentTask.getValue()) {
 
-                    showSelectionErrorAlert();
+                    showDatabaseErrorAlert(root);
 
                 }
             });
@@ -311,7 +306,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_ADD_LOCATION), getResources());
                     Parent addAppointmentParent = loader.load();
 
-                    return Main.createView(600, 750, addAppointmentParent);
+                    return Main.createNewView(600, 750, addAppointmentParent);
 
 
                 } catch (IOException e) {
@@ -322,9 +317,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             }
         };
 
-        task.setOnSucceeded(event -> {
-            createNewStage(task.getValue());
-        });
+        task.setOnSucceeded(event -> createNewStage(task.getValue(), root));
 
         new Thread(task).start();
 
@@ -335,7 +328,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
-            showSelectionErrorAlert();
+            showSelectionErrorAlert(root);
         } else {
 
             try {
@@ -345,8 +338,8 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                 AppointmentDetailsController controller = loader.getController();
                 controller.setAppointment(selectedItem.getValue());
 
-                Parent containerRoot = Main.createView(608, 650, detailsViewRoot);
-                createNewStage(containerRoot);
+                Parent containerRoot = Main.createNewView(608, 650, detailsViewRoot);
+                createNewStage(containerRoot, root);
 
             } catch (IOException e) {
                 System.err.println("Error in AppointmentController - handleShowDetails(): + " + e.getMessage());
@@ -360,7 +353,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
 
         if (selectedItem == null) {
-            showSelectionErrorAlert();
+            showSelectionErrorAlert(root);
         } else {
 
 
@@ -373,55 +366,19 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                 AppointmentUpdateController controller = loader.getController();
                 controller.setAppointment(appointment);
 
-                Parent container = Main.createView(600, 800, updateRoot);
+                Parent container = Main.createNewView(600, 800, updateRoot);
 
-                createNewStage(container);
+                createNewStage(container, root);
 
             } catch (IOException e) {
                 System.err.println("Error in AppointmentController - handleUpdateAppointment(): + " + e.getMessage());
             }
 
-
-
-
-//            Task<Boolean> updateAppointmentTask = new Task<Boolean>() {
-//                @Override
-//                protected Boolean call() {
-//                    return DataSource.getInstance().updateAppointment(appointment);
-//                }
-//            };
-//
-//            updateAppointmentTask.setOnSucceeded(event -> {
-//                if (updateAppointmentTask.getValue()) {
-//                    Appointment updatedAppointment = new Appointment.Builder().
-//                            setStatus("Unconfirmed").
-//                            setDate(LocalDateTime.now()).
-//                            setDoctor(new Doctor.Builder().setName("Test").build()).
-//                            setPatient(new Patient.Builder().setFirstName("Test").setLastName("Test").build()).
-//                            build();
-//                    appointmentsTableView.getRoot().getChildren().add(new TreeItem<>(updatedAppointment));
-//                }
-//            });
-//
-//            new Thread(updateAppointmentTask).start();
         }
 
     }
 
-    private void showSelectionErrorAlert() {
-        showAlert(Alert.AlertType.ERROR, root,
-                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
-    }
 
-    private void createNewStage(Parent sceneRoot) {
-        Scene scene = new Scene(sceneRoot);
-        Stage newStage = new Stage();
-        newStage.initOwner(root.getScene().getWindow());
-        newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
-        newStage.setScene(scene);
-        newStage.initStyle(StageStyle.TRANSPARENT);
-        newStage.show();
-    }
+
+
 }

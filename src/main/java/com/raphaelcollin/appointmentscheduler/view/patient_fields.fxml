@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="root" alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1"
+
+          fx:controller="com.raphaelcollin.appointmentscheduler.controller.PatientFieldsController">
+
+    <columnConstraints>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        <RowConstraints fillHeight="false" vgrow="NEVER"/>
+    </rowConstraints>
+
+    <Label text="%patient_fields_firstName"/>
+    <JFXTextField fx:id="firstNameField" promptText="%patient_fields_firstName_promptText" GridPane.columnIndex="1"/>
+    <Label text="%patient_fields_lastName" GridPane.columnIndex="2"/>
+    <JFXTextField fx:id="lastNameField" promptText="%patient_fields_lastName_promptText" GridPane.columnIndex="3"/>
+    <Label text="%patient_fields_birthDate" GridPane.rowIndex="1"/>
+    <JFXDatePicker fx:id="dateField" promptText="%patient_fields_birthDate_promptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="%patient_fields_gender" GridPane.rowIndex="2"/>
+    <JFXComboBox fx:id="genderField" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2"/>
+
+    <Label text="%patient_fields_phone" GridPane.rowIndex="3"/>
+    <JFXTextField fx:id="phoneField" promptText="%patient_fields_phone_promptText" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Label text="%patient_fields_email" GridPane.rowIndex="4"/>
+    <JFXTextField fx:id="emailField" promptText="%patient_fields_email_promptText" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+    <Label text="%patient_fields_zipCode" GridPane.rowIndex="5"/>
+    <JFXTextField fx:id="zipCodeField" promptText="%patient_fields_zipCode_promptText" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+    <Label text="%patient_fields_city" GridPane.rowIndex="6"/>
+    <JFXTextField fx:id="cityField" promptText="%patient_fields_city_promptText" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+    <Label text="%patient_fields_street" GridPane.rowIndex="7"/>
+    <JFXTextField fx:id="streetField" promptText="%patient_fields_street_promptText" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+    <Label text="%patient_fields_house" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    <JFXTextField fx:id="houseField" promptText="%patient_fields_house_promptText" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+</GridPane>

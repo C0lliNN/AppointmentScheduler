@@ -54,7 +54,8 @@ public class Patient extends RecursiveTreeObject<Patient> {
         phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
         emailProperty = new SimpleStringProperty(this.email == null ? "" : email);
 
-        if (zipCode == null || streetName == null || houseNumber == null || city == null) {
+        if (zipCode == null || zipCode.isEmpty() || streetName == null || streetName.isEmpty() || houseNumber == null
+                || houseNumber.isEmpty() || city == null || city.isEmpty()) {
             addressProperty = new SimpleStringProperty("");
         } else {
             addressProperty = new SimpleStringProperty(this.city + ", " + this.streetName + " " + this.houseNumber + " - " + this.zipCode);

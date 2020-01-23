@@ -30,6 +30,7 @@ import java.util.*;
 import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
 public class Main extends Application {
+
     // Global attributes
 
     private static Connection connection;
@@ -53,6 +54,8 @@ public class Main extends Application {
     public static final String APPOINTMENT_DETAILS_LOCATION = "/appointment_details.fxml";
     public static final String FINANCIAL_VIEW_LOCATION = "/financial_view.fxml";
     public static final String PATIENT_VIEW_LOCATION = "/patient_view.fxml";
+    public static final String PATIENT_FIELDS_LOCATION = "/patient_fields.fxml";
+    public static final String PATIENT_DIALOG_LOCATION = "/patient_dialog.fxml";
     public static final String DOCTOR_VIEW_LOCATION = "/doctor_view.fxml";
 
     // Bundle Keys
@@ -93,6 +96,12 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_GENDER_MALE = "gender_male";
     public static final String BUNDLE_KEY_GENDER_FEMALE = "gender_female";
     public static final String BUNDLE_KEY_DATE_FORMAT = "date_format";
+    public static final String BUNDLE_KEY_PATIENT_DIALOG_ADD_TITLE = "patient_dialog_add_title";
+    public static final String BUNDLE_KEY_PATIENT_DIALOG_CLEAR = "patient_dialog_clear";
+    public static final String BUNDLE_KEY_PATIENT_DIALOG_ADD = "patient_dialog_add";
+    public static final String BUNDLE_KEY_PATIENT_DIALOG_EDIT_TITLE = "patient_dialog_edit_title";
+    public static final String BUNDLE_KEY_PATIENT_DIALOG_SAVE = "patient_dialog_save";
+    public static final String BUNDLE_KEY_INVALID_EMAIL = "invalid_email";
 
     // Classes and Ids
 
@@ -144,8 +153,8 @@ public class Main extends Application {
 
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
-    public static final int MALE_INDEX = 1;
-    public static final int FEMALE_INDEX = 2;
+    public static final int MALE_INDEX = 0;
+    public static final int FEMALE_INDEX = 1;
 
 
 
@@ -225,7 +234,7 @@ public class Main extends Application {
             childRoot = loader.load();
         }
 
-        Parent containerRoot = createView(rootWidth, rootHeight, childRoot);
+        Parent containerRoot = createNewView(rootWidth, rootHeight, childRoot);
 
         stage.setScene(new Scene(containerRoot));
         stage.getIcons().add(new Image(getClass().getResourceAsStream(LOCATION_STAGE_ICON)));
@@ -279,14 +288,9 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
             Parent mainViewRoot = loader.load();
 
-            Parent root = createView(1208, 845, mainViewRoot);
+            Parent root = createNewView(1208, 845, mainViewRoot);
 
-            Stage newStage = new Stage();
-            newStage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
-            newStage.setScene(new Scene(root));
-            newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
-            newStage.initStyle(StageStyle.TRANSPARENT);
-            newStage.show();
+            createNewStage(root, null);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -310,7 +314,21 @@ public class Main extends Application {
         return alert.showAndWait();
     }
 
-    public static AnchorPane createView(double width, double height, Parent childRoot) {
+    public static void showSelectionErrorAlert(Parent root) {
+        showAlert(Alert.AlertType.ERROR, root,
+                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT));
+    }
+
+    public static void showDatabaseErrorAlert(Parent root) {
+        showAlert(Alert.AlertType.ERROR, root,
+                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+    }
+
+    public static AnchorPane createNewView(double width, double height, Parent childRoot) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(CONTAINER_LOCATION), resources);
         AnchorPane root = null;
         try {
@@ -324,6 +342,18 @@ public class Main extends Application {
         }
 
         return root;
+    }
+
+    public static void createNewStage(Parent sceneRoot, Parent ownerRoot) {
+        Scene scene = new Scene(sceneRoot);
+        Stage newStage = new Stage();
+        if (ownerRoot != null) {
+            newStage.initOwner(ownerRoot.getScene().getWindow());
+        }
+        newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
+        newStage.setScene(scene);
+        newStage.initStyle(StageStyle.TRANSPARENT);
+        newStage.show();
     }
 
     public static ResourceBundle getResources() {

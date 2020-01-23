@@ -11,8 +11,12 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -20,11 +24,13 @@ import javafx.scene.text.Font;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.PATIENTS_CHANGE;
 
 public class PatientController implements Initializable, PropertyChangeListener {
 
@@ -114,23 +120,86 @@ public class PatientController implements Initializable, PropertyChangeListener 
             final RecursiveTreeItem<Patient> root = new RecursiveTreeItem<>(patients, RecursiveTreeObject::getChildren);
             Platform.runLater(() -> {
                 patientsTableView.setRoot(root);
+                patientsTableView.getSortOrder().add(nameColumn);
             });
+        }
 
+        if (evt.getPropertyName().equals(PATIENTS_CHANGE)) {
+            Platform.runLater(() -> patientsTableView.getSortOrder().add(nameColumn));
         }
     }
 
     @FXML
     void handleAdd() {
 
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_DIALOG_LOCATION), getResources());
+            Parent patientDialog = loader.load();
+            PatientDialogController controller = loader.getController();
+            controller.setupAddDialog();
+
+            AnchorPane containerRoot = createNewView(900, 750, patientDialog);
+            createNewStage(containerRoot, root);
+
+        } catch (IOException e){
+            System.err.println("PatientController - handleAdd(): " + e.getMessage());
+        }
+
     }
 
     @FXML
     void handleDelete() {
+        TreeItem<Patient> selectedPatient = patientsTableView.getSelectionModel().getSelectedItem();
 
+        if (selectedPatient == null) {
+            showSelectionErrorAlert(root);
+        } else {
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() {
+                    return DataSource.getInstance().deletePatient(selectedPatient.getValue().getId());
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                if (!task.getValue()) {
+
+                    showDatabaseErrorAlert(root);
+
+                }
+            });
+
+
+            new Thread(task).start();
+        }
     }
 
     @FXML
     void handleEdit() {
+
+        TreeItem<Patient> selectedPatient = patientsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedPatient == null) {
+            showSelectionErrorAlert(root);
+        } else {
+
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(PATIENT_DIALOG_LOCATION), getResources());
+                Parent patientDialog = loader.load();
+                PatientDialogController controller = loader.getController();
+                controller.setupEditDialog(selectedPatient.getValue());
+
+                AnchorPane containerRoot = createNewView(900, 750, patientDialog);
+                createNewStage(containerRoot, root);
+
+            } catch (IOException e){
+                System.err.println("PatientController - handleAdd(): " + e.getMessage());
+            }
+        }
+
 
     }
 }

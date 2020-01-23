@@ -37,10 +37,14 @@ create table Appointment(
 );
 
 alter table Appointment add constraint FK_PATIENT_APPOINTMENT
-FOREIGN KEY(id_patient) REFERENCES Patient(idPatient);
+FOREIGN KEY(id_patient) REFERENCES Patient(idPatient)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 alter table Appointment add constraint FK_DOCTOR_APPOINTMENT
-FOREIGN KEY(id_doctor) REFERENCES Doctor(idDoctor);
+FOREIGN KEY(id_doctor) REFERENCES Doctor(idDoctor)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 Create view APPOINTMENT_DATA as SELECT Appointment.idAppointment, Appointment.date, Appointment.description, Appointment.status,
 Appointment.price, Patient.idPatient, Patient.firstName, Patient.lastName, Patient.gender as "P_Gender", Patient.birthDate as "P_BIRTHDATE",
@@ -61,11 +65,11 @@ insert into Patient
 ('Michael', 'Hernandez', 'Male', '1995-01-02', '754-13153', null, null, null,null,null);
 
 insert into Doctor
-(name, gender, birthDate, licenseNumber)
+(name, phoneNumber, gender, birthDate, licenseNumber)
     values
-('Joseph Smith', 'Male', '1984-02-11', '55543325'),
-('David Garcia', 'Male', '1979-12-01', '33126523'),
-('Maria Martinez', 'Female', '1990-06-02', '18531234');
+('Joseph Smith', '343242523', 'Male', '1984-02-11', '55543325'),
+('David Garcia', '436334534', 'Male', '1979-12-01', '33126523'),
+('Maria Martinez', '32342342', 'Female', '1990-06-02', '18531234');
 
 insert into Appointment
 (date, description, status, price, id_patient, id_doctor)

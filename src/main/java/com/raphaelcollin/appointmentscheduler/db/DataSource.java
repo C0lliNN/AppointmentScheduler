@@ -119,6 +119,7 @@ public class DataSource {
 
         if (operationResult) {
             observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
+
         } else {
             doctors.add(removedDoctor);
         }
@@ -154,6 +155,7 @@ public class DataSource {
     }
 
     public boolean deletePatient(int id) {
+
         DAO<Patient> dao = DAOFactory.getPatientDAO(connection);
 
         Patient removedPatient = null;
@@ -169,6 +171,8 @@ public class DataSource {
 
         if (operationResult) {
             observers.firePropertyChange(PATIENTS_CHANGE, null, patients);
+            appointments.removeIf(appointment -> appointment.getPatient().getId() == id);
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
         } else {
             patients.add(removedPatient);
         }
@@ -185,6 +189,15 @@ public class DataSource {
             int index = patients.indexOf(patient);
             patients.set(index, patient);
             observers.firePropertyChange(PATIENTS_CHANGE, null, patients);
+
+            for (Appointment appointment : appointments) {
+                if (appointment.getPatient().equals(patient)) {
+                    appointment.setPatient(patient);
+                }
+            }
+
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
+
         }
 
         return result;
@@ -205,6 +218,7 @@ public class DataSource {
 
 
     }
+
     // Returns the Year of the oldest appointment
     public int getFirstYear() {
         int oldestYear = Integer.MIN_VALUE;
