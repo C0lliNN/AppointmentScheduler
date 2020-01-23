@@ -33,6 +33,22 @@ public class DataSource {
         observers = new PropertyChangeSupport(this);
     }
 
+    public void loadInitialData() {
+
+        DAO<Patient> patientDAO = DAOFactory.getPatientDAO(connection);
+        DAO<Doctor> doctorDAO = DAOFactory.getDoctorDAO(connection);
+        DAO<Appointment> appointmentDAO = DAOFactory.getAppointmentDAO(connection);
+
+
+        patients = patientDAO.getAll();
+        doctors = doctorDAO.getAll();
+        appointments = appointmentDAO.getAll();
+
+        observers.firePropertyChange(INITIAL_DATA_LOADED, null, this);
+
+
+    }
+
     public void addObserver(PropertyChangeListener listener) {
         observers.addPropertyChangeListener(listener);
     }
@@ -49,6 +65,20 @@ public class DataSource {
         }
 
         return generatedId;
+    }
+
+    public boolean updateAppointment(Appointment appointment) {
+        DAO<Appointment> dao = DAOFactory.getAppointmentDAO(connection);
+
+        boolean result = dao.update(appointment);
+
+        if (result) {
+            int index = appointments.indexOf(appointment);
+            appointments.set(index, appointment);
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
+        }
+
+        return result;
     }
 
     public boolean deleteAppointment(int id) {
@@ -74,73 +104,6 @@ public class DataSource {
         return operationResult;
     }
 
-    public boolean updateAppointment(Appointment appointment) {
-        DAO<Appointment> dao = DAOFactory.getAppointmentDAO(connection);
-
-        boolean result = dao.update(appointment);
-
-        if (result) {
-            int index = appointments.indexOf(appointment);
-            appointments.set(index, appointment);
-            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
-        }
-
-        return result;
-    }
-
-
-    public int addDoctor(Doctor doctor) {
-        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
-        int generatedId = dao.add(doctor);
-
-        if (generatedId > 0) {
-            doctor.setId(generatedId);
-            doctors.add(doctor);
-            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
-        }
-
-        return generatedId;
-    }
-
-    public boolean deleteDoctor(int id) {
-
-        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
-
-        Doctor removedDoctor = null;
-
-        for (int i = 0; i < doctors.size(); i++) {
-            if (doctors.get(i).getId() == id) {
-                removedDoctor = doctors.remove(i);
-                break;
-            }
-        }
-
-        boolean operationResult = dao.delete(id);
-
-        if (operationResult) {
-            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
-
-        } else {
-            doctors.add(removedDoctor);
-        }
-
-        return operationResult;
-    }
-
-    public boolean updateDoctor(Doctor doctor) {
-        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
-
-        boolean result = dao.update(doctor);
-
-        if (result) {
-            int index = doctors.indexOf(doctor);
-            doctors.set(index, doctor);
-            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
-        }
-
-        return result;
-    }
-
     public int addPatient(Patient patient) {
         DAO<Patient> dao = DAOFactory.getPatientDAO(connection);
         int generatedId = dao.add(patient);
@@ -152,6 +115,29 @@ public class DataSource {
         }
 
         return generatedId;
+    }
+
+    public boolean updatePatient(Patient patient) {
+        DAO<Patient> dao = DAOFactory.getPatientDAO(connection);
+
+        boolean result = dao.update(patient);
+
+        if (result) {
+            int index = patients.indexOf(patient);
+            patients.set(index, patient);
+            observers.firePropertyChange(PATIENTS_CHANGE, null, patients);
+
+            for (Appointment appointment : appointments) {
+                if (appointment.getPatient().equals(patient)) {
+                    appointment.setPatient(patient);
+                }
+            }
+
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
+
+        }
+
+        return result;
     }
 
     public boolean deletePatient(int id) {
@@ -180,44 +166,68 @@ public class DataSource {
         return operationResult;
     }
 
-    public boolean updatePatient(Patient patient) {
-        DAO<Patient> dao = DAOFactory.getPatientDAO(connection);
 
-        boolean result = dao.update(patient);
+    public int addDoctor(Doctor doctor) {
+        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
+        int generatedId = dao.add(doctor);
+
+        if (generatedId > 0) {
+            doctor.setId(generatedId);
+            doctors.add(doctor);
+            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
+        }
+
+        return generatedId;
+    }
+
+    public boolean updateDoctor(Doctor doctor) {
+        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
+
+        boolean result = dao.update(doctor);
 
         if (result) {
-            int index = patients.indexOf(patient);
-            patients.set(index, patient);
-            observers.firePropertyChange(PATIENTS_CHANGE, null, patients);
+            int index = doctors.indexOf(doctor);
+            doctors.set(index, doctor);
+            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
 
             for (Appointment appointment : appointments) {
-                if (appointment.getPatient().equals(patient)) {
-                    appointment.setPatient(patient);
+                if (appointment.getDoctor().equals(doctor)) {
+                    appointment.setDoctor(doctor);
                 }
             }
 
             observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
-
         }
 
         return result;
     }
 
-    public void loadInitialData() {
+    public boolean deleteDoctor(int id) {
 
-        DAO<Patient> patientDAO = DAOFactory.getPatientDAO(connection);
-        DAO<Doctor> doctorDAO = DAOFactory.getDoctorDAO(connection);
-        DAO<Appointment> appointmentDAO = DAOFactory.getAppointmentDAO(connection);
+        DAO<Doctor> dao = DAOFactory.getDoctorDAO(connection);
 
+        Doctor removedDoctor = null;
 
-        patients = patientDAO.getAll();
-        doctors = doctorDAO.getAll();
-        appointments = appointmentDAO.getAll();
+        for (int i = 0; i < doctors.size(); i++) {
+            if (doctors.get(i).getId() == id) {
+                removedDoctor = doctors.remove(i);
+                break;
+            }
+        }
 
-        observers.firePropertyChange(INITIAL_DATA_LOADED, null, this);
+        boolean operationResult = dao.delete(id);
 
+        if (operationResult) {
+            observers.firePropertyChange(DOCTORS_CHANGE, null, doctors);
+            appointments.removeIf(appointment -> appointment.getDoctor().getId() == id);
+            observers.firePropertyChange(APPOINTMENTS_CHANGE, null, appointments);
+        } else {
+            doctors.add(removedDoctor);
+        }
 
+        return operationResult;
     }
+
 
     // Returns the Year of the oldest appointment
     public int getFirstYear() {

@@ -79,6 +79,7 @@ public class PatientController implements Initializable, PropertyChangeListener 
                     newValue.trim().isEmpty() ||
                     patient.getValue().getFirstName().toLowerCase().contains(newValue.toLowerCase()) ||
                     patient.getValue().getLastName().toLowerCase().contains(newValue.toLowerCase()) ||
+                    patient.getValue().getGender().toLowerCase().contains(newValue.toLowerCase()) ||
                     patient.getValue().getPhoneNumber().contains(newValue) ||
                     ((patient.getValue().getEmail() != null) && patient.getValue().getEmail().contains(newValue)) ||
                     ((patient.getValue().getZipCode() != null) && patient.getValue().getZipCode().contains(newValue)) ||

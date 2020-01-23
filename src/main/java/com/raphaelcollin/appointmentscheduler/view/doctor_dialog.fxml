@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raphaelcollin.appointmentscheduler.controller.DoctorDialogController"
+    stylesheets="@dialogs_style.css" styleClass="content">
+
+    <Label fx:id="titleLabel" alignment="CENTER" text="Add Doctor" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+    <GridPane fx:id="fieldsGridPane" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <columnConstraints>
+            <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+            <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+            <ColumnConstraints fillWidth="false" hgrow="NEVER"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+            <RowConstraints fillHeight="false" vgrow="NEVER"/>
+        </rowConstraints>
+
+        <Label text="%doctor_dialog_name"/>
+        <Label text="%doctor_dialog_gender" GridPane.rowIndex="1"/>
+        <Label text="%doctor_dialog_birthDate" GridPane.rowIndex="2"/>
+        <Label text="%doctor_dialog_phone" GridPane.rowIndex="3"/>
+        <Label text="%doctor_dialog_license" GridPane.rowIndex="4"/>
+
+        <JFXTextField fx:id="nameField" promptText="%doctor_dialog_name_promptText" GridPane.columnIndex="2"/>
+        <JFXComboBox fx:id="genderField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <JFXDatePicker fx:id="dateField" promptText="%doctor_dialog_birthDate_promptText" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <JFXTextField fx:id="phoneField" promptText="%doctor_dialog_phone_promptText" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+        <JFXTextField fx:id="licenseNumberField" promptText="%doctor_dialog_license_promptText" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+
+    </GridPane>
+
+    <HBox fx:id="buttonsHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <JFXButton fx:id="leftButton"/>
+
+        <JFXButton fx:id="rightButton" defaultButton="true"/>
+    </HBox>
+</AnchorPane>

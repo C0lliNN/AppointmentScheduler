@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -68,17 +67,17 @@ public class PatientDialogController implements Initializable {
 
     public void setupAddDialog() {
         titleLabel.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_ADD_TITLE));
-        leftButton.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_CLEAR));
+        leftButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_CLEAR));
         leftButton.setOnAction(this::clear);
-        rightButton.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_ADD));
+        rightButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_ADD));
         rightButton.setOnAction(this::addPatient);
     }
 
     public void setupEditDialog(Patient patient) {
         titleLabel.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_EDIT_TITLE));
-        leftButton.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_CLEAR));
+        leftButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_CLEAR));
         leftButton.setOnAction(this::clear);
-        rightButton.setText(getResources().getString(BUNDLE_KEY_PATIENT_DIALOG_SAVE));
+        rightButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_SAVE));
         rightButton.setOnAction(this::savePatient);
         fieldsController.setPatient(patient);
     }
@@ -99,10 +98,7 @@ public class PatientDialogController implements Initializable {
                 root.setCursor(Cursor.DEFAULT);
 
                 if (!task.getValue()) {
-                    showAlert(Alert.AlertType.ERROR, root,
-                            getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+                    showDatabaseErrorAlert(root);
                 }
             });
 
@@ -129,10 +125,8 @@ public class PatientDialogController implements Initializable {
                 root.setCursor(Cursor.DEFAULT);
 
                 if (task.getValue() < 0) {
-                    showAlert(Alert.AlertType.ERROR, root,
-                            getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+
+                    showDatabaseErrorAlert(root);
                 }
             });
 

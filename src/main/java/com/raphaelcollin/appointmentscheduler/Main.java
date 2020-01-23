@@ -25,7 +25,10 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
@@ -57,6 +60,7 @@ public class Main extends Application {
     public static final String PATIENT_FIELDS_LOCATION = "/patient_fields.fxml";
     public static final String PATIENT_DIALOG_LOCATION = "/patient_dialog.fxml";
     public static final String DOCTOR_VIEW_LOCATION = "/doctor_view.fxml";
+    public static final String DOCTOR_DIALOG_LOCATION = "/doctor_dialog.fxml";
 
     // Bundle Keys
 
@@ -97,11 +101,13 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_GENDER_FEMALE = "gender_female";
     public static final String BUNDLE_KEY_DATE_FORMAT = "date_format";
     public static final String BUNDLE_KEY_PATIENT_DIALOG_ADD_TITLE = "patient_dialog_add_title";
-    public static final String BUNDLE_KEY_PATIENT_DIALOG_CLEAR = "patient_dialog_clear";
-    public static final String BUNDLE_KEY_PATIENT_DIALOG_ADD = "patient_dialog_add";
+    public static final String BUNDLE_KEY_DIALOG_CLEAR = "patient_dialog_clear";
+    public static final String BUNDLE_KEY_DIALOG_ADD = "patient_dialog_add";
     public static final String BUNDLE_KEY_PATIENT_DIALOG_EDIT_TITLE = "patient_dialog_edit_title";
-    public static final String BUNDLE_KEY_PATIENT_DIALOG_SAVE = "patient_dialog_save";
+    public static final String BUNDLE_KEY_DIALOG_SAVE = "patient_dialog_save";
     public static final String BUNDLE_KEY_INVALID_EMAIL = "invalid_email";
+    public static final String BUNDLE_KEY_DOCTOR_DIALOG_ADD_TITLE = "doctor_dialog_add_title";
+    public static final String BUNDLE_KEY_DOCTOR_DIALOG_EDIT_TITLE = "doctor_dialog_edit_title";
 
     // Classes and Ids
 
@@ -282,22 +288,6 @@ public class Main extends Application {
 
     }
 
-    public static void createMainViewStage() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
-            Parent mainViewRoot = loader.load();
-
-            Parent root = createNewView(1208, 845, mainViewRoot);
-
-            createNewStage(root, null);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public static Optional<ButtonType> showAlert(Alert.AlertType alertType, Parent root, String title, String headerText,
                                                  String contentText) {
         Alert alert = new Alert(alertType);
@@ -312,6 +302,13 @@ public class Main extends Application {
         alert.setContentText(contentText);
 
         return alert.showAndWait();
+    }
+
+    public static void showRequiredFieldsErrorAlert(Parent root) {
+        showAlert(Alert.AlertType.ERROR, root,
+                getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE));
     }
 
     public static void showSelectionErrorAlert(Parent root) {
@@ -353,7 +350,24 @@ public class Main extends Application {
         newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
         newStage.setScene(scene);
         newStage.initStyle(StageStyle.TRANSPARENT);
+        newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
         newStage.show();
+    }
+
+    public static void createMainViewStage() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(MAIN_VIEW_LOCATION), resources);
+            Parent mainViewRoot = loader.load();
+
+            Parent root = createNewView(1208, 845, mainViewRoot);
+
+            createNewStage(root, null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static ResourceBundle getResources() {

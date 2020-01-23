@@ -1,5 +1,7 @@
-Patient and Doctor Tabs
+Tools Tab
 
-Test Patient with all Fields
+--- Final ----
 
-Pateint Add
+1 - Check Name Conventions
+2 - Try to create more Global Methods
+3 - Review Appointments Buttons Text

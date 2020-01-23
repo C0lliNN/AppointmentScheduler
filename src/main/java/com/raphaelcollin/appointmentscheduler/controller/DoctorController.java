@@ -11,8 +11,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -20,10 +25,12 @@ import javafx.scene.text.Font;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
+import static com.raphaelcollin.appointmentscheduler.db.DataSource.DOCTORS_CHANGE;
 import static com.raphaelcollin.appointmentscheduler.db.DataSource.INITIAL_DATA_LOADED;
 
 public class DoctorController implements Initializable, PropertyChangeListener {
@@ -39,7 +46,7 @@ public class DoctorController implements Initializable, PropertyChangeListener {
     @FXML
     private JFXButton deleteButton;
     @FXML
-    private JFXTreeTableView<Doctor> patientsTableView;
+    private JFXTreeTableView<Doctor> doctorsTableView;
     @FXML
     private TreeTableColumn<Doctor, String> nameColumn;
     @FXML
@@ -65,6 +72,12 @@ public class DoctorController implements Initializable, PropertyChangeListener {
         searchField.setFont(Font.font(20));
         AnchorPane.setTopAnchor(searchField, 30.0);
         AnchorPane.setLeftAnchor(searchField, 50.0);
+
+        searchField.textProperty().addListener(((observable, oldValue, newValue) -> doctorsTableView.setPredicate(doctor -> newValue.trim().isEmpty() ||
+                doctor.getValue().getName().toLowerCase().contains(newValue.toLowerCase()) ||
+                doctor.getValue().getGender().toLowerCase().contains(newValue.toLowerCase()) ||
+                doctor.getValue().getPhoneNumber().contains(newValue) ||
+                doctor.getValue().getLicenseNumber().contains(newValue))));
 
         for (int i = 1; i < 4; i++) {
             JFXButton button = (JFXButton) root.getChildren().get(i);
@@ -93,7 +106,7 @@ public class DoctorController implements Initializable, PropertyChangeListener {
         AnchorPane.setLeftAnchor(deleteButton, 821.0);
 
 
-        AnchorPane.setTopAnchor(patientsTableView, 130.0);
+        AnchorPane.setTopAnchor(doctorsTableView, 130.0);
         nameColumn.setCellValueFactory(param -> param.getValue().getValue().getNameProperty());
         genderColumn.setCellValueFactory(param -> param.getValue().getValue().getGenderProperty());
         birthDateColumn.setCellValueFactory(param -> param.getValue().getValue().getBirthDateProperty());
@@ -110,24 +123,85 @@ public class DoctorController implements Initializable, PropertyChangeListener {
 
             final RecursiveTreeItem<Doctor> root = new RecursiveTreeItem<>(doctors, RecursiveTreeObject::getChildren);
             Platform.runLater(() -> {
-                patientsTableView.setRoot(root);
+                doctorsTableView.setRoot(root);
+                doctorsTableView.getSortOrder().add(nameColumn);
             });
+        }
+
+        if (evt.getPropertyName().equals(DOCTORS_CHANGE)) {
+            Platform.runLater(() -> doctorsTableView.getSortOrder().add(nameColumn));
 
         }
     }
 
     @FXML
     void handleAdd() {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(DOCTOR_DIALOG_LOCATION), getResources());
+            Parent patientDialog = loader.load();
+            DoctorDialogController controller = loader.getController();
+            controller.setupAddDialog();
+
+            AnchorPane containerRoot = createNewView(710, 560, patientDialog);
+            createNewStage(containerRoot, root);
+
+        } catch (IOException e){
+            System.err.println("PatientController - handleAdd(): " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void handleEdit() {
+
+        TreeItem<Doctor> selectedDoctor = doctorsTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedDoctor == null) {
+            showSelectionErrorAlert(root);
+        } else {
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(DOCTOR_DIALOG_LOCATION), getResources());
+                Parent patientDialog = loader.load();
+                DoctorDialogController controller = loader.getController();
+                controller.setupEditDialog(selectedDoctor.getValue());
+
+                AnchorPane containerRoot = createNewView(710, 560, patientDialog);
+                createNewStage(containerRoot, root);
+
+            } catch (IOException e){
+                System.err.println("PatientController - handleAdd(): " + e.getMessage());
+            }
+        }
 
     }
 
     @FXML
     void handleDelete() {
 
-    }
+        TreeItem<Doctor> selectedDoctor = doctorsTableView.getSelectionModel().getSelectedItem();
 
-    @FXML
-    void handleEdit() {
+        if (selectedDoctor == null) {
+            showSelectionErrorAlert(root);
+        } else {
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call()  {
+                    return DataSource.getInstance().deleteDoctor(selectedDoctor.getValue().getId());
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                root.setCursor(Cursor.DEFAULT);
+                if (!task.getValue()) {
+                    showDatabaseErrorAlert(root);
+                }
+            });
+
+            root.setCursor(Cursor.WAIT);
+            new Thread(task).start();
+        }
 
     }
 }
