@@ -11,7 +11,7 @@
 
     <HBox fx:id="buttonsHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <JFXButton fx:id="leftButton"/>
-        <JFXButton fx:id="rightButton"/>
+        <JFXButton fx:id="rightButton" defaultButton="true"/>
     </HBox>
 
 </AnchorPane>

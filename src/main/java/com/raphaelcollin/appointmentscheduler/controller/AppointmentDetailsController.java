@@ -189,8 +189,9 @@ public class AppointmentDetailsController implements Initializable {
         patientPhoneField.setText(appointment.getPatient().getPhoneNumber());
         patientEmailField.setText(appointment.getPatient().getEmail());
 
-        if (appointment.getPatient().getCity() != null && appointment.getPatient().getZipCode() != null &&
-        appointment.getPatient().getHouseNumber() != null && appointment.getPatient().getStreetName() != null) {
+        if (appointment.getPatient().getCity() != null && !appointment.getPatient().getCity().isEmpty() && appointment.getPatient().getZipCode() != null &&
+                !appointment.getPatient().getZipCode().isEmpty() && appointment.getPatient().getHouseNumber() != null && !appointment.getPatient().getHouseNumber().isEmpty()
+                && appointment.getPatient().getStreetName() != null && !appointment.getPatient().getStreetName().isEmpty()) {
             patientAddressField.setText(appointment.getPatient().getCity() + ", " + appointment.getPatient().getStreetName()
             + ", " + appointment.getPatient().getHouseNumber() + " - " + appointment.getPatient().getZipCode());
         }

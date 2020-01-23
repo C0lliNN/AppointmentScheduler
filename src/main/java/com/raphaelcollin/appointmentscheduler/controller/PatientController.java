@@ -74,6 +74,18 @@ public class PatientController implements Initializable, PropertyChangeListener 
         AnchorPane.setTopAnchor(searchField, 30.0);
         AnchorPane.setLeftAnchor(searchField, 50.0);
 
+        searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            patientsTableView.setPredicate(patient ->
+                    newValue.trim().isEmpty() ||
+                    patient.getValue().getFirstName().toLowerCase().contains(newValue.toLowerCase()) ||
+                    patient.getValue().getLastName().toLowerCase().contains(newValue.toLowerCase()) ||
+                    patient.getValue().getPhoneNumber().contains(newValue) ||
+                    ((patient.getValue().getEmail() != null) && patient.getValue().getEmail().contains(newValue)) ||
+                    ((patient.getValue().getZipCode() != null) && patient.getValue().getZipCode().contains(newValue)) ||
+                    ((patient.getValue().getCity() != null) && patient.getValue().getCity().toLowerCase().contains(newValue.toLowerCase())) ||
+                    ((patient.getValue().getHouseNumber() != null) && patient.getValue().getHouseNumber().contains(newValue.toLowerCase())));
+        }));
+
         for (int i = 1; i < 4; i++) {
             JFXButton button = (JFXButton) root.getChildren().get(i);
             button.setFont(Font.font(18));

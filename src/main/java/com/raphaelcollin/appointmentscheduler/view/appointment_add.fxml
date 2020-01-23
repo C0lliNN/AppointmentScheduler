@@ -10,7 +10,7 @@
     <Label fx:id="titleLabel" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" alignment="CENTER" text="%appointments_add_newAppointment"/>
     <HBox fx:id="hBoxButtons" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <JFXButton text="%appointments_add_clear" fx:id="clearButton" onAction="#handleClear"/>
-        <JFXButton text="%appointments_add_add" fx:id="addButton" onAction="#handleAdd"/>
+        <JFXButton text="%appointments_add_add" fx:id="addButton" onAction="#handleAdd" defaultButton="true"/>
     </HBox>
 
 </AnchorPane>
