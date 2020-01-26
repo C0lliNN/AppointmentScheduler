@@ -61,6 +61,7 @@ public class Main extends Application {
     public static final String PATIENT_DIALOG_LOCATION = "/patient_dialog.fxml";
     public static final String DOCTOR_VIEW_LOCATION = "/doctor_view.fxml";
     public static final String DOCTOR_DIALOG_LOCATION = "/doctor_dialog.fxml";
+    public static final String TOOLS_VIEW_LOCATION = "/tools_content.fxml";
 
     // Bundle Keys
 
@@ -108,6 +109,33 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_INVALID_EMAIL = "invalid_email";
     public static final String BUNDLE_KEY_DOCTOR_DIALOG_ADD_TITLE = "doctor_dialog_add_title";
     public static final String BUNDLE_KEY_DOCTOR_DIALOG_EDIT_TITLE = "doctor_dialog_edit_title";
+    public static final String BUNDLE_KEY_TOOLS_LOCATION_BUTTON = "tools_location_button";
+    public static final String BUNDLE_KEY_FILES = "files";
+    public static final String BUNDLE_KEY_LOCATION_ERROR_HEADER_TEXT = "alert_location_missing_headerText";
+    public static final String BUNDLE_KEY_LOCATION_ERROR_CONTENT_TEXT = "alert_location_missing_contentText";
+    public static final String BUNDLE_KEY_DATA_EXPORT_SUCCESS_HEADER = "alert_success_headerText";
+    public static final String BUNDLE_KEY_DATA_EXPORT_SUCCESS_CONTENT = "alert_success_contentText";
+    public static final String BUNDLE_KEY_DATA_EXPORT_ERROR_HEADER = "alert_error_headerText";
+    public static final String BUNDLE_KEY_DATA_EXPORT_ERROR_CONTENT = "alert_error_contentText";
+    public static final String BUNDLE_KEY_APPOINTMENT_ID = "appointmentId";
+    public static final String BUNDLE_KEY_DATE = "date";
+    public static final String BUNDLE_KEY_PRICE = "price";
+    public static final String BUNDLE_KEY_DESCRIPTION = "description";
+    public static final String BUNDLE_KEY_STATUS = "status";
+    public static final String BUNDLE_KEY_PATIENT_ID = "patientId";
+    public static final String BUNDLE_KEY_DOCTOR_ID = "doctorId";
+    public static final String BUNDLE_KEY_FIRST_NAME = "firstName";
+    public static final String BUNDLE_KEY_LAST_NAME = "lastName";
+    public static final String BUNDLE_KEY_GENDER = "gender";
+    public static final String BUNDLE_KEY_BIRTH_DATE = "birthDate";
+    public static final String BUNDLE_KEY_PHONE_NUMBER = "phoneNumber";
+    public static final String BUNDLE_KEY_EMAIL = "email";
+    public static final String BUNDLE_KEY_CITY = "city";
+    public static final String BUNDLE_KEY_ZIP_CODE = "zipCode";
+    public static final String BUNDLE_KEY_STREET_NAME = "streetName";
+    public static final String BUNDLE_KEY_HOUSE_NUMBER = "houseNumber";
+    public static final String BUNDLE_KEY_NAME = "name";
+    public static final String BUNDLE_KEY_LICENSE_NUMBER = "licenseNumber";
 
     // Classes and Ids
 
@@ -286,6 +314,30 @@ public class Main extends Application {
         timeline.getKeyFrames().setAll(frame1);
         timeline.play();
 
+    }
+
+    public static String getTranslatedStatus(String dbName) {
+        String status = "";
+
+        for (ComboBoxItemHelper statusItem : statusList) {
+            if (statusItem.getDbName().equals(dbName)) {
+                status = getResources().getString(statusItem.getBundleKey());
+            }
+        }
+
+        return status;
+    }
+
+    public static String getTranslatedGender (String dbName) {
+        String gender = "";
+
+        for (ComboBoxItemHelper genderItem : genderList) {
+            if (genderItem.getDbName().equals(dbName)) {
+                gender = getResources().getString(genderItem.getBundleKey());
+            }
+        }
+
+        return gender;
     }
 
     public static Optional<ButtonType> showAlert(Alert.AlertType alertType, Parent root, String title, String headerText,

@@ -334,3 +334,7 @@
     -fx-text-fill: white;
     -fx-fill: white;
 }
+
+.toggle-button:hover {
+    -fx-cursor: hand;
+}

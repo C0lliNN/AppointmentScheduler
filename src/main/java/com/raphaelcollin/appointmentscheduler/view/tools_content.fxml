@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<?import com.jfoenix.controls.JFXRadioButton?>
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.ToolsController">
+
+    <Label fx:id="titleLabel" alignment="CENTER" text="%tab_title_tools" AnchorPane.leftAnchor="0.0"
+           AnchorPane.rightAnchor="0.0"/>
+
+    <Label fx:id="exportLabel" text="%tools_export_label"/>
+
+    <GridPane fx:id="exportContainerGridPane" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0">
+
+        <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" prefWidth="200"/>
+            <ColumnConstraints hgrow="NEVER" prefWidth="400"/>
+            <ColumnConstraints hgrow="NEVER" prefWidth="200"/>
+        </columnConstraints>
+
+        <rowConstraints>
+            <RowConstraints vgrow="NEVER" valignment="TOP" prefHeight="400"/>
+        </rowConstraints>
+
+        <VBox fx:id="formatVBox" alignment="CENTER">
+
+            <JFXRadioButton fx:id="csvButton" mnemonicParsing="false" text="CSV"/>
+            <JFXRadioButton fx:id="xmlButton" mnemonicParsing="false" text="XML"/>
+            <JFXRadioButton fx:id="jsonButton" mnemonicParsing="false" text="JSON"/>
+            <JFXRadioButton fx:id="xlsxButton" mnemonicParsing="false" text="XLSX"/>
+
+        </VBox>
+        <VBox fx:id="configVBox" alignment="BOTTOM_CENTER" GridPane.columnIndex="1">
+
+            <JFXButton fx:id="locationButton" buttonType="RAISED" onAction="#handleSelectLocation"
+                       text="%tools_location_button"/>
+            <JFXButton fx:id="exportButton" buttonType="RAISED" onAction="#handleExport" text="%tools_export_button"/>
+
+        </VBox>
+        <VBox fx:id="entityVBox" alignment="CENTER"
+              GridPane.columnIndex="2">
+
+            <JFXRadioButton fx:id="appointmentButton" mnemonicParsing="false" text="%tab_title_appointment"/>
+            <JFXRadioButton fx:id="patientButton" mnemonicParsing="false" text="%tab_title_patient"/>
+            <JFXRadioButton fx:id="doctorButton" mnemonicParsing="false" text="%tab_title_doctor"/>
+
+        </VBox>
+    </GridPane>
+</AnchorPane>

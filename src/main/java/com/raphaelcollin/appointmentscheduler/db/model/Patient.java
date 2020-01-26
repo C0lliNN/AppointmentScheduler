@@ -1,6 +1,7 @@
 package com.raphaelcollin.appointmentscheduler.db.model;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.raphaelcollin.appointmentscheduler.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -10,7 +11,8 @@ import java.util.Objects;
 
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
-public class Patient extends RecursiveTreeObject<Patient> {
+public class Patient extends RecursiveTreeObject<Patient> implements Exportable {
+
     private int id;
     private String firstName;
     private String lastName;
@@ -38,10 +40,11 @@ public class Patient extends RecursiveTreeObject<Patient> {
         this.birthDate = builder.birthDate;
         this.phoneNumber = builder.phoneNumber;
         this.email = builder.email;
+        this.city = builder.city;
         this.zipCode = builder.zipCode;
         this.streetName = builder.streetName;
         this.houseNumber = builder.houseNumber;
-        this.city = builder.city;
+
 
         nameProperty = new SimpleStringProperty(this.firstName + " " + this.lastName);
         if (this.gender.equals(MALE)) {
@@ -60,7 +63,85 @@ public class Patient extends RecursiveTreeObject<Patient> {
         } else {
             addressProperty = new SimpleStringProperty(this.city + ", " + this.streetName + " " + this.houseNumber + " - " + this.zipCode);
         }
+    }
 
+    @Override
+    public String getHeaderLineCSV() {
+        return getResources().getString(BUNDLE_KEY_PATIENT_ID) + "," + getResources().getString(BUNDLE_KEY_FIRST_NAME)
+                + "," + getResources().getString(BUNDLE_KEY_LAST_NAME) + "," + getResources().getString(BUNDLE_KEY_GENDER)
+                + "," + getResources().getString(BUNDLE_KEY_BIRTH_DATE) + "," + getResources().getString(BUNDLE_KEY_PHONE_NUMBER)
+                + "," + getResources().getString(BUNDLE_KEY_EMAIL) + "," + getResources().getString(BUNDLE_KEY_CITY)
+                + "," + getResources().getString(BUNDLE_KEY_ZIP_CODE) + "," + getResources().getString(BUNDLE_KEY_STREET_NAME)
+                + "," + getResources().getString(BUNDLE_KEY_HOUSE_NUMBER);
+    }
+
+    @Override
+    public String convertToCSV() {
+
+        return id + "," + firstName + "," + lastName + "," + Main.getTranslatedGender(this.gender) + "," +
+                birthDate.format(DateTimeFormatter.ofPattern(getResources().getString(BUNDLE_KEY_DATE_FORMAT))) + "," +
+                phoneNumber + "," +
+                (email == null ? "" : email) + "," +
+                (city == null ? "" : city) + "," +
+                (zipCode == null ? "" : zipCode) + "," +
+                (streetName == null ? "" : streetName) + "," +
+                (houseNumber == null ? "" : houseNumber);
+    }
+
+    @Override
+    public String convertToXML() {
+
+        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT) + ">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_PATIENT_ID)).append(">").append(this.id).append("</").
+                append(getResources().getString(BUNDLE_KEY_PATIENT_ID)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_FIRST_NAME)).append(">").append(this.firstName).append("</").
+                append(getResources().getString(BUNDLE_KEY_FIRST_NAME)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_LAST_NAME)).append(">").append(this.lastName).append("</").
+                append(getResources().getString(BUNDLE_KEY_LAST_NAME)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_GENDER)).append(">").append(Main.getTranslatedGender(this.gender)).append("</").
+                append(getResources().getString(BUNDLE_KEY_GENDER)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_BIRTH_DATE)).append(">").append(this.birthDate.format(DateTimeFormatter.
+                ofPattern(getResources().getString(BUNDLE_KEY_DATE_FORMAT)))).append("</").
+                append(getResources().getString(BUNDLE_KEY_BIRTH_DATE)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_PHONE_NUMBER)).append(">").append(this.phoneNumber).append("</").
+                append(getResources().getString(BUNDLE_KEY_PHONE_NUMBER)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_EMAIL)).append(">").append(email == null ? "" : email).append("</").
+                append(getResources().getString(BUNDLE_KEY_EMAIL)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_CITY)).append(">").append(city == null ? "" : city).append("</").
+                append(getResources().getString(BUNDLE_KEY_CITY)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_ZIP_CODE)).append(">").append(zipCode == null ? "" : zipCode).append("</").
+                append(getResources().getString(BUNDLE_KEY_ZIP_CODE)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_STREET_NAME)).append(">").append(streetName == null ? "" : streetName).append("</").
+                append(getResources().getString(BUNDLE_KEY_STREET_NAME)).append(">\n");
+        builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_HOUSE_NUMBER)).append(">").append(houseNumber == null ? "" : houseNumber).append("</").
+                append(getResources().getString(BUNDLE_KEY_HOUSE_NUMBER)).append(">\n");
+
+
+        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT)).append(">\n");
+
+        return builder.toString();
+    }
+
+    @Override
+    public String convertToJSON() {
+        StringBuilder builder = new StringBuilder("{");
+
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_PATIENT_ID)).append("\": ").append(this.id).append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_FIRST_NAME)).append("\": ").append("\"").append(this.firstName).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_LAST_NAME)).append("\": ").append("\"").append(this.lastName).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_GENDER)).append("\": ").append("\"").append(Main.getTranslatedGender(this.gender)).
+                append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_BIRTH_DATE)).append("\": ").append("\"").append(this.birthDate.
+                format(DateTimeFormatter.ofPattern(getResources().getString(BUNDLE_KEY_DATE_FORMAT)))).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_PHONE_NUMBER)).append("\": ").append("\"").append(this.phoneNumber).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_EMAIL)).append("\": ").append("\"").append(email == null ? "" : email).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_CITY)).append("\": ").append("\"").append(city == null ? "" : city).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_ZIP_CODE)).append("\": ").append("\"").append(zipCode == null ? "" : zipCode).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_STREET_NAME)).append("\": ").append("\"").append(streetName == null ? "" : streetName).append("\"").append(",\n");
+        builder.append("\t\"").append(getResources().getString(BUNDLE_KEY_HOUSE_NUMBER)).append("\": ").append("\"").append(houseNumber == null ? "" : houseNumber).append("\"").append("\n");
+        builder.append("}\n");
+
+        return builder.toString();
     }
 
     public int getId() {

@@ -57,10 +57,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Exp
 
     @Override
     public String getHeaderLineCSV() {
-        return getResources().getString(BUNDLE_KEY_APPOINTMENT_ID) + "," + getResources().getString(BUNDLE_KEY_DATE)
-                + "," + getResources().getString(BUNDLE_KEY_PRICE) + "," + getResources().getString(BUNDLE_KEY_DESCRIPTION)
-                + "," + getResources().getString(BUNDLE_KEY_STATUS) + "," + getResources().getString(BUNDLE_KEY_DOCTOR_ID)
-                + "," + getResources().getString(BUNDLE_KEY_PATIENT_ID);
+        return null;
     }
 
     @Override
