@@ -52,7 +52,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Exp
         this.descriptionProperty = new SimpleStringProperty(this.description);
         this.doctorProperty = new SimpleStringProperty(this.doctor.getName());
         this.priceProperty = new SimpleDoubleProperty(this.price);
-        this.statusProperty = new SimpleStringProperty(this.status);
+        this.statusProperty = new SimpleStringProperty(getTranslatedStatus(this.status));
     }
 
     @Override

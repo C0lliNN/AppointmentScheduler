@@ -25,10 +25,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.raphaelcollin.appointmentscheduler.ApplicationPreferences.*;
 
@@ -40,6 +37,7 @@ public class Main extends Application {
     private static ResourceBundle resources;
     public static ObservableList<ComboBoxItemHelper> statusList;
     public static ObservableList<ComboBoxItemHelper> genderList;
+    public static Map<String, String> languageList;
 
     // File Locations
 
@@ -62,6 +60,7 @@ public class Main extends Application {
     public static final String DOCTOR_VIEW_LOCATION = "/doctor_view.fxml";
     public static final String DOCTOR_DIALOG_LOCATION = "/doctor_dialog.fxml";
     public static final String TOOLS_VIEW_LOCATION = "/tools_content.fxml";
+    public static final String SETTINGS_VIEW_LOCATION = "/settings_view.fxml";
 
     // Bundle Keys
 
@@ -136,6 +135,8 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_HOUSE_NUMBER = "houseNumber";
     public static final String BUNDLE_KEY_NAME = "name";
     public static final String BUNDLE_KEY_LICENSE_NUMBER = "licenseNumber";
+    public static final String BUNDLE_KEY_SETTING_ALERT_HEADER_TEXT = "settings_apply_alert_headerText";
+    public static final String BUNDLE_KEY_SETTING_ALERT_CONTENT_TEXT = "settings_apply_alert_contentText";
 
     // Classes and Ids
 
@@ -194,8 +195,7 @@ public class Main extends Application {
 
     @Override
     public void init() throws Exception {
-        //ApplicationPreferences.getInstance().getPreferences().clear();
-        //ApplicationPreferences.getInstance().getPreferences().putBoolean(PREFERENCES_KEY_ACCESS_CONTROL, false);
+
         super.init();
 
         statusList = FXCollections.observableList(Arrays.asList(
@@ -211,6 +211,9 @@ public class Main extends Application {
                 new ComboBoxItemHelper(FEMALE, FEMALE_INDEX, BUNDLE_KEY_GENDER_FEMALE)
         ));
 
+        languageList = new HashMap<>();
+        languageList.put("pt", "Português");
+        languageList.put("en", "English");
 
     }
 
@@ -361,6 +364,14 @@ public class Main extends Application {
                 getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
                 getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
                 getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE));
+    }
+
+    public static void showPasswordMatchErrorAlert(Parent root) {
+        showAlert(Alert.AlertType.ERROR,
+                root,
+                getResources().getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
+                getResources().getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
+                getResources().getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH));
     }
 
     public static void showSelectionErrorAlert(Parent root) {

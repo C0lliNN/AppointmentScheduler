@@ -201,7 +201,7 @@ public class AppointmentFieldsController implements Initializable {
                 builder.setStatus(statusField.getSelectionModel().getSelectedItem().getDbName());
             } else {
 
-                builder.setStatus(getResources().getString(BUNDLE_KEY_STATUS_UNCONFIRMED));
+                builder.setStatus(UNCONFIRMED);
             }
 
             appointment = builder

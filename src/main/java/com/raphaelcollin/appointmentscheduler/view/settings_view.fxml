@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css"
+            fx:controller="com.raphaelcollin.appointmentscheduler.controller.SettingsController">
+
+    <Label fx:id="titleLabel" alignment="CENTER" text="Settings" AnchorPane.leftAnchor="0.0"
+           AnchorPane.rightAnchor="0.0"/>
+
+    <HBox fx:id="containerHBox" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <GridPane alignment="TOP_CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+                <RowConstraints vgrow="NEVER"/>
+            </rowConstraints>
+
+            <Label text="%language"/>
+            <Label text="%recover_credentials_user" GridPane.rowIndex="2"/>
+
+            <JFXComboBox fx:id="languageField" GridPane.columnIndex="1"/>
+            <JFXCheckBox fx:id="accessControlCheckBox" text="Access Control" GridPane.rowIndex="1"/>
+
+            <Label text="%recover_credentials_password" GridPane.rowIndex="3"/>
+            <Label text="%access_control_confirmPassword" GridPane.rowIndex="4"/>
+
+            <JFXTextField fx:id="userField" promptText="%login_userField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <JFXPasswordField fx:id="userPasswordField" promptText="%login_passwordField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <JFXPasswordField fx:id="confirmPasswordField" promptText="%access_control_confirmPassword" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        </GridPane>
+    <GridPane alignment="TOP_CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+            <RowConstraints vgrow="NEVER"/>
+        </rowConstraints>
+
+        <Label fx:id="dbSectionTitleLabel" text="%database_configuration_databaseConfigurationMessage" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+        <Label text="%database_configuration_ipAddress" GridPane.rowIndex="1"/>
+        <Label text="%database_configuration_port" GridPane.rowIndex="2"/>
+        <Label text="%recover_credentials_user" GridPane.rowIndex="3"/>
+        <Label text="%access_control_password" GridPane.rowIndex="4"/>
+
+        <JFXTextField fx:id="ipField" promptText="EX: 192.168.0.1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <JFXTextField fx:id="portField" promptText="EX: 3306" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <JFXTextField fx:id="dbUserField" promptText="%database_user" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <JFXPasswordField fx:id="dbPasswordField" promptText="%database_password" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    </GridPane>
+</HBox>
+    <JFXButton fx:id="applyButton" buttonType="RAISED" onAction="#handleApply"
+               text="%apply"/>
+</AnchorPane>

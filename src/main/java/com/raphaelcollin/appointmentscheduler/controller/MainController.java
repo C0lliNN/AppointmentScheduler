@@ -118,6 +118,9 @@ public class MainController implements Initializable {
                     getResources().getString(BUNDLE_KEY_TAB_TITLE_SETTINGS),
                     settingsIcon));
 
+            Parent settingsContent = FXMLLoader.load(getClass().getResource(SETTINGS_VIEW_LOCATION), resources);
+            settingsTab.setContent(settingsContent);
+
             tabPane.getTabs().addAll(dashboardTab, appointmentTab, financialTab, patientTab, doctorTab, toolsTab, settingsTab);
 
             tabPane.getTabs().forEach(tab -> tab.setDisable(true));
@@ -143,19 +146,13 @@ public class MainController implements Initializable {
                 @Override
                 protected Void call() {
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
                     DataSource.getInstance().loadInitialData();
-
                     return null;
                 }
             };
 
             loadInitialDataTask.setOnSucceeded(event -> {
+
 
                 root.getChildren().remove(box);
                 tabPane.getTabs().forEach(tab -> tab.setDisable(false));

@@ -96,6 +96,8 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             box.setSpacing(15);
 
             ((Label) box.getChildren().get(0)).setFont(Font.font(18));
+
+            ((Control) box.getChildren().get(1)).setPrefWidth(150);
         });
         AnchorPane.setTopAnchor(filtersHBox, 50.0);
 
@@ -161,8 +163,8 @@ public class AppointmentController implements Initializable, PropertyChangeListe
                 return 1;
             }
 
-            String [] dateParts1 = date1.substring(0, date1.length() - 2).split(":");
-            String [] dateParts2 = date2.substring(0, date2.length() - 2).split(":");
+            String [] dateParts1 = date1.replaceAll("[^\\d:]+", "").split(":");
+            String [] dateParts2 = date2.replaceAll("[^\\d:]+", "").split(":");
 
             dateParts1[1] = dateParts1[1].replaceAll(REMOVE_NON_DIGITS_REGEX, "");
             dateParts2[1] = dateParts2[1].replaceAll(REMOVE_NON_DIGITS_REGEX, "");
