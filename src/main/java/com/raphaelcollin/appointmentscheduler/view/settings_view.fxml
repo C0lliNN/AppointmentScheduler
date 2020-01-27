@@ -5,10 +5,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css"
+<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css" styleClass="settings-tab"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.SettingsController">
 
-    <Label fx:id="titleLabel" alignment="CENTER" text="Settings" AnchorPane.leftAnchor="0.0"
+    <Label fx:id="titleLabel" alignment="CENTER" text="%settings" AnchorPane.leftAnchor="0.0"
            AnchorPane.rightAnchor="0.0"/>
 
     <HBox fx:id="containerHBox" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

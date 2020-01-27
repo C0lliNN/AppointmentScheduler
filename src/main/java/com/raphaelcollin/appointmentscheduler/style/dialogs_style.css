@@ -1,42 +1,56 @@
 * {
-    -theme-gray-1: #a2a2a2;
-    -theme-gray-2: #848484;
+    -theme-color-gray1: #a2a2a2;
+    -theme-color-gray2: #848484;
+    -theme-color-gray3: #575757;
+    -theme-color-gray4: #414141;
+    -theme-color-gray5: #303030;
+    -theme-color-gray6: #cfd0cf;
+    -theme-color-gray7: #b7b8b7;
+    -theme-color-green1: #3d8718;
+    -theme-color-green2: green;
+    -theme-color-green3: #0d9900;
+    -theme-color-orange1: orange;
+    -theme-color-orange2: #FF9004;
+    -theme-color-blue1: #085394;
+    -theme-color-blue2: #084889;
+    -theme-background: #f4f4f4;
+
 }
 
 .root, .content {
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: -theme-background;
 }
 
 .label {
     -fx-font-family: "Verdana";
-    -fx-text-fill: #303030;
+    -fx-text-fill: -theme-color-gray5;
 }
 
 .configuration-subtitle {
-    -fx-text-fill: #414141;
+    -fx-text-fill: -theme-color-gray4;
 }
 
 .jfx-text-field, .jfx-password-field, .jfx-text-area, .jfx-combo-box .list-cell {
     -fx-font-family: Arial;
-    -jfx-focus-color: -theme-gray-1;
-    -jfx-unfocus-color: -theme-gray-2;
+    -jfx-focus-color: -theme-color-gray1;
+    -jfx-unfocus-color: -theme-color-gray2;
     -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
     -fx-font-size: 1.7em;
-    -fx-text-fill: #575757;
+    -fx-text-fill: -theme-color-gray3;
 }
 
 .jfx-combo-box {
-    -jfx-focus-color: -theme-gray-1;
-    -jfx-unfocus-color: -theme-gray-2;
+    -jfx-focus-color: -theme-color-gray1;
+    -jfx-unfocus-color: -theme-color-gray2;
 }
 
 .jfx-combo-box .list-cell:hover {
-    -fx-background-color: #cfd0cf;
+    -fx-background-color: -theme-color-gray6;
     -fx-cursor: hand;
 }
 
 .jfx-combo-box .combo-box-popup .list-cell:selected {
-    -fx-background-color: #b7b8b7;
+    -fx-background-color: -theme-color-gray7;
 }
 
 .jfx-text-area .content{
@@ -53,7 +67,7 @@
     -fx-font-family: Arial;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-text-fill: #3d8718;
+    -fx-text-fill: -theme-color-green1;
 }
 
 #label-credentials:hover {
@@ -62,21 +76,21 @@
 }
 
 .green-button {
-    -fx-background-color: green;
+    -fx-background-color: -theme-color-green2;
     -fx-text-fill: white;
 }
 
 .green-button:hover {
-    -fx-background-color: #0d9900;
+    -fx-background-color: -theme-color-green3;
 }
 
 .orange-button {
     -fx-text-fill: white;
-    -fx-background-color: orange
+    -fx-background-color: -theme-color-orange1
 }
 
 .orange-button:hover {
-    -fx-background-color: #FF9004;
+    -fx-background-color: -theme-color-orange2;
 }
 
 .jfx-tab-pane .jfx-rippler {
@@ -88,16 +102,16 @@
 }
 
 .jfx-tab-pane .tab-header-background {
-    -fx-background-color: #085394;
+    -fx-background-color: -theme-color-blue1;
 }
 
 .tab {
-    -fx-background-color: #085394;
+    -fx-background-color: -theme-color-blue1;
 }
 
 .tab:hover {
     -fx-cursor: hand;
-    -fx-background-color: #084889;
+    -fx-background-color: -theme-color-blue2;
 }
 
 .tab .tab-label {

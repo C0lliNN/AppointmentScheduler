@@ -1,20 +1,23 @@
 *{
-    -theme-color1: #085394;
-    -theme-color2: #084889;
-    -theme-color3: #32a852;
-    -theme-color4: #e32a05;
-    -theme-color5: #07de41;
-    -theme-color6: #025c99;
-    -theme-color7: #d42b05;
-    -theme-color8: #329B4D;
-    -theme-color9: #07CE40;
-    -theme-color10: #eeaa06;
-    -theme-color11: #e39f06;
+    -theme-color-blue1: #085394;
+    -theme-color-blue2: #084889;
+    -theme-color-blue3: #025c99;
+    -theme-color-green1: #32a852;
+    -theme-color-green2: #07de41;
+    -theme-color-red1: #e32a05;
+    -theme-color-red2: #d42b05;
+    -theme-color-green3: #329B4D;
+    -theme-color-green4: #07CE40;
+    -theme-color-orange1: #eeaa06;
+    -theme-color-orange2: #e39f06;
+    -theme-color-gray1: #a2a2a2;
+    -theme-color-gray2: #848484;
+    -theme-color-gray3: #575757;
     -theme-background: #f4f4f4;
 }
 
-.root {
-    -fx-background-color: #053259;
+.jfx-button {
+    -fx-text-fill: -theme-background;
 }
 
 .button:hover {
@@ -41,14 +44,14 @@
 
 .close-icon {
     -glyph-size: 30px;
-    -fx-text-fill: red;
-    -fx-fill: red;
+    -fx-text-fill: -theme-color-red1;
+    -fx-fill: -theme-color-red1;
 }
 
 .minimize-icon {
     -glyph-size: 30px;
-    -fx-text-fill: #f0f0f0;
-    -fx-fill: #f0f0f0;
+    -fx-text-fill: -theme-background;
+    -fx-fill: -theme-background;
 }
 
 .tab-pane .tab-header-area {
@@ -63,7 +66,7 @@
 }
 
 .tab-pane .tab-header-background, .tab-pane .tab-header-area {
-    -fx-background-color: -theme-color1;
+    -fx-background-color: -theme-color-blue1;
 }
 
 .tab{
@@ -78,7 +81,7 @@
 
 .tab:hover {
     -fx-cursor: hand;
-    -fx-background-color: -theme-color2;
+    -fx-background-color: -theme-color-blue2;
 }
 
 .tab-icon {
@@ -95,12 +98,12 @@
 }
 
 .tab:selected .tab-pane-label {
-    -fx-text-fill: -theme-color1;
+    -fx-text-fill: -theme-color-blue1;
 }
 
 .tab:selected .tab-icon {
-    -fx-text-fill: -theme-color1;
-    -fx-fill: -theme-color1;
+    -fx-text-fill: -theme-color-blue1;
+    -fx-fill: -theme-color-blue1;
 }
 
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
@@ -119,72 +122,65 @@
 }
 
 .dashboard-tab-upcoming-box {
-    -fx-border-width: 0 1 1 0; -fx-border-color: -theme-color1;
+    -fx-border-width: 0 1 1 0;
+    -fx-border-color: -theme-color-blue1;
 }
 
 .dashboard-tab-upcoming-box .value-label{
-    -fx-text-fill: -theme-color6;
+    -fx-text-fill: -theme-color-blue3;
 }
 
 .dashboard-tab-upcoming-box .jfx-button {
-    -fx-background-color: -theme-color6;
-    -fx-text-fill: white;
+    -fx-background-color: -theme-color-blue3;
 }
 
 .dashboard-tab-upcoming-box .jfx-button:hover {
-    -fx-background-color: -theme-color2;
+    -fx-background-color: -theme-color-blue2;
 }
 
 
 .dashboard-tab-unconfirmed-box .value-label{
-    -fx-text-fill: -theme-color4;
+    -fx-text-fill: -theme-color-red1;
 }
 
 .dashboard-tab-unconfirmed-box .jfx-button{
-    -fx-background-color: -theme-color4;
-    -fx-text-fill: white;
+    -fx-background-color: -theme-color-red1;
 }
 
 .dashboard-tab-unconfirmed-box .jfx-button:hover {
-    -fx-background-color: -theme-color7;
+    -fx-background-color: -theme-color-red2;
 }
 
 .dashboard-tab-unconfirmed-box .jfx-progress-bar > .bar {
-    -fx-background-color: -theme-color4;
+    -fx-background-color: -theme-color-red1;
 }
 
 .dashboard-tab-completed-box .value-label{
-    -fx-text-fill: -theme-color3;
+    -fx-text-fill: -theme-color-green1;
 }
 .dashboard-tab-completed-box .jfx-button{
-    -fx-background-color: -theme-color3;
-    -fx-text-fill: white;
+    -fx-background-color: -theme-color-green1;
 }
 
 .dashboard-tab-completed-box .jfx-button:hover {
-    -fx-background-color: -theme-color8;
+    -fx-background-color: -theme-color-green3;
 }
 
 .dashboard-tab-earnings-box {
     -fx-border-width: 1 0 0 1;
-    -fx-border-color: -theme-color1;
+    -fx-border-color: -theme-color-blue1;
 }
 
 .dashboard-tab-earnings-box .value-label{
-    -fx-text-fill: -theme-color5;
+    -fx-text-fill: -theme-color-green2;
 }
 
 .dashboard-tab-earnings-box .jfx-button{
-    -fx-background-color: -theme-color5;
-    -fx-text-fill: white;
+    -fx-background-color: -theme-color-green2;
 }
 
 .dashboard-tab-earnings-box .jfx-button:hover {
-    -fx-background-color: -theme-color9;
-}
-
-.appointment-tab .jfx-button{
-    -fx-text-fill: white;
+    -fx-background-color: -theme-color-green4;
 }
 
 .appointment-tab .jfx-text-field {
@@ -211,7 +207,7 @@
 }
 
 .blue-check-box {
-    -jfx-checked-color: -theme-color1;
+    -jfx-checked-color: -theme-color-blue1;
 }
 
 .blue-check-box:hover {
@@ -219,35 +215,35 @@
 }
 
 .blue-button {
-    -fx-background-color: -theme-color1;
+    -fx-background-color: -theme-color-blue1;
 }
 
 .blue-button:hover {
-    -fx-background-color: -theme-color2;
+    -fx-background-color: -theme-color-blue2;
 }
 
 .green-button {
-    -fx-background-color: -theme-color3;
+    -fx-background-color: -theme-color-green1;
 }
 
 .green-button:hover {
-    -fx-background-color: -theme-color8;
+    -fx-background-color: -theme-color-green3;
 }
 
 .orange-button {
-    -fx-background-color: -theme-color10;
+    -fx-background-color: -theme-color-orange1;
 }
 
 .orange-button:hover {
-    -fx-background-color: -theme-color11;
+    -fx-background-color: -theme-color-orange2;
 }
 
 .red-button {
-    -fx-background-color: -theme-color4;
+    -fx-background-color: -theme-color-red1;
 }
 
 .red-button:hover {
-    -fx-background-color: -theme-color7;
+    -fx-background-color: -theme-color-red2;
 }
 
 .tree-table-view .column-header {
@@ -335,6 +331,11 @@
     -fx-fill: white;
 }
 
-.toggle-button:hover {
-    -fx-cursor: hand;
+.settings-tab .jfx-text-field, .jfx-password-field, .jfx-text-area {
+    -fx-font-family: Arial;
+    -jfx-focus-color: -theme-color-gray1;
+    -jfx-unfocus-color: -theme-color-gray2;
+    -fx-prompt-text-fill: rgba(0, 0, 0, 0.4);
+    -fx-font-size: 1.7em;
+    -fx-text-fill: -theme-color-gray3;
 }

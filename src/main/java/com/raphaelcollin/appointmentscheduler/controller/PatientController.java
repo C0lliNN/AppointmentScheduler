@@ -152,7 +152,7 @@ public class PatientController implements Initializable, PropertyChangeListener 
             PatientDialogController controller = loader.getController();
             controller.setupAddDialog();
 
-            AnchorPane containerRoot = createNewView(900, 750, patientDialog);
+            AnchorPane containerRoot = createNewView(1050, 750, patientDialog);
             createNewStage(containerRoot, root);
 
         } catch (IOException e){
@@ -205,7 +205,7 @@ public class PatientController implements Initializable, PropertyChangeListener 
                 PatientDialogController controller = loader.getController();
                 controller.setupEditDialog(selectedPatient.getValue());
 
-                AnchorPane containerRoot = createNewView(900, 750, patientDialog);
+                AnchorPane containerRoot = createNewView(1050, 750, patientDialog);
                 createNewStage(containerRoot, root);
 
             } catch (IOException e){
