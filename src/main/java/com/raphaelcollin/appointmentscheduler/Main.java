@@ -51,6 +51,7 @@ public class Main extends Application {
     public static final String CONTAINER_LOCATION = "/container.fxml";
     public static final String APPOINTMENT_FIELDS_LOCATION = "/appointment_fields.fxml";
     public static final String APPOINTMENT_ADD_LOCATION ="/appointment_add.fxml";
+    public static final String APPOINTMENT_UPDATE_LOCATION = "/appointment_update.fxml";
     public static final String APPOINTMENT_DETAILS_LOCATION = "/appointment_details.fxml";
     public static final String FINANCIAL_VIEW_LOCATION = "/financial_view.fxml";
     public static final String PATIENT_VIEW_LOCATION = "/patient_view.fxml";
@@ -186,8 +187,6 @@ public class Main extends Application {
     public static final String FEMALE = "Female";
     public static final int MALE_INDEX = 0;
     public static final int FEMALE_INDEX = 1;
-
-
 
     @Override
     public void init() throws Exception {

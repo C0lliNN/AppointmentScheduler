@@ -60,7 +60,7 @@
 
    <HBox fx:id="buttonsHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <JFXButton fx:id="skipButton" text="%skip" onAction="#handleSkip" buttonType="RAISED"/>
-      <JFXButton fx:id="saveButton" text="%save" onAction="#handleSave" buttonType="RAISED"/>
+      <JFXButton fx:id="saveButton" text="%save" onAction="#handleSave" buttonType="RAISED" defaultButton="true"/>
    </HBox>
 
 </AnchorPane>

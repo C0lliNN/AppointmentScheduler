@@ -1,9 +1,0 @@
-Fix xlsx to Doctor and Patient
-Settings TAB
-
---- Final ----
-
-1 - Check Name Conventions
-2 - Try to create more Global Methods
-3 - Icons
-4 - Preferences

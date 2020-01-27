@@ -3,9 +3,11 @@ package com.raphaelcollin.appointmentscheduler.controller;
 import com.jfoenix.controls.JFXButton;
 import com.raphaelcollin.appointmentscheduler.db.DataSource;
 import com.raphaelcollin.appointmentscheduler.db.model.Appointment;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -35,7 +37,6 @@ public class AppointmentUpdateController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
         try {
             titleLabel.setFont(Font.font(32));
@@ -87,7 +88,20 @@ public class AppointmentUpdateController implements Initializable {
         Appointment appointment = fieldsController.getAppointment();
 
         if (appointment != null) {
-            DataSource.getInstance().updateAppointment(appointment);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    return DataSource.getInstance().updateAppointment(appointment);
+                }
+            };
+
+            task.setOnSucceeded(event -> root.setCursor(Cursor.DEFAULT));
+
+            root.setCursor(Cursor.WAIT);
+            new Thread(task).start();
+
+
         }
 
     }

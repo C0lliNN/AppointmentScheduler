@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
+
 <AnchorPane fx:controller="com.raphaelcollin.appointmentscheduler.controller.MainController" fx:id="root"
              stylesheets="@main_style.css" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
 
+      <TabPane rotateGraphic="true" fx:id="tabPane" side="LEFT" tabClosingPolicy="UNAVAILABLE"/>
 
-
-      <TabPane rotateGraphic="true" fx:id="tabPane" side="LEFT" tabClosingPolicy="UNAVAILABLE"
-         />
-
-   </children>
-</AnchorPane>
+   </AnchorPane>

@@ -97,19 +97,24 @@ public class DatabaseConfigurationController implements Initializable {
         String password = passwordField.getText().trim();
 
         String errorMessage = "";
-        boolean errorFounded = false;
+        boolean emptyErrorFounded = false;
+        boolean portInvalidErrorFounded = false;
 
         if (ipAddress.isEmpty() || port.isEmpty() || user.isEmpty()) {
             errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
-            errorFounded = true;
+            emptyErrorFounded = true;
         }
 
-        if (!errorFounded && !port.matches(REGEX_PORT)) {
+        if (!emptyErrorFounded && !port.matches(REGEX_PORT)) {
             errorMessage = getResources().getString(BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE);
-            errorFounded = true;
+            portInvalidErrorFounded = true;
         }
 
-        if (errorFounded) {
+        if (emptyErrorFounded) {
+
+            showRequiredFieldsErrorAlert(root);
+
+        } else if (portInvalidErrorFounded) {
             Main.showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
                     getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),

@@ -266,33 +266,26 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     }
 
     @FXML
-    void handleDeleteAppointment() {
+    void handleShowDetails() {
+        TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
 
-        TreeItem<Appointment> appointment = appointmentsTableView.getSelectionModel().getSelectedItem();
-
-        if (appointment == null) {
-
+        if (selectedItem == null) {
             showSelectionErrorAlert(root);
-
         } else {
 
-            Task<Boolean> deleteAppointmentTask = new Task<Boolean>() {
-                @Override
-                protected Boolean call(){
-                    return DataSource.getInstance().deleteAppointment(appointment.getValue().getId());
-                }
-            };
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_DETAILS_LOCATION), getResources());
+                Parent detailsViewRoot = loader.load();
 
-            deleteAppointmentTask.setOnSucceeded(event -> {
-                if (!deleteAppointmentTask.getValue()) {
+                AppointmentDetailsController controller = loader.getController();
+                controller.setAppointment(selectedItem.getValue());
 
-                    showDatabaseErrorAlert(root);
+                Parent containerRoot = Main.createNewView(608, 650, detailsViewRoot);
+                createNewStage(containerRoot, root);
 
-                }
-            });
-
-
-            new Thread(deleteAppointmentTask).start();
+            } catch (IOException e) {
+                System.err.println("Error in AppointmentController - handleShowDetails(): + " + e.getMessage());
+            }
         }
     }
 
@@ -325,30 +318,6 @@ public class AppointmentController implements Initializable, PropertyChangeListe
     }
 
     @FXML
-    void handleShowDetails() {
-        TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null) {
-            showSelectionErrorAlert(root);
-        } else {
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_DETAILS_LOCATION), getResources());
-                Parent detailsViewRoot = loader.load();
-
-                AppointmentDetailsController controller = loader.getController();
-                controller.setAppointment(selectedItem.getValue());
-
-                Parent containerRoot = Main.createNewView(608, 650, detailsViewRoot);
-                createNewStage(containerRoot, root);
-
-            } catch (IOException e) {
-                System.err.println("Error in AppointmentController - handleShowDetails(): + " + e.getMessage());
-            }
-        }
-    }
-
-    @FXML
     void handleUpdateAppointment() {
         TreeItem<Appointment> selectedItem = appointmentsTableView.getSelectionModel().getSelectedItem();
 
@@ -361,7 +330,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
             Appointment appointment = selectedItem.getValue();
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/appointment_update.fxml"), getResources());
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_UPDATE_LOCATION), getResources());
                 Parent updateRoot =  loader.load();
 
                 AppointmentUpdateController controller = loader.getController();
@@ -377,5 +346,34 @@ public class AppointmentController implements Initializable, PropertyChangeListe
 
         }
 
+    }
+
+    @FXML
+    void handleDeleteAppointment() {
+
+        TreeItem<Appointment> appointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+
+        if (appointment == null) {
+
+            showSelectionErrorAlert(root);
+
+        } else {
+
+            Task<Boolean> deleteAppointmentTask = new Task<Boolean>() {
+                @Override
+                protected Boolean call(){
+                    return DataSource.getInstance().deleteAppointment(appointment.getValue().getId());
+                }
+            };
+
+            deleteAppointmentTask.setOnSucceeded(event -> {
+                if (!deleteAppointmentTask.getValue()) {
+
+                    showDatabaseErrorAlert(root);
+
+                }
+            });
+            new Thread(deleteAppointmentTask).start();
+        }
     }
 }

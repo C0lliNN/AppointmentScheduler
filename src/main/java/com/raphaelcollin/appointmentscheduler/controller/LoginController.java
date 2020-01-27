@@ -92,10 +92,7 @@ public class LoginController implements Initializable {
 
         if (enterUser.isEmpty() || enterPassword.isEmpty()) {
 
-            showAlert(Alert.AlertType.ERROR, root,
-                    getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
-                    getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE));
+            showRequiredFieldsErrorAlert(root);
 
         } else {
 

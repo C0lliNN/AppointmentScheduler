@@ -40,9 +40,6 @@ import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class ToolsController implements Initializable {
 
-    private static final String BUNDLE_KEY_TOOLS_START_FIELD = "start_date";
-    private static final String BUNDLE_KEY_SELECT_DATE = "select_date";
-    private static final String BUNDLE_KEY_TOOLS_END_FIELD = "end_date";
     @FXML
     private AnchorPane root;
     @FXML
@@ -81,7 +78,12 @@ public class ToolsController implements Initializable {
     private JFXRadioButton doctorButton;
 
     private GridPane dateConfigurationGridPane;
+
     private File file;
+
+    private static final String BUNDLE_KEY_TOOLS_START_FIELD = "start_date";
+    private static final String BUNDLE_KEY_SELECT_DATE = "select_date";
+    private static final String BUNDLE_KEY_TOOLS_END_FIELD = "end_date";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

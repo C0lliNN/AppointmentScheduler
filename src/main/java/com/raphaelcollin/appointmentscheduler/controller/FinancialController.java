@@ -48,6 +48,7 @@ public class FinancialController implements Initializable, PropertyChangeListene
     private static final String OCTOBER = "october";
     private static final String NOVEMBER = "november";
     private static final String DECEMBER = "december";
+
     @FXML
     private AnchorPane root;
     @FXML

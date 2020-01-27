@@ -117,31 +117,35 @@ public class AccessControlController implements Initializable {
         String securityQuestion = securityQuestionField.getText().trim();
         String answer = answerField.getText().trim();
 
-        boolean errorFounded = false;
+        boolean emptyFieldsError = false;
+        boolean passwordMatchError = false;
         String errorMessage = "";
 
         if (user.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || securityQuestion.isEmpty() ||
                 answer.isEmpty()) {
-            errorFounded = true;
-            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
+            emptyFieldsError = true;
         }
 
-        if (!errorFounded && !password.equals(confirmPassword)) {
-            errorFounded = true;
+        if (!emptyFieldsError && !password.equals(confirmPassword)) {
+            passwordMatchError = true;
             errorMessage = getResources().getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH);
         }
 
-        if (errorFounded) {
+        if (emptyFieldsError) {
+
+            showRequiredFieldsErrorAlert(root);
+
+        } else if (passwordMatchError) {
+
             showAlert(Alert.AlertType.ERROR,
                     root,
                     getResources().getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
                     getResources().getString(Main.BUNDLE_KEY_ERROR_INVALID_INPUT),
                     errorMessage);
+
         } else {
 
-
             UserCredentials.saveCredentials(user, password, securityQuestion, answer);
-
             goToMainView();
         }
     }

@@ -27,8 +27,10 @@
          <TreeTableColumn fx:id="emailColumn" text="%email"/>
          <TreeTableColumn fx:id="addressColumn" text="%address"/>
       </columns>
+
       <columnResizePolicy>
          <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
       </columnResizePolicy>
+
    </JFXTreeTableView>
 </AnchorPane>

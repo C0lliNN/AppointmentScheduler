@@ -20,78 +20,51 @@ import java.util.ResourceBundle;
 import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class AppointmentDetailsController implements Initializable {
+
     @FXML
     private AnchorPane root;
-
     @FXML
     private JFXTabPane tabPane;
-
-    @FXML
-    private Tab appointmentTab;
-
     @FXML
     private JFXDatePicker appointmentDateField;
-
     @FXML
     private JFXTimePicker appointmentTimeField;
-
     @FXML
     private JFXTextField appointmentStatusField;
-
     @FXML
     private JFXTextField appointmentPriceField;
-
     @FXML
     private JFXTextArea appointmentDescriptionField;
-
-    @FXML
-    private Tab patientTab;
-
     @FXML
     private JFXTextField patientNameField;
-
     @FXML
     private JFXTextField patientGenderField;
-
     @FXML
     private JFXDatePicker patientBirthDateField;
-
     @FXML
     private JFXTextField patientPhoneField;
-
     @FXML
     private JFXTextField patientEmailField;
-
     @FXML
     private JFXTextField patientAddressField;
-
     @FXML
     private JFXTextField patientAppointmentsField;
-
     @FXML
     private JFXTextField patientAmountField;
-
     @FXML
     private Tab doctorTab;
-
     @FXML
     private JFXTextField doctorNameField;
-
     @FXML
     private JFXTextField doctorGenderField;
-
     @FXML
     private JFXDatePicker doctorBirthDateField;
-
     @FXML
     private JFXTextField doctorPhoneField;
-
     @FXML
     private JFXTextField doctorLicenseNumberField;
-
     @FXML
     private JFXTextField doctorAppointmentsField;
-
     @FXML
     private JFXTextField doctorAmountField;
 
@@ -160,6 +133,7 @@ public class AppointmentDetailsController implements Initializable {
 
     public void setAppointment(Appointment appointment) {
         appointmentDateField.setValue(appointment.getDate().toLocalDate());
+        appointmentTimeField.setValue(appointment.getDate().toLocalTime());
 
         String status = "";
 

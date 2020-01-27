@@ -130,20 +130,8 @@ public class Doctor extends RecursiveTreeObject<Doctor> implements Exportable{
         this.name = name;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
     }
 
     public ObservableValue<String> getNameProperty() {
