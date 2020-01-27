@@ -33,16 +33,26 @@ public class Doctor extends RecursiveTreeObject<Doctor> implements Exportable{
         this.birthDate = builder.birthDate;
         this.licenseNumber = builder.licenseNumber;
 
-        nameProperty = new SimpleStringProperty(this.name);
-        if (this.gender.equals(MALE)) {
-            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_MALE));
-        } else {
-            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_FEMALE));
+        if (this.name != null) {
+            nameProperty = new SimpleStringProperty(this.name);
         }
-        birthDateProperty = new SimpleStringProperty(this.birthDate.format(DateTimeFormatter.ofPattern(getResources().
-                getString(BUNDLE_KEY_DATE_FORMAT))));
-        phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
-        licenseNumberProperty = new SimpleStringProperty(licenseNumber);
+        if (this.gender != null) {
+            if (this.gender.equals(MALE)) {
+                genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_MALE));
+            } else {
+                genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_FEMALE));
+            }
+        }
+        if (this.birthDate != null) {
+            birthDateProperty = new SimpleStringProperty(this.birthDate.format(DateTimeFormatter.ofPattern(getResources().
+                    getString(BUNDLE_KEY_DATE_FORMAT))));
+        }
+        if (this.phoneNumber != null) {
+            phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
+        }
+        if (this.licenseNumber != null) {
+            licenseNumberProperty = new SimpleStringProperty(licenseNumber);
+        }
 
     }
 

@@ -40,6 +40,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Exp
         this.patient = builder.patient;
 
 
+
         String datePattern = getResources().getString(BUNDLE_KEY_DATE_FORMAT).trim();
         String stringDate = this.date.toLocalDate().format(DateTimeFormatter.ofPattern(datePattern));
 

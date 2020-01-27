@@ -45,16 +45,24 @@ public class Patient extends RecursiveTreeObject<Patient> implements Exportable 
         this.streetName = builder.streetName;
         this.houseNumber = builder.houseNumber;
 
-
-        nameProperty = new SimpleStringProperty(this.firstName + " " + this.lastName);
-        if (this.gender.equals(MALE)) {
-            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_MALE));
-        } else {
-            genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_FEMALE));
+        if (this.firstName != null && this.lastName != null) {
+            nameProperty = new SimpleStringProperty(this.firstName + " " + this.lastName);
         }
-        birthDateProperty = new SimpleStringProperty(this.birthDate.format(DateTimeFormatter.ofPattern(getResources().
-                getString(BUNDLE_KEY_DATE_FORMAT))));
-        phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
+        if (this.gender != null) {
+            if (this.gender.equals(MALE)) {
+                genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_MALE));
+            } else {
+                genderProperty = new SimpleStringProperty(getResources().getString(BUNDLE_KEY_GENDER_FEMALE));
+            }
+        }
+        if (this.birthDate != null) {
+            birthDateProperty = new SimpleStringProperty(this.birthDate.format(DateTimeFormatter.ofPattern(getResources().
+                    getString(BUNDLE_KEY_DATE_FORMAT))));
+        }
+        if (this.phoneNumber != null) {
+            phoneNumberProperty = new SimpleStringProperty(this.phoneNumber);
+        }
+
         emailProperty = new SimpleStringProperty(this.email == null ? "" : email);
 
         if (zipCode == null || zipCode.isEmpty() || streetName == null || streetName.isEmpty() || houseNumber == null

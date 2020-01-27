@@ -1,13 +1,7 @@
-plugins {
-    id 'application'
-    id 'org.beryx.jlink' version '2.12.0'
-}
+group 'com.raphaelcollin'
+version '1.0.0'
 
-ext {
-    moduleName = 'appointment_scheduler'
-    mainClass = 'com.raphaelcollin.appointmentscheduler.Main'
-    appName = 'Appointment Scheduler'
-}
+apply plugin: 'java'
 
 sourceSets {
     main {
@@ -25,19 +19,46 @@ sourceSets {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-mainClassName = "${mainClass}"
+repositories {
+    mavenCentral()
+    jcenter()
+}
 
 dependencies {
 
-    implementation 'com.jfoenix:jfoenix:8.0.9'
-    implementation 'com.panemu:tiwulfx:2.0'
-    implementation group: 'org.apache.poi', name: 'poi', version: '4.1.1'
-    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
+    compile 'com.jfoenix:jfoenix:8.0.9'
+    compile 'com.panemu:tiwulfx:2.0'
+    compile group: 'org.apache.poi', name: 'poi', version: '4.1.1'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
 
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+    testCompile 'org.junit.jupiter:junit-jupiter:5.5.2'
 }
+
+def mainClassName = 'com.raphaelcollin.appointmentscheduler.Main'
+
+jar {
+    archiveName = "AppointmentScheduler.jar"
+
+    from {
+
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -47,16 +68,4 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnitPlatform()
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-
-jlink {
-    launcher {
-        name = "${appName}"
-    }
 }
