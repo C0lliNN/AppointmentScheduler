@@ -53,7 +53,7 @@ public class MainController implements Initializable {
 
             Tab dashboardTab = new Tab();
             dashboardTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_DASHBOARD),
+                    getResources().getString(BUNDLE_KEY_TAB_DASHBOARD),
                     dashBoardIcon));
 
             Parent dashboardContent = FXMLLoader.load(getClass().getResource(DASHBOARD_CONTENT_LOCATION), getResources());
@@ -64,7 +64,7 @@ public class MainController implements Initializable {
 
             Tab appointmentTab = new Tab();
             appointmentTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_APPOINTMENT),
+                    getResources().getString(BUNDLE_KEY_APPOINTMENT),
                     appointmentIcon));
 
             Parent appointmentContent = FXMLLoader.load(getClass().getResource(APPOINTMENT_CONTENT_LOCATION), getResources());
@@ -74,7 +74,7 @@ public class MainController implements Initializable {
             financialIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab financialTab = new Tab();
             financialTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_FINANCIAL),
+                    getResources().getString(BUNDLE_KEY_FINANCIAL),
                     financialIcon));
 
             Parent financialContent = FXMLLoader.load(getClass().getResource(FINANCIAL_VIEW_LOCATION), getResources());
@@ -85,7 +85,7 @@ public class MainController implements Initializable {
             patientIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab patientTab = new Tab();
             patientTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT),
+                    getResources().getString(BUNDLE_KEY_PATIENT),
                     patientIcon));
 
             Parent patientContent = FXMLLoader.load(getClass().getResource(PATIENT_VIEW_LOCATION), resources);
@@ -95,7 +95,7 @@ public class MainController implements Initializable {
             doctorIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab doctorTab = new Tab();
             doctorTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_DOCTOR),
+                    getResources().getString(BUNDLE_KEY_DOCTOR),
                     doctorIcon));
 
             Parent doctorContent = FXMLLoader.load(getClass().getResource(DOCTOR_VIEW_LOCATION), resources);
@@ -105,7 +105,7 @@ public class MainController implements Initializable {
             toolsIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab toolsTab = new Tab();
             toolsTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_TOOLS),
+                    getResources().getString(BUNDLE_KEY_TOOLS),
                     toolsIcon));
 
             Parent toolsContent = FXMLLoader.load(getClass().getResource(TOOLS_VIEW_LOCATION), resources);
@@ -115,7 +115,7 @@ public class MainController implements Initializable {
             settingsIcon.getStyleClass().add(STYLE_CLASS_TAB_ICON);
             Tab settingsTab = new Tab();
             settingsTab.setGraphic(createTabHeader(
-                    getResources().getString(BUNDLE_KEY_TAB_TITLE_SETTINGS),
+                    getResources().getString(BUNDLE_KEY_SETTINGS),
                     settingsIcon));
 
             Parent settingsContent = FXMLLoader.load(getClass().getResource(SETTINGS_VIEW_LOCATION), resources);

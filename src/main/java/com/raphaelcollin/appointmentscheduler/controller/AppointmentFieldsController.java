@@ -111,7 +111,7 @@ public class AppointmentFieldsController implements Initializable {
         priceField.setText(appointment.getPrice() + "");
         descriptionField.setText(appointment.getDescription());
 
-        Label statusLabel = new Label(getResources().getString(BUNDLE_KEY_STATUS_TEXT));
+        Label statusLabel = new Label(getResources().getString(BUNDLE_KEY_STATUS));
         statusLabel.setFont(Font.font(20));
 
         statusField = new JFXComboBox<>();
@@ -173,12 +173,12 @@ public class AppointmentFieldsController implements Initializable {
 
         if (dateField.getValue() == null || timeField.getValue() == null || priceField.getText().trim().isEmpty()) {
             errorFounded = true;
-            errorMessage = getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
         }
 
         if (!errorFounded && !priceField.getText().matches(REGEX_PRICE)){
             errorFounded = true;
-            errorMessage = getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE2);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_INVALID_PRICE);
         }
 
         Appointment appointment = null;
@@ -186,7 +186,7 @@ public class AppointmentFieldsController implements Initializable {
         if (errorFounded) {
             showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
                     errorMessage);
         } else {
 

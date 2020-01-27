@@ -18,35 +18,35 @@
    <HBox fx:id="filtersHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
       <HBox>
-         <Label text="%tab_appointments_date_text"/>
-         <JFXDatePicker fx:id="dateField" promptText="%tab_appointments_date_promptText"/>
+         <Label text="%date"/>
+         <JFXDatePicker fx:id="dateField" promptText="%select_date"/>
       </HBox>
       <HBox>
-         <Label text="%tab_appointments_patient_text"/>
-         <JFXTextField fx:id="patientField" promptText="%tab_appointments_patient_promptText"/>
+         <Label text="%patient"/>
+         <JFXTextField fx:id="patientField" promptText="%patient_name"/>
       </HBox>
       <HBox>
-         <Label text="%tab_appointments_doctor_text"/>
-         <JFXTextField fx:id="doctorField" promptText="%tab_appointments_doctor_promptText"/>
+         <Label text="%doctor"/>
+         <JFXTextField fx:id="doctorField" promptText="%doctor_name"/>
       </HBox>
       <HBox>
-         <Label text="%tab_appointments_status_text"/>
+         <Label text="%status"/>
          <JFXComboBox fx:id="statusField"/>
       </HBox>
    </HBox>
 
-   <JFXCheckBox fx:id="allDatesCheckBox" text="%tab_appointments_check_box_text"/>
+   <JFXCheckBox fx:id="allDatesCheckBox" text="%all_dates"/>
 
    <JFXTreeTableView fx:id="appointmentsTableView" tableMenuButtonVisible="true"
                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <columns>
-         <TreeTableColumn fx:id="dateColumn" text="%tab_appointments_column_header0"/>
-         <TreeTableColumn fx:id="scheduleColumn" text="%tab_appointments_column_header1"/>
-         <TreeTableColumn fx:id="patientColumn" text="%tab_appointments_column_header2"/>
-         <TreeTableColumn fx:id="descriptionColumn" text="%tab_appointments_column_header3"/>
-         <TreeTableColumn fx:id="doctorColumn" text="%tab_appointments_column_header4"/>
-         <TreeTableColumn fx:id="priceColumn" text="%tab_appointments_column_header5"/>
-         <TreeTableColumn fx:id="statusColumn" text="%tab_appointments_column_header6"/>
+         <TreeTableColumn fx:id="dateColumn" text="%date"/>
+         <TreeTableColumn fx:id="scheduleColumn" text="%schedule"/>
+         <TreeTableColumn fx:id="patientColumn" text="%patient"/>
+         <TreeTableColumn fx:id="descriptionColumn" text="%description"/>
+         <TreeTableColumn fx:id="doctorColumn" text="%doctor"/>
+         <TreeTableColumn fx:id="priceColumn" text="%price"/>
+         <TreeTableColumn fx:id="statusColumn" text="%status"/>
       </columns>
       <columnResizePolicy>
          <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
@@ -56,12 +56,12 @@
    <HBox fx:id="buttonsHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0"
          AnchorPane.rightAnchor="0.0">
       <JFXButton fx:id="showDetailsButton" buttonType="RAISED" onAction="#handleShowDetails"
-                 text="%tab_appointments_details_button"/>
+                 text="%details"/>
       <JFXButton fx:id="newAppointmentButton" buttonType="RAISED" onAction="#handleNewAppointment"
-                 text="%tab_appointments_new_button"/>
+                 text="%new"/>
       <JFXButton fx:id="updateAppointmentButton" buttonType="RAISED" onAction="#handleUpdateAppointment"
-                 text="%tab_appointments_update_button"/>
+                 text="%update"/>
       <JFXButton fx:id="deleteAppointmentButton" buttonType="RAISED" onAction="#handleDeleteAppointment"
-                 text="%tab_appointments_delete_button"/>
+                 text="%delete"/>
    </HBox>
 </AnchorPane>

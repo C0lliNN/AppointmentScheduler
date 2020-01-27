@@ -40,9 +40,9 @@ import static com.raphaelcollin.appointmentscheduler.Main.*;
 
 public class ToolsController implements Initializable {
 
-    private static final String BUNDLE_KEY_TOOLS_START_FIELD = "tools_startField";
-    private static final String BUNDLE_KEY_TOOLS_DATE_PROMPT = "tools_dateField_promptText";
-    private static final String BUNDLE_KEY_TOOLS_END_FIELD = "tools_endField";
+    private static final String BUNDLE_KEY_TOOLS_START_FIELD = "start_date";
+    private static final String BUNDLE_KEY_SELECT_DATE = "select_date";
+    private static final String BUNDLE_KEY_TOOLS_END_FIELD = "end_date";
     @FXML
     private AnchorPane root;
     @FXML
@@ -149,7 +149,7 @@ public class ToolsController implements Initializable {
         startDateLabel.setFont(Font.font(18));
 
         JFXDatePicker startDateField = new JFXDatePicker();
-        startDateField.setPromptText(resources.getString(BUNDLE_KEY_TOOLS_DATE_PROMPT));
+        startDateField.setPromptText(resources.getString(BUNDLE_KEY_SELECT_DATE));
         startDateField.setStyle("-fx-font-size: 15px");
         startDateField.setDefaultColor(Color.valueOf("#085394"));
 
@@ -157,7 +157,7 @@ public class ToolsController implements Initializable {
         endDateLabel.setFont(Font.font(18));
 
         JFXDatePicker endDateField = new JFXDatePicker();
-        endDateField.setPromptText(resources.getString(BUNDLE_KEY_TOOLS_DATE_PROMPT));
+        endDateField.setPromptText(resources.getString(BUNDLE_KEY_SELECT_DATE));
         endDateField.setStyle("-fx-font-size: 15px");
         endDateField.setDefaultColor(Color.valueOf("#085394"));
 
@@ -170,7 +170,7 @@ public class ToolsController implements Initializable {
 
         formatToggleGroup.selectedToggleProperty().addListener(((observable, oldValue, newValue) -> {
             file = null;
-            locationButton.setText(getResources().getString(BUNDLE_KEY_TOOLS_LOCATION_BUTTON));
+            locationButton.setText(getResources().getString(BUNDLE_KEY_SELECT_LOCATION));
         }));
 
         entityToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -192,8 +192,8 @@ public class ToolsController implements Initializable {
 
             showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_LOCATION_ERROR_HEADER_TEXT),
-                    getResources().getString(BUNDLE_KEY_LOCATION_ERROR_CONTENT_TEXT));
+                    getResources().getString(BUNDLE_KEY_ERROR_LOCATION_HEADER),
+                    getResources().getString(BUNDLE_KEY_ERROR_LOCATION_MESSAGE));
 
         } else {
 
@@ -368,14 +368,14 @@ public class ToolsController implements Initializable {
 
                     showAlert(Alert.AlertType.INFORMATION, root,
                             ((Stage) root.getScene().getWindow()).getTitle(),
-                             getResources().getString(BUNDLE_KEY_DATA_EXPORT_SUCCESS_HEADER),
-                            getResources().getString(BUNDLE_KEY_DATA_EXPORT_SUCCESS_CONTENT));
+                             getResources().getString(BUNDLE_KEY_SUCCESS_DATA_EXPORT_HEADER),
+                            getResources().getString(BUNDLE_KEY_SUCCESS_DATA_EXPORT_MESSAGE));
 
                 } else {
                     showAlert(Alert.AlertType.ERROR, root,
                             ((Stage) root.getScene().getWindow()).getTitle(),
-                            getResources().getString(BUNDLE_KEY_DATA_EXPORT_ERROR_HEADER),
-                            getResources().getString(BUNDLE_KEY_DATA_EXPORT_ERROR_CONTENT));
+                            getResources().getString(BUNDLE_KEY_ERROR_DATA_EXPORT_HEADER),
+                            getResources().getString(BUNDLE_KEY_ERROR_DATA_EXPORT_CONTENT));
                 }
             });
 

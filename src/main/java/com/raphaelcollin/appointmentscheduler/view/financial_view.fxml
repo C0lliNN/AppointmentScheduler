@@ -16,17 +16,17 @@
 <AnchorPane fx:id="root" fx:controller="com.raphaelcollin.appointmentscheduler.controller.FinancialController"
             xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css">
 
-    <LineChart fx:id="lineChart" axisSortingPolicy="NONE" title="%financial_line_chart_title">
+    <LineChart fx:id="lineChart" axisSortingPolicy="NONE" title="%earnings">
       <xAxis>
           <NumberAxis side="BOTTOM"/>
       </xAxis>
       <yAxis>
-          <NumberAxis side="LEFT" label="%financial_line_chart_axis"/>
+          <NumberAxis side="LEFT" label="%income"/>
       </yAxis>
     </LineChart>
-    <PieChart fx:id="pieChart" title="%financial_pie_chart_title"/>
+    <PieChart fx:id="pieChart" title="%doctors"/>
 
-    <Label fx:id="titleLabel" alignment="CENTER" text="%financial_label_title"/>
+    <Label fx:id="titleLabel" alignment="CENTER" text="%select_interval"/>
 
     <GridPane fx:id="gridPaneFields" alignment="CENTER_LEFT" >
         <columnConstraints>
@@ -41,22 +41,22 @@
             <RowConstraints vgrow="NEVER"/>
         </rowConstraints>
 
-        <Label text="%financial_label_year"/>
-        <Label text="%financial_label_month" GridPane.rowIndex="1"/>
-        <Label text="%financial_label_start_day" GridPane.rowIndex="2"/>
-        <Label text="%financial_label_end_day" GridPane.rowIndex="3"/>
+        <Label text="%year"/>
+        <Label text="%month" GridPane.rowIndex="1"/>
+        <Label text="%start_day" GridPane.rowIndex="2"/>
+        <Label text="%end_day" GridPane.rowIndex="3"/>
 
         <JFXComboBox fx:id="yearField" GridPane.columnIndex="3"/>
         <JFXComboBox fx:id="monthField" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-        <JFXTextField fx:id="startDayField" promptText="%financial_field_day" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-        <JFXTextField fx:id="endDayField" promptText="%financial_field_day" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+        <JFXTextField fx:id="startDayField" promptText="%from0_to_31" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+        <JFXTextField fx:id="endDayField" promptText="%from0_to_31" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
     </GridPane>
     <VBox fx:id="resultsVBox" alignment="CENTER_LEFT" fillWidth="false">
 
-        <Label text="%financial_label_appointments"/>
+        <Label text="%appointments"/>
         <JFXTextField  fx:id="appointmentsField"/>
 
-        <Label text="%financial_label_total_earned">
+        <Label text="%total_earned">
             <VBox.margin>
                 <Insets top="10"/>
             </VBox.margin>

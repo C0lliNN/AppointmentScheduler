@@ -94,8 +94,8 @@ public class AppointmentAddController implements Initializable {
                 if (task.getValue() < 0) {
                     showAlert(Alert.AlertType.ERROR, root,
                             getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                            getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+                            getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_LABEL),
+                            getResources().getString(BUNDLE_KEY_ERROR_DATABASE_MESSAGE));
                 }
             });
 

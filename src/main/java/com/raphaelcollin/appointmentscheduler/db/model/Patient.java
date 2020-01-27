@@ -91,7 +91,7 @@ public class Patient extends RecursiveTreeObject<Patient> implements Exportable 
     @Override
     public String convertToXML() {
 
-        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT) + ">\n");
+        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_PATIENT) + ">\n");
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_PATIENT_ID)).append(">").append(this.id).append("</").
                 append(getResources().getString(BUNDLE_KEY_PATIENT_ID)).append(">\n");
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_FIRST_NAME)).append(">").append(this.firstName).append("</").
@@ -117,7 +117,7 @@ public class Patient extends RecursiveTreeObject<Patient> implements Exportable 
                 append(getResources().getString(BUNDLE_KEY_HOUSE_NUMBER)).append(">\n");
 
 
-        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_TAB_TITLE_PATIENT)).append(">\n");
+        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_PATIENT)).append(">\n");
 
         return builder.toString();
     }

@@ -19,11 +19,11 @@
    <JFXTabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-      <Tab fx:id="appointmentTab" text="Appointment">
+      <Tab fx:id="appointmentTab" text="%appointment">
 
          <AnchorPane>
 
-            <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+            <Label alignment="CENTER" text="%details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 
             <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
@@ -41,32 +41,32 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                </rowConstraints>
 
-               <Label text="Date"/>
+               <Label text="%date"/>
 
                <JFXDatePicker fx:id="appointmentDateField" GridPane.columnIndex="1"/>
 
-               <Label text="Schedule" GridPane.rowIndex="1"/>
+               <Label text="%schedule" GridPane.rowIndex="1"/>
 
                <JFXTimePicker fx:id="appointmentTimeField" GridPane.columnIndex="1"
                               GridPane.rowIndex="1"/>
 
-               <Label text="Status" GridPane.rowIndex="2"/>
+               <Label text="%status" GridPane.rowIndex="2"/>
 
                <JFXTextField fx:id="appointmentStatusField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-               <Label text="Price" GridPane.rowIndex="3"/>
+               <Label text="%price" GridPane.rowIndex="3"/>
 
                <JFXTextField fx:id="appointmentPriceField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-               <Label text="Description" GridPane.rowIndex="4"/>
+               <Label text="%description" GridPane.rowIndex="4"/>
 
                <JFXTextArea fx:id="appointmentDescriptionField" prefColumnCount="18" GridPane.columnSpan="2"
                             GridPane.rowIndex="5" GridPane.rowSpan="2"/>
             </GridPane>
          </AnchorPane>
       </Tab>
-      <Tab fx:id="patientTab" text="Patient">
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+      <Tab fx:id="patientTab" text="%patient">
+         <AnchorPane minHeight="0.0" minWidth="0.0">
 
             <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 
@@ -87,37 +87,37 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                </rowConstraints>
 
-               <Label text="Name"/>
+               <Label text="%name"/>
                <JFXTextField fx:id="patientNameField" GridPane.columnIndex="1"/>
 
-               <Label text="Gender" GridPane.rowIndex="1"/>
+               <Label text="%gender" GridPane.rowIndex="1"/>
                <JFXTextField fx:id="patientGenderField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-               <Label text="Birth Date" GridPane.rowIndex="2"/>
+               <Label text="%birth_date" GridPane.rowIndex="2"/>
                <JFXDatePicker fx:id="patientBirthDateField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-               <Label text="Phone" GridPane.rowIndex="3"/>
+               <Label text="%phone" GridPane.rowIndex="3"/>
                <JFXTextField fx:id="patientPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-               <Label text="Email" GridPane.rowIndex="4"/>
+               <Label text="%email" GridPane.rowIndex="4"/>
                <JFXTextField fx:id="patientEmailField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-               <Label text="Address" GridPane.rowIndex="5"/>
+               <Label text="%address" GridPane.rowIndex="5"/>
                <JFXTextField fx:id="patientAddressField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
-               <Label text="Appointments" GridPane.rowIndex="6"/>
+               <Label text="%appointments" GridPane.rowIndex="6"/>
                <JFXTextField fx:id="patientAppointmentsField" GridPane.columnIndex="1"
                              GridPane.rowIndex="6"/>
-               <Label text="Amount Spent" GridPane.rowIndex="7"/>
+               <Label text="%total_spent" GridPane.rowIndex="7"/>
                <JFXTextField fx:id="patientAmountField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
             </GridPane>
          </AnchorPane>
       </Tab>
-      <Tab fx:id="doctorTab" text="Doctor">
+      <Tab fx:id="doctorTab" text="%doctor">
          <AnchorPane>
 
-            <Label alignment="CENTER" text="Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+            <Label alignment="CENTER" text="%details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 
             <GridPane alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
@@ -135,26 +135,26 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                </rowConstraints>
 
-               <Label text="Name"/>
+               <Label text="%name"/>
                <JFXTextField fx:id="doctorNameField" GridPane.columnIndex="1"/>
 
-               <Label text="Gender" GridPane.rowIndex="1"/>
+               <Label text="%gender" GridPane.rowIndex="1"/>
                <JFXTextField fx:id="doctorGenderField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-               <Label text="Birth Date" GridPane.rowIndex="2"/>
+               <Label text="%birth_date" GridPane.rowIndex="2"/>
                <JFXDatePicker fx:id="doctorBirthDateField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-               <Label text="Phone" GridPane.rowIndex="3"/>
+               <Label text="%phone" GridPane.rowIndex="3"/>
                <JFXTextField fx:id="doctorPhoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-               <Label text="License Number" GridPane.rowIndex="4"/>
+               <Label text="%license_number" GridPane.rowIndex="4"/>
                <JFXTextField fx:id="doctorLicenseNumberField" GridPane.columnIndex="1"
                              GridPane.rowIndex="4"/>
-               <Label text="Appointments" GridPane.rowIndex="5"/>
+               <Label text="%appointments" GridPane.rowIndex="5"/>
                <JFXTextField fx:id="doctorAppointmentsField" GridPane.columnIndex="1"
                              GridPane.rowIndex="5"/>
 
-               <Label text="Amount earned" GridPane.rowIndex="6"/>
+               <Label text="%total_earned" GridPane.rowIndex="6"/>
                <JFXTextField fx:id="doctorAmountField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
             </GridPane>
          </AnchorPane>

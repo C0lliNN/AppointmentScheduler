@@ -111,7 +111,7 @@ public class PatientFieldsController implements Initializable {
         String errorMessage = "";
 
         if (firstName.isEmpty() || lastName.isEmpty() || birthDate == null || phone.isEmpty()) {
-            errorMessage = getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE);
+            errorMessage = getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE);
             errorFounded = true;
         }
 
@@ -123,7 +123,7 @@ public class PatientFieldsController implements Initializable {
         if (errorFounded) {
             showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
                     errorMessage);
         } else {
 

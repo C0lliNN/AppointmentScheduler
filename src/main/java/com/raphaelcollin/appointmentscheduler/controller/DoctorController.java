@@ -82,7 +82,7 @@ public class DoctorController implements Initializable, PropertyChangeListener {
         for (int i = 1; i < 4; i++) {
             JFXButton button = (JFXButton) root.getChildren().get(i);
             button.setFont(Font.font(18));
-            button.setPrefSize(110, 40);
+            button.setPrefSize(120, 40);
             AnchorPane.setTopAnchor(button, 30.0);
             button.setTextFill(Color.WHITE);
         }
@@ -103,7 +103,7 @@ public class DoctorController implements Initializable, PropertyChangeListener {
         FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
         deleteIcon.getStyleClass().add(STYLE_CLASS_BUTTON_ICON);
         deleteButton.setGraphic(deleteIcon);
-        AnchorPane.setLeftAnchor(deleteButton, 821.0);
+        AnchorPane.setLeftAnchor(deleteButton, 826.0);
 
 
         AnchorPane.setTopAnchor(doctorsTableView, 130.0);

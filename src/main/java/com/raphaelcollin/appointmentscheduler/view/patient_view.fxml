@@ -11,21 +11,21 @@
 <AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.PatientController">
 
-   <JFXTextField fx:id="searchField" promptText="%search_field_promptText"/>
+   <JFXTextField fx:id="searchField" promptText="%search"/>
 
-   <JFXButton fx:id="addButton" buttonType="RAISED" onAction="#handleAdd" text="%button_add"/>
-   <JFXButton fx:id="editButton" buttonType="RAISED" onAction="#handleEdit" text="%button_edit"/>
-   <JFXButton fx:id="deleteButton" buttonType="RAISED" onAction="#handleDelete" text="%button_delete"/>
+   <JFXButton fx:id="addButton" buttonType="RAISED" onAction="#handleAdd" text="%new"/>
+   <JFXButton fx:id="editButton" buttonType="RAISED" onAction="#handleEdit" text="%edit"/>
+   <JFXButton fx:id="deleteButton" buttonType="RAISED" onAction="#handleDelete" text="%delete"/>
 
    <JFXTreeTableView fx:id="patientsTableView" showRoot="false" AnchorPane.bottomAnchor="0.0" tableMenuButtonVisible="true"
                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
       <columns>
-         <TreeTableColumn fx:id="nameColumn" text="%patient_column0"/>
-         <TreeTableColumn fx:id="genderColumn" text="%patient_column1"/>
-         <TreeTableColumn fx:id="birthDateColumn" text="%patient_column2"/>
-         <TreeTableColumn fx:id="phoneColumn" text="%patient_column3"/>
-         <TreeTableColumn fx:id="emailColumn" text="%patient_column4"/>
-         <TreeTableColumn fx:id="addressColumn" text="%patient_column5"/>
+         <TreeTableColumn fx:id="nameColumn" text="%name"/>
+         <TreeTableColumn fx:id="genderColumn" text="%gender"/>
+         <TreeTableColumn fx:id="birthDateColumn" text="%birth_date"/>
+         <TreeTableColumn fx:id="phoneColumn" text="%phone"/>
+         <TreeTableColumn fx:id="emailColumn" text="%email"/>
+         <TreeTableColumn fx:id="addressColumn" text="%address"/>
       </columns>
       <columnResizePolicy>
          <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

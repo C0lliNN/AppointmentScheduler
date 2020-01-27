@@ -7,25 +7,25 @@
 <AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" styleClass="content" stylesheets="@dialogs_style.css"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.DatabaseConfigurationController">
 
-   <Label fx:id="welcomeLabel" alignment="CENTER" text="%database_configuration_welcomeMessage" AnchorPane.leftAnchor="0.0"
+   <Label fx:id="welcomeLabel" alignment="CENTER" text="%welcome_message" AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0"/>
-   <Label fx:id="dbConfigLabel" text="%database_configuration_databaseConfigurationMessage"/>
+   <Label fx:id="dbConfigLabel" text="%database_configuration"/>
 
    <GridPane fx:id="inputGridPane" alignment="CENTER" AnchorPane.leftAnchor="0.0"
              AnchorPane.rightAnchor="0.0">
 
-      <Label text="%database_configuration_ipAddress"/>
+      <Label text="%ip_address"/>
       <JFXTextField fx:id="ipAddressField" promptText="EX: 192.183.12.3" GridPane.columnIndex="1"/>
-      <Label text="%database_configuration_port" GridPane.rowIndex="1"/>
+      <Label text="%port" GridPane.rowIndex="1"/>
       <JFXTextField fx:id="portField" promptText="EX: 3306" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-      <Label text="%database_configuration_user" GridPane.rowIndex="2"/>
+      <Label text="%user" GridPane.rowIndex="2"/>
       <JFXTextField fx:id="userField" promptText="EX: root" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-      <Label text="%database_configuration_password" GridPane.rowIndex="3"/>
+      <Label text="%password" GridPane.rowIndex="3"/>
       <JFXPasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
    </GridPane>
    <HBox fx:id="testConnectionHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <JFXButton fx:id="testConnectionButton" onAction="#handleTestConnection" defaultButton="true" buttonType="RAISED"
-                 text="%database_configuration_testConnection"/>
+                 text="%test_connection"/>
    </HBox>
 </AnchorPane>

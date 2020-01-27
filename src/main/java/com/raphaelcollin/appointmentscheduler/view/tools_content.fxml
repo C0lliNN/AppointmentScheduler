@@ -12,10 +12,10 @@
 <AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@main_style.css"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.ToolsController">
 
-    <Label fx:id="titleLabel" alignment="CENTER" text="%tab_title_tools" AnchorPane.leftAnchor="0.0"
+    <Label fx:id="titleLabel" alignment="CENTER" text="%tools" AnchorPane.leftAnchor="0.0"
            AnchorPane.rightAnchor="0.0"/>
 
-    <Label fx:id="exportLabel" text="%tools_export_label"/>
+    <Label fx:id="exportLabel" text="%export_data"/>
 
     <GridPane fx:id="exportContainerGridPane" alignment="TOP_CENTER" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0">
@@ -41,16 +41,16 @@
         <VBox fx:id="configVBox" alignment="BOTTOM_CENTER" GridPane.columnIndex="1">
 
             <JFXButton fx:id="locationButton" buttonType="RAISED" onAction="#handleSelectLocation"
-                       text="%tools_location_button"/>
-            <JFXButton fx:id="exportButton" buttonType="RAISED" onAction="#handleExport" text="%tools_export_button"/>
+                       text="%select_location"/>
+            <JFXButton fx:id="exportButton" buttonType="RAISED" onAction="#handleExport" text="%export"/>
 
         </VBox>
         <VBox fx:id="entityVBox" alignment="CENTER"
               GridPane.columnIndex="2">
 
-            <JFXRadioButton fx:id="appointmentButton" mnemonicParsing="false" text="%tab_title_appointment"/>
-            <JFXRadioButton fx:id="patientButton" mnemonicParsing="false" text="%tab_title_patient"/>
-            <JFXRadioButton fx:id="doctorButton" mnemonicParsing="false" text="%tab_title_doctor"/>
+            <JFXRadioButton fx:id="appointmentButton" mnemonicParsing="false" text="%appointment"/>
+            <JFXRadioButton fx:id="patientButton" mnemonicParsing="false" text="%patient"/>
+            <JFXRadioButton fx:id="doctorButton" mnemonicParsing="false" text="%doctor"/>
 
         </VBox>
     </GridPane>

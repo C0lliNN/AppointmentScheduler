@@ -135,7 +135,7 @@ public class AccessControlController implements Initializable {
             showAlert(Alert.AlertType.ERROR,
                     root,
                     getResources().getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(Main.BUNDLE_KEY_ERROR_INVALID_INPUT),
                     errorMessage);
         } else {
 

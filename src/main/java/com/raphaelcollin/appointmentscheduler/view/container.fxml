@@ -10,7 +10,7 @@
 
     <ImageView fx:id="appIconImageView"/>
 
-    <Label fx:id="applicationTitleLabel" text="%application_title" alignment="CENTER"/>
+    <Label fx:id="applicationTitleLabel" text="%appointment_scheduler" alignment="CENTER"/>
 
     <HBox alignment="CENTER_RIGHT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <JFXButton buttonType="RAISED" fx:id="minimizeButton" onAction="#handleMinimizeWindow"/>

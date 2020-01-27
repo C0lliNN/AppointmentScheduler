@@ -7,35 +7,35 @@
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.DashboardController">
    <VBox fx:id="vBoxUpcomingAppointments" alignment="TOP_CENTER">
 
-      <Label text="%tab_dashboard_upcoming"/>
+      <Label text="%upcoming_appointments"/>
       <Label fx:id="upcomingAppointmentsLabel"/>
 
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowUpcomingAppointments"/>
+      <JFXButton buttonType="RAISED" text="%show" onAction="#handleShowUpcomingAppointments"/>
 
    </VBox>
    <VBox fx:id="vBoxUnconfirmedAppointments" alignment="TOP_CENTER">
 
-      <Label text="%tab_dashboard_unconfirmed"/>
+      <Label text="%unconfirmed_appointments"/>
       <Label fx:id="unconfirmedAppointmentsLabel"/>
 
       <JFXProgressBar fx:id="unconfirmedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowUnconfirmedAppointments"/>
+      <JFXButton buttonType="RAISED" text="%show" onAction="#handleShowUnconfirmedAppointments"/>
    </VBox>
    <VBox fx:id="vBoxCompletedAppointments" alignment="TOP_CENTER">
 
-      <Label text="%tab_dashboard_completed"/>
+      <Label text="%completed_appointments"/>
       <Label fx:id="completedAppointmentsLabel"/>
 
       <JFXProgressBar fx:id="completedAppointmentsProgressBar"/>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowCompletedAppointments"/>
+      <JFXButton buttonType="RAISED" text="%show" onAction="#handleShowCompletedAppointments"/>
    </VBox>
    <VBox fx:id="vBoxEarnings" alignment="TOP_CENTER">
 
-      <Label alignment="CENTER" text="%tab_dashboard_earnings"/>
+      <Label alignment="CENTER" text="%earnings"/>
       <HBox alignment="CENTER">
          <Label text="%currency_symbol"/>
          <Label fx:id="earningsLabel"/>
       </HBox>
-      <JFXButton buttonType="RAISED" text="%tab_dashboard_button_text" onAction="#handleShowEarnings"/>
+      <JFXButton buttonType="RAISED" text="%show" onAction="#handleShowEarnings"/>
    </VBox>
 </AnchorPane>

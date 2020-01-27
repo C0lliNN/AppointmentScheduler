@@ -33,13 +33,12 @@ public class Main extends Application {
 
     // Global attributes
 
-    private static Connection connection;
     private static ResourceBundle resources;
     public static ObservableList<ComboBoxItemHelper> statusList;
     public static ObservableList<ComboBoxItemHelper> genderList;
     public static Map<String, String> languageList;
 
-    // File Locations
+    // Files Location
 
     public static final String ACCESS_CONTROL_CONFIGURATION_LOCATION = "/access_control_configuration.fxml";
     public static final String MAIN_VIEW_LOCATION = "/main_view.fxml";
@@ -61,61 +60,56 @@ public class Main extends Application {
     public static final String DOCTOR_DIALOG_LOCATION = "/doctor_dialog.fxml";
     public static final String TOOLS_VIEW_LOCATION = "/tools_content.fxml";
     public static final String SETTINGS_VIEW_LOCATION = "/settings_view.fxml";
+    private static final String STAGE_ICON_LOCATION = "/stage_icon.png";
 
     // Bundle Keys
 
-    public static final String BUNDLE_KEY_APPLICATION_TITLE = "application_title";
-    public static final String BUNDLE_KEY_ERROR_ALERT_TITLE = "alert_error_title";
-    public static final String BUNDLE_KEY_ERROR_EMPTY_MESSAGE = "alert_errorMessage_empty";
-    public static final String BUNDLE_KEY_ERROR_HEADER_TEXT = "alert_errorMessage_headerText";
-    public static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT2 = "database_configuration_errorMessage3_contentText";
-    public static final String BUNDLE_KEY_CONNECTION_ERROR_LABEL = "database_configuration_errorLabel";
-    public static final String BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT = "database_configuration_errorMessage2_headerText";
-    public static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "access_control_error_password_match";
-    public static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "database_configuration_errorMessage_invalidPort";
-    public static final String BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT = "database_configuration_errorMessage2_contentText";
-    public static final String BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE = "login_alert_invalid_credentials_message";
-    public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "recover_credentials_invalid_answer";
-    public static final String BUNDLE_KEY_LOADING_DATA = "main_controller_loading_data";
-    public static final String BUNDLE_KEY_TAB_TITLE_DASHBOARD = "tab_title_dashboard";
-    public static final String BUNDLE_KEY_TAB_TITLE_APPOINTMENT = "tab_title_appointment";
-    public static final String BUNDLE_KEY_TAB_TITLE_FINANCIAL = "tab_title_financial";
-    public static final String BUNDLE_KEY_TAB_TITLE_PATIENT = "tab_title_patient";
-    public static final String BUNDLE_KEY_TAB_TITLE_DOCTOR = "tab_title_doctor";
-    public static final String BUNDLE_KEY_TAB_TITLE_TOOLS = "tab_title_tools";
-    public static final String BUNDLE_KEY_TAB_TITLE_SETTINGS = "tab_title_settings";
-    public static final String BUNDLE_KEY_TIME_FORMAT = "time_format";
-    public static final String BUNDLE_KEY_STATUS_ALL = "tab_appointments_status_all";
-    public static final String BUNDLE_KEY_STATUS_UNCONFIRMED = "tab_appointments_status_unconfirmed";
-    public static final String BUNDLE_KEY_STATUS_CONFIRMED = "tab_appointments_status_confirmed";
-    public static final String BUNDLE_KEY_STATUS_CANCELED ="tab_appointments_status_canceled" ;
-    public static final String BUNDLE_KEY_STATUS_COMPLETED = "tab_appointments_status_completed";
-    public static final String BUNDLE_KEY_STATUS_TEXT = "tab_appointments_status_text";
-    public static final String BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT = "alert_database_error_headerText";
-    public static final String BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT = "alert_database_error_contentText";
-    public static final String BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE = "alert_appointment_field_message";
-    public static final String BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE2 = "alert_appointment_field_priceMessage";
-    public static final String BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT = "alert_invalid_selection_headerText";
-    public static final String BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT = "alert_invalid_selection_contentText";
-    public static final String BUNDLE_KEY_GENDER_MALE = "gender_male";
-    public static final String BUNDLE_KEY_GENDER_FEMALE = "gender_female";
+    public static final String BUNDLE_KEY_APPLICATION_TITLE = "appointment_scheduler";
+    public static final String BUNDLE_KEY_ERROR_ALERT_TITLE = "error";
+    public static final String BUNDLE_KEY_ERROR_EMPTY_MESSAGE = "empty_message";
+    public static final String BUNDLE_KEY_ERROR_INVALID_INPUT = "invalid_input";
+    public static final String BUNDLE_KEY_ERROR_CONNECTION_HEADER = "database_connection_error_header";
+    public static final String BUNDLE_KEY_ERROR_TEST_CONNECTION_MESSAGE = "database_configuration_test_error_message";
+    public static final String BUNDLE_KEY_ERROR_CONNECTION_LABEL = "database_configuration_error_label";
+    public static final String BUNDLE_KEY_ERROR_PASSWORD_MATCH = "password_match";
+    public static final String BUNDLE_KEY_ERROR_PORT_INVALID_MESSAGE = "invalid_port";
+    public static final String BUNDLE_KEY_ERROR_CONNECTION_MESSAGE = "database_connection_error_message";
+    public static final String BUNDLE_KEY_ERROR_INVALID_CREDENTIALS = "user_password_incorrect";
+    public static final String BUNDLE_KEY_ERROR_INCORRECT_ANSWER = "answer_incorrect";
+    public static final String BUNDLE_KEY_ERROR_DATABASE_MESSAGE = "checkout_db_connection";
+    public static final String BUNDLE_KEY_ERROR_INVALID_PRICE = "invalid_price";
+    public static final String BUNDLE_KEY_ERROR_INVALID_SELECTION_HEADER = "no_item_selected";
+    public static final String BUNDLE_KEY_ERROR_INVALID_SELECTION_MESSAGE = "select_item";
+    public static final String BUNDLE_KEY_ERROR_LOCATION_HEADER = "location_missing";
+    public static final String BUNDLE_KEY_ERROR_LOCATION_MESSAGE = "select_location_message";
+    public static final String BUNDLE_KEY_ERROR_DATA_EXPORT_HEADER = "error_data_exportation";
+    public static final String BUNDLE_KEY_ERROR_DATA_EXPORT_CONTENT = "make_sure_valid_location";
+    public static final String BUNDLE_KEY_LOADING_DATA = "loading_data";
+    public static final String BUNDLE_KEY_TAB_DASHBOARD = "dashboard";
+    public static final String BUNDLE_KEY_APPOINTMENT = "appointment";
+    public static final String BUNDLE_KEY_FINANCIAL = "financial";
+    public static final String BUNDLE_KEY_PATIENT = "patient";
+    public static final String BUNDLE_KEY_DOCTOR = "doctor";
+    public static final String BUNDLE_KEY_TOOLS = "tools";
+    public static final String BUNDLE_KEY_SETTINGS = "settings";
     public static final String BUNDLE_KEY_DATE_FORMAT = "date_format";
-    public static final String BUNDLE_KEY_PATIENT_DIALOG_ADD_TITLE = "patient_dialog_add_title";
-    public static final String BUNDLE_KEY_DIALOG_CLEAR = "patient_dialog_clear";
-    public static final String BUNDLE_KEY_DIALOG_ADD = "patient_dialog_add";
-    public static final String BUNDLE_KEY_PATIENT_DIALOG_EDIT_TITLE = "patient_dialog_edit_title";
-    public static final String BUNDLE_KEY_DIALOG_SAVE = "patient_dialog_save";
+    public static final String BUNDLE_KEY_TIME_FORMAT = "time_format";
+    public static final String BUNDLE_KEY_STATUS_ALL = "all";
+    public static final String BUNDLE_KEY_STATUS_UNCONFIRMED = "unconfirmed";
+    public static final String BUNDLE_KEY_STATUS_CONFIRMED = "confirmed";
+    public static final String BUNDLE_KEY_STATUS_CANCELED = "canceled";
+    public static final String BUNDLE_KEY_STATUS_COMPLETED = "completed";
+    public static final String BUNDLE_KEY_GENDER_MALE = "male";
+    public static final String BUNDLE_KEY_GENDER_FEMALE = "female";
+    public static final String BUNDLE_KEY_ADD_PATIENT = "add_patient";
+    public static final String BUNDLE_KEY_EDIT_PATIENT = "edit_patient";
     public static final String BUNDLE_KEY_INVALID_EMAIL = "invalid_email";
-    public static final String BUNDLE_KEY_DOCTOR_DIALOG_ADD_TITLE = "doctor_dialog_add_title";
-    public static final String BUNDLE_KEY_DOCTOR_DIALOG_EDIT_TITLE = "doctor_dialog_edit_title";
-    public static final String BUNDLE_KEY_TOOLS_LOCATION_BUTTON = "tools_location_button";
+    public static final String BUNDLE_KEY_ADD_DOCTOR = "add_doctor";
+    public static final String BUNDLE_KEY_EDIT_DOCTOR = "edit_doctor";
+    public static final String BUNDLE_KEY_SELECT_LOCATION = "select_location";
     public static final String BUNDLE_KEY_FILES = "files";
-    public static final String BUNDLE_KEY_LOCATION_ERROR_HEADER_TEXT = "alert_location_missing_headerText";
-    public static final String BUNDLE_KEY_LOCATION_ERROR_CONTENT_TEXT = "alert_location_missing_contentText";
-    public static final String BUNDLE_KEY_DATA_EXPORT_SUCCESS_HEADER = "alert_success_headerText";
-    public static final String BUNDLE_KEY_DATA_EXPORT_SUCCESS_CONTENT = "alert_success_contentText";
-    public static final String BUNDLE_KEY_DATA_EXPORT_ERROR_HEADER = "alert_error_headerText";
-    public static final String BUNDLE_KEY_DATA_EXPORT_ERROR_CONTENT = "alert_error_contentText";
+    public static final String BUNDLE_KEY_SUCCESS_DATA_EXPORT_HEADER = "data_exported";
+    public static final String BUNDLE_KEY_SUCCESS_DATA_EXPORT_MESSAGE = "data_exported_successfully";
     public static final String BUNDLE_KEY_APPOINTMENT_ID = "appointmentId";
     public static final String BUNDLE_KEY_DATE = "date";
     public static final String BUNDLE_KEY_PRICE = "price";
@@ -135,8 +129,11 @@ public class Main extends Application {
     public static final String BUNDLE_KEY_HOUSE_NUMBER = "houseNumber";
     public static final String BUNDLE_KEY_NAME = "name";
     public static final String BUNDLE_KEY_LICENSE_NUMBER = "licenseNumber";
-    public static final String BUNDLE_KEY_SETTING_ALERT_HEADER_TEXT = "settings_apply_alert_headerText";
-    public static final String BUNDLE_KEY_SETTING_ALERT_CONTENT_TEXT = "settings_apply_alert_contentText";
+    public static final String BUNDLE_KEY_SETTING_ALERT_HEADER = "changes_applied";
+    public static final String BUNDLE_KEY_SETTING_ALERT_MESSAGE = "you_need_restart";
+    public static final String BUNDLE_KEY_CLEAR = "clear";
+    public static final String BUNDLE_KEY_ADD = "add";
+    public static final String BUNDLE_KEY_SAVE = "save";
 
     // Classes and Ids
 
@@ -169,7 +166,6 @@ public class Main extends Application {
 
     private static final String BUNDLE_BASE_NAME = "language";
     public static final String DEFAULT_LANGUAGE = "en";
-    private static final String LOCATION_STAGE_ICON = "/stage_icon.png";
     public static int TRANSITION_FROM_LEFT = 1;
     public static int TRANSITION_FROM_RIGHT = 2;
 
@@ -212,6 +208,7 @@ public class Main extends Application {
         ));
 
         languageList = new HashMap<>();
+
         languageList.put("pt", "Português");
         languageList.put("en", "English");
 
@@ -237,7 +234,7 @@ public class Main extends Application {
 
             DatabaseCredentials dbCredentials = DatabaseCredentials.getSavedCredentials();
 
-            connection = ConnectionFactory.getConnection(dbCredentials);
+            Connection connection = ConnectionFactory.getConnection(dbCredentials);
 
             if (connection == null) {
 
@@ -274,7 +271,7 @@ public class Main extends Application {
         Parent containerRoot = createNewView(rootWidth, rootHeight, childRoot);
 
         stage.setScene(new Scene(containerRoot));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream(LOCATION_STAGE_ICON)));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(STAGE_ICON_LOCATION)));
         stage.setTitle(resources.getString(BUNDLE_KEY_APPLICATION_TITLE));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
@@ -325,6 +322,7 @@ public class Main extends Application {
         for (ComboBoxItemHelper statusItem : statusList) {
             if (statusItem.getDbName().equals(dbName)) {
                 status = getResources().getString(statusItem.getBundleKey());
+                break;
             }
         }
 
@@ -337,6 +335,7 @@ public class Main extends Application {
         for (ComboBoxItemHelper genderItem : genderList) {
             if (genderItem.getDbName().equals(dbName)) {
                 gender = getResources().getString(genderItem.getBundleKey());
+                break;
             }
         }
 
@@ -350,7 +349,7 @@ public class Main extends Application {
             alert.initOwner(root.getScene().getWindow());
         } else {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
+            stage.getIcons().add(new Image(Main.class.getResourceAsStream(STAGE_ICON_LOCATION)));
         }
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -362,30 +361,30 @@ public class Main extends Application {
     public static void showRequiredFieldsErrorAlert(Parent root) {
         showAlert(Alert.AlertType.ERROR, root,
                 getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
-                getResources().getString(BUNDLE_KEY_APPOINTMENT_FIELD_MESSAGE));
+                getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
+                getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE));
     }
 
     public static void showPasswordMatchErrorAlert(Parent root) {
         showAlert(Alert.AlertType.ERROR,
                 root,
                 getResources().getString(Main.BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(Main.BUNDLE_KEY_ERROR_HEADER_TEXT),
+                getResources().getString(Main.BUNDLE_KEY_ERROR_INVALID_INPUT),
                 getResources().getString(BUNDLE_KEY_ERROR_PASSWORD_MATCH));
     }
 
     public static void showSelectionErrorAlert(Parent root) {
         showAlert(Alert.AlertType.ERROR, root,
                 getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(BUNDLE_KEY_INVALID_SELECTION_HEADER_TEXT),
-                getResources().getString(BUNDLE_KEY_INVALID_SELECTION_CONTENT_TEXT));
+                getResources().getString(BUNDLE_KEY_ERROR_INVALID_SELECTION_HEADER),
+                getResources().getString(BUNDLE_KEY_ERROR_INVALID_SELECTION_MESSAGE));
     }
 
     public static void showDatabaseErrorAlert(Parent root) {
         showAlert(Alert.AlertType.ERROR, root,
                 getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_HEADER_TEXT),
-                getResources().getString(BUNDLE_KEY_DATABASE_ERROR_CONTENT_TEXT));
+                getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_LABEL),
+                getResources().getString(BUNDLE_KEY_ERROR_DATABASE_MESSAGE));
     }
 
     public static AnchorPane createNewView(double width, double height, Parent childRoot) {
@@ -413,7 +412,7 @@ public class Main extends Application {
         newStage.setTitle(getResources().getString(BUNDLE_KEY_APPLICATION_TITLE));
         newStage.setScene(scene);
         newStage.initStyle(StageStyle.TRANSPARENT);
-        newStage.getIcons().add(new Image(Main.class.getResourceAsStream(LOCATION_STAGE_ICON)));
+        newStage.getIcons().add(new Image(Main.class.getResourceAsStream(STAGE_ICON_LOCATION)));
         newStage.show();
     }
 
@@ -437,11 +436,5 @@ public class Main extends Application {
         return resources;
     }
 
-    public static Connection getConnection() {
-        return connection;
-    }
 
-    public static void setConnection(Connection connection) {
-        Main.connection = connection;
-    }
 }

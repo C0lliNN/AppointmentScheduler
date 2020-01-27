@@ -26,17 +26,17 @@
             </rowConstraints>
 
             <Label text="%language"/>
-            <Label text="%recover_credentials_user" GridPane.rowIndex="2"/>
+            <Label text="%user" GridPane.rowIndex="2"/>
 
             <JFXComboBox fx:id="languageField" GridPane.columnIndex="1"/>
             <JFXCheckBox fx:id="accessControlCheckBox" text="Access Control" GridPane.rowIndex="1"/>
 
-            <Label text="%recover_credentials_password" GridPane.rowIndex="3"/>
-            <Label text="%access_control_confirmPassword" GridPane.rowIndex="4"/>
+            <Label text="%password" GridPane.rowIndex="3"/>
+            <Label text="%confirm_password" GridPane.rowIndex="4"/>
 
-            <JFXTextField fx:id="userField" promptText="%login_userField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <JFXPasswordField fx:id="userPasswordField" promptText="%login_passwordField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-            <JFXPasswordField fx:id="confirmPasswordField" promptText="%access_control_confirmPassword" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <JFXTextField fx:id="userField" promptText="%enter_user" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <JFXPasswordField fx:id="userPasswordField" promptText="%enter_password" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <JFXPasswordField fx:id="confirmPasswordField" promptText="%confirm_password" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
         </GridPane>
     <GridPane alignment="TOP_CENTER">
         <columnConstraints>
@@ -53,11 +53,11 @@
             <RowConstraints vgrow="NEVER"/>
         </rowConstraints>
 
-        <Label fx:id="dbSectionTitleLabel" text="%database_configuration_databaseConfigurationMessage" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
-        <Label text="%database_configuration_ipAddress" GridPane.rowIndex="1"/>
-        <Label text="%database_configuration_port" GridPane.rowIndex="2"/>
-        <Label text="%recover_credentials_user" GridPane.rowIndex="3"/>
-        <Label text="%access_control_password" GridPane.rowIndex="4"/>
+        <Label fx:id="dbSectionTitleLabel" text="%database_configuration" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+        <Label text="%ip_address" GridPane.rowIndex="1"/>
+        <Label text="%port" GridPane.rowIndex="2"/>
+        <Label text="%user" GridPane.rowIndex="3"/>
+        <Label text="%password" GridPane.rowIndex="4"/>
 
         <JFXTextField fx:id="ipField" promptText="EX: 192.168.0.1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
         <JFXTextField fx:id="portField" promptText="EX: 3306" GridPane.columnIndex="1" GridPane.rowIndex="2"/>

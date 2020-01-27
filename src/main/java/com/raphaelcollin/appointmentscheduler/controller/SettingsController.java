@@ -203,8 +203,8 @@ public class SettingsController implements Initializable {
 
             showAlert(Alert.AlertType.INFORMATION, root,
                     ((Stage) root.getScene().getWindow()).getTitle(),
-                    getResources().getString(BUNDLE_KEY_SETTING_ALERT_HEADER_TEXT),
-                    getResources().getString(BUNDLE_KEY_SETTING_ALERT_CONTENT_TEXT));
+                    getResources().getString(BUNDLE_KEY_SETTING_ALERT_HEADER),
+                    getResources().getString(BUNDLE_KEY_SETTING_ALERT_MESSAGE));
 
         }
     }

@@ -94,7 +94,7 @@ public class LoginController implements Initializable {
 
             showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
                     getResources().getString(BUNDLE_KEY_ERROR_EMPTY_MESSAGE));
 
         } else {
@@ -103,8 +103,8 @@ public class LoginController implements Initializable {
 
                 showAlert(Alert.AlertType.ERROR, root,
                         getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                        getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
-                        getResources().getString(BUNDLE_KEY_INVALID_CREDENTIALS_MESSAGE));
+                        getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
+                        getResources().getString(BUNDLE_KEY_ERROR_INVALID_CREDENTIALS));
 
             } else {
 

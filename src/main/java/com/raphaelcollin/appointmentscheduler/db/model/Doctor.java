@@ -61,7 +61,7 @@ public class Doctor extends RecursiveTreeObject<Doctor> implements Exportable{
 
     @Override
     public String convertToXML() {
-        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_TAB_TITLE_DOCTOR) + ">\n");
+        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_DOCTOR) + ">\n");
 
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_DOCTOR_ID)).append(">").append(this.id).append("</").
                 append(getResources().getString(BUNDLE_KEY_DOCTOR_ID)).append(">\n");
@@ -76,7 +76,7 @@ public class Doctor extends RecursiveTreeObject<Doctor> implements Exportable{
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_LICENSE_NUMBER)).append(">").append(this.licenseNumber).append("</").
                 append(getResources().getString(BUNDLE_KEY_LICENSE_NUMBER)).append(">\n");
 
-        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_TAB_TITLE_DOCTOR)).append(">\n");
+        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_DOCTOR)).append(">\n");
 
         return builder.toString();
     }

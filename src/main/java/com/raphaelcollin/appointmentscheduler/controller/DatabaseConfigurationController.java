@@ -112,7 +112,7 @@ public class DatabaseConfigurationController implements Initializable {
         if (errorFounded) {
             Main.showAlert(Alert.AlertType.ERROR, root,
                     getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                    getResources().getString(BUNDLE_KEY_ERROR_HEADER_TEXT),
+                    getResources().getString(BUNDLE_KEY_ERROR_INVALID_INPUT),
                     errorMessage);
 
         } else {
@@ -126,12 +126,11 @@ public class DatabaseConfigurationController implements Initializable {
 
             testConnectionTask.setOnSucceeded(event -> {
                 root.setCursor(Cursor.DEFAULT);
-                setConnection(testConnectionTask.getValue());
-                if (getConnection() == null) {
+                if (testConnectionTask.getValue() == null) {
                     Main.showAlert(Alert.AlertType.ERROR, root,
                             getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                            getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
-                            getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT));
+                            getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_HEADER),
+                            getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_MESSAGE));
                 } else {
 
                     DatabaseCredentials.saveCredentials(ipAddress, port, user, password);
@@ -171,7 +170,7 @@ public class DatabaseConfigurationController implements Initializable {
 
     public void setupFields(String ipAddress, String port, String user, String password) {
 
-        welcomeLabel.setText(getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_LABEL));
+        welcomeLabel.setText(getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_LABEL));
 
         ((JFXTextField) inputGridPane.getChildren().get(1)).setText(ipAddress);
         ((JFXTextField) inputGridPane.getChildren().get(3)).setText(port);
@@ -180,7 +179,7 @@ public class DatabaseConfigurationController implements Initializable {
 
         showAlert(Alert.AlertType.ERROR, root,
                 getResources().getString(BUNDLE_KEY_ERROR_ALERT_TITLE),
-                getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_HEADER_TEXT),
-                getResources().getString(BUNDLE_KEY_CONNECTION_ERROR_CONTENT_TEXT2));
+                getResources().getString(BUNDLE_KEY_ERROR_CONNECTION_HEADER),
+                getResources().getString(BUNDLE_KEY_ERROR_TEST_CONNECTION_MESSAGE));
     }
 }

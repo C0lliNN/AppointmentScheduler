@@ -32,17 +32,17 @@
             <RowConstraints fillHeight="false" vgrow="NEVER"/>
         </rowConstraints>
 
-        <Label text="%doctor_dialog_name"/>
-        <Label text="%doctor_dialog_gender" GridPane.rowIndex="1"/>
-        <Label text="%doctor_dialog_birthDate" GridPane.rowIndex="2"/>
-        <Label text="%doctor_dialog_phone" GridPane.rowIndex="3"/>
-        <Label text="%doctor_dialog_license" GridPane.rowIndex="4"/>
+        <Label text="%name"/>
+        <Label text="%gender" GridPane.rowIndex="1"/>
+        <Label text="%birth_date" GridPane.rowIndex="2"/>
+        <Label text="%phone" GridPane.rowIndex="3"/>
+        <Label text="%license_number" GridPane.rowIndex="4"/>
 
-        <JFXTextField fx:id="nameField" promptText="%doctor_dialog_name_promptText" GridPane.columnIndex="2"/>
+        <JFXTextField fx:id="nameField" promptText="%doctor_name" GridPane.columnIndex="2"/>
         <JFXComboBox fx:id="genderField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <JFXDatePicker fx:id="dateField" promptText="%doctor_dialog_birthDate_promptText" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-        <JFXTextField fx:id="phoneField" promptText="%doctor_dialog_phone_promptText" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-        <JFXTextField fx:id="licenseNumberField" promptText="%doctor_dialog_license_promptText" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+        <JFXDatePicker fx:id="dateField" promptText="%select_date" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <JFXTextField fx:id="phoneField" promptText="%phone_number" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+        <JFXTextField fx:id="licenseNumberField" promptText="%doctor_license" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
 
     </GridPane>
 

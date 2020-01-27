@@ -1,6 +1,5 @@
 package com.raphaelcollin.appointmentscheduler.controller;
 
-
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.raphaelcollin.appointmentscheduler.Main;
@@ -334,7 +333,7 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         } else {
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_DETAILS_LOCATION));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(APPOINTMENT_DETAILS_LOCATION), getResources());
                 Parent detailsViewRoot = loader.load();
 
                 AppointmentDetailsController controller = loader.getController();
@@ -379,8 +378,4 @@ public class AppointmentController implements Initializable, PropertyChangeListe
         }
 
     }
-
-
-
-
 }

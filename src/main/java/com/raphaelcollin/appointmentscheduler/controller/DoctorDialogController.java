@@ -118,16 +118,16 @@ public class DoctorDialogController implements Initializable {
     }
 
     public void setupAddDialog() {
-        titleLabel.setText(getResources().getString(BUNDLE_KEY_DOCTOR_DIALOG_ADD_TITLE));
-        leftButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_CLEAR));
-        rightButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_ADD));
+        titleLabel.setText(getResources().getString(BUNDLE_KEY_ADD_DOCTOR));
+        leftButton.setText(getResources().getString(BUNDLE_KEY_CLEAR));
+        rightButton.setText(getResources().getString(BUNDLE_KEY_ADD));
         rightButton.setOnAction(this::handleAdd);
     }
 
     public void setupEditDialog(Doctor doctor) {
-        titleLabel.setText(getResources().getString(BUNDLE_KEY_DOCTOR_DIALOG_EDIT_TITLE));
-        leftButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_CLEAR));
-        rightButton.setText(getResources().getString(BUNDLE_KEY_DIALOG_SAVE));
+        titleLabel.setText(getResources().getString(BUNDLE_KEY_EDIT_DOCTOR));
+        leftButton.setText(getResources().getString(BUNDLE_KEY_CLEAR));
+        rightButton.setText(getResources().getString(BUNDLE_KEY_SAVE));
         rightButton.setOnAction(this::handleSave);
 
         nameField.setText(doctor.getName());

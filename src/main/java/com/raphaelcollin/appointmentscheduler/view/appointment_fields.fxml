@@ -30,24 +30,24 @@
         <RowConstraints fillHeight="false" vgrow="NEVER"/>
     </rowConstraints>
 
-    <Label text="%appointments_label_date" GridPane.rowIndex="1"/>
-    <JFXDatePicker fx:id="dateField" promptText="%appointments_field_date_promptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label text="%date" GridPane.rowIndex="1"/>
+    <JFXDatePicker fx:id="dateField" promptText="%select_date" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Label text="%appointments_label_schedule" GridPane.rowIndex="2"/>
-    <JFXTimePicker fx:id="timeField" promptText="%appointments_field_schedule_promptText" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Label text="%schedule" GridPane.rowIndex="2"/>
+    <JFXTimePicker fx:id="timeField" promptText="%select_time" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Label text="%appointments_label_patient" GridPane.rowIndex="3"/>
+    <Label text="%patient" GridPane.rowIndex="3"/>
     <JFXComboBox fx:id="patientField" GridPane.columnIndex="1"
                  GridPane.rowIndex="3"/>
 
-    <Label text="%appointments_label_doctor" GridPane.rowIndex="4"/>
+    <Label text="%doctor" GridPane.rowIndex="4"/>
     <JFXComboBox fx:id="doctorField" GridPane.columnIndex="1"
                  GridPane.rowIndex="4"/>
 
-    <Label text="%appointments_label_price" GridPane.rowIndex="5"/>
-    <JFXTextField fx:id="priceField" promptText="%appointments_field_price_promptText" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <Label text="%price" GridPane.rowIndex="5"/>
+    <JFXTextField fx:id="priceField" promptText="%appointment_price" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
     <Label text="%appointments_label_description" GridPane.rowIndex="6"/>
-    <JFXTextArea fx:id="descriptionField" promptText="%appointments_field_description_promptText"
+    <JFXTextArea fx:id="descriptionField" promptText="%describe_appointment"
                  wrapText="true" prefColumnCount="19" prefRowCount="4"  GridPane.rowIndex="7" GridPane.columnSpan="2"/>
 </GridPane>

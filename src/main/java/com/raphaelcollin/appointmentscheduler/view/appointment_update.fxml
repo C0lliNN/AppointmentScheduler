@@ -8,11 +8,11 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.raphaelcollin.appointmentscheduler.controller.AppointmentUpdateController">
 
-    <Label fx:id="titleLabel" text="%tab_appointments_update_button" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+    <Label fx:id="titleLabel" text="%update" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
 
     <HBox fx:id="hBoxButtons" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" alignment="CENTER">
-        <JFXButton fx:id="clearButton" text="%appointments_add_clear" onAction="#handleClear"/>
-        <JFXButton fx:id="saveButton" text="%access_control_button_save" onAction="#handleSave" defaultButton="true"/>
+        <JFXButton fx:id="clearButton" text="%clear" onAction="#handleClear"/>
+        <JFXButton fx:id="saveButton" text="%save" onAction="#handleSave" defaultButton="true"/>
     </HBox>
 
 </AnchorPane>

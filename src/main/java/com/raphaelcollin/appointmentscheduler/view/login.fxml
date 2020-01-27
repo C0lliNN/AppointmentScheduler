@@ -13,7 +13,7 @@
 <AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.raphaelcollin.appointmentscheduler.controller.LoginController"
             stylesheets="@dialogs_style.css" styleClass="content">
 
-    <Label fx:id="loginLabel" alignment="CENTER" text="Login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+    <Label fx:id="loginLabel" alignment="CENTER" text="%login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 
     <GridPane fx:id="inputGridPane" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columnConstraints>
@@ -26,18 +26,18 @@
             <RowConstraints fillHeight="false" vgrow="NEVER"/>
         </rowConstraints>
 
-        <Label fx:id="userLabel" text="%login_userLabel"/>
-        <Label fx:id="passwordLabel" text="%login_passwordLabel" GridPane.rowIndex="1"/>
+        <Label fx:id="userLabel" text="%user"/>
+        <Label fx:id="passwordLabel" text="%password" GridPane.rowIndex="1"/>
 
-        <JFXTextField fx:id="userField" promptText="%login_userField_promptText" GridPane.columnIndex="1"/>
-        <JFXPasswordField fx:id="passwordField" promptText="%login_passwordField_promptText" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <JFXTextField fx:id="userField" promptText="%enter_user" GridPane.columnIndex="1"/>
+        <JFXPasswordField fx:id="passwordField" promptText="%enter_password" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     </GridPane>
 
-   <Label fx:id="recoverCredentialsLabel" text="%login_credentialsLabel" onMouseClicked="#handleRecoverCredentials"/>
+   <Label fx:id="recoverCredentialsLabel" text="%recover_credentials" onMouseClicked="#handleRecoverCredentials"/>
 
     <HBox fx:id="buttonHBox" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <JFXButton fx:id="enterButton" text="%login_enterButton" onAction="#handleEnter" defaultButton="true" buttonType="RAISED"/>
+        <JFXButton fx:id="enterButton" text="%enter" onAction="#handleEnter" defaultButton="true" buttonType="RAISED"/>
     </HBox>
 
 </AnchorPane>

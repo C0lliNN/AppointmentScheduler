@@ -74,7 +74,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Exp
     @Override
     public String convertToXML() {
 
-        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_TAB_TITLE_APPOINTMENT) + ">\n");
+        StringBuilder builder = new StringBuilder("\t<" + getResources().getString(BUNDLE_KEY_APPOINTMENT) + ">\n");
 
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_APPOINTMENT_ID)).append(">").append(this.id).append("</").
                 append(getResources().getString(BUNDLE_KEY_APPOINTMENT_ID)).append(">\n");
@@ -92,7 +92,7 @@ public class Appointment extends RecursiveTreeObject<Appointment> implements Exp
         builder.append("\t\t<").append(getResources().getString(BUNDLE_KEY_DOCTOR_ID)).append(">").append(this.doctor.getId()).append("</").
                 append(getResources().getString(BUNDLE_KEY_DOCTOR_ID)).append(">\n");
 
-        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_TAB_TITLE_APPOINTMENT)).append(">\n");
+        builder.append("\t</").append(getResources().getString(BUNDLE_KEY_APPOINTMENT)).append(">\n");
 
         return builder.toString();
     }
