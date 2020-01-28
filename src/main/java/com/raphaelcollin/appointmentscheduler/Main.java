@@ -193,6 +193,8 @@ public class Main extends Application {
 
         super.init();
 
+        ApplicationPreferences.getInstance().getPreferences().clear();
+
         statusList = FXCollections.observableList(Arrays.asList(
                 new ComboBoxItemHelper("", 0, BUNDLE_KEY_STATUS_ALL),
                 new ComboBoxItemHelper(UNCONFIRMED, UNCONFIRMED_INDEX, BUNDLE_KEY_STATUS_UNCONFIRMED),

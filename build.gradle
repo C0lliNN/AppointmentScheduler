@@ -27,7 +27,6 @@ repositories {
 dependencies {
 
     compile 'com.jfoenix:jfoenix:8.0.9'
-    compile 'com.panemu:tiwulfx:2.0'
     compile group: 'org.apache.poi', name: 'poi', version: '4.1.1'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.1'
 
