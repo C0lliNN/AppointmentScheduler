@@ -2,7 +2,7 @@
 
 ![Overview Screenshots](https://i.imgur.com/j0nJ0v9.png)
 
-[Show all screenshots](myLib/README.md)
+### [Show all screenshots](myLib/README.md)
 
 ## Overview
 
@@ -15,4 +15,4 @@ Appointment Scheduler is an Application developed in Java/JavaFX with MYSQL that
 
 ## More Details
 
-[Link](www.google.com)
+### [Link](www.google.com)
