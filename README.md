@@ -2,7 +2,7 @@
 
 ![Overview Screenshots](https://i.imgur.com/j0nJ0v9.png)
 
-### [Show all screenshots](myLib/README.md)
+### [Show all screenshots](https://c0llinn.github.io/AppointmentScheduler/page/)
 
 ## Overview
 
@@ -22,5 +22,5 @@ Appointment Scheduler is an Desktop Application developed in Java/JavaFX with MY
 
 ## More Details
 
-### [Link](www.google.com)
+### [Link](https://c0llinn.github.io/AppointmentScheduler/page/)
 
