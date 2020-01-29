@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>Appointment Scheduler</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+        <link rel="icon" href="img/icon.png">
+        <link rel="stylesheet" href="style.css">
+
+
+    </head>
+
+    <body>
+
+        <header id="index-header">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-4 text-light">
+                        <h1 class="display-4 text-center">Scheduler</h1>
+                        <p class="lead my-4">Manage your data, time and earnings with this easy-to-use tool</p>
+                        <div class="text-center">
+                            <a class="btn btn-outline-light btn-lg mb-sm-3 mb-lg-0" href="https://drive.google.com/file/d/1aUAX96EiEpw1dzyMQHnkI_kivD-YGijp/view" target="_blank">Download</a>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-7">
+                        <div id="carousel" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                              <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                              <li data-target="#carousel" data-slide-to="1"></li>
+                              <li data-target="#carousel" data-slide-to="2"></li>
+                              <li data-target="#carousel" data-slide-to="3"></li>
+                              <li data-target="#carousel" data-slide-to="4"></li>
+                              <li data-target="#carousel" data-slide-to="5"></li>
+                              <li data-target="#carousel" data-slide-to="6"></li>
+                              <li data-target="#carousel" data-slide-to="7"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="img/dashboard.png" class="d-block w-100" alt="Appointment Dashboard">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/appointment.png" class="d-block w-100" alt="Appointments">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/financial.png" class="d-block w-100" alt="Financial View">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/patient.png" class="d-block w-100" alt="Financial View">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/doctor.png" class="d-block w-100" alt="Financial View">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/tools.png" class="d-block w-100" alt="Financial View">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="img/settings.png" class="d-block w-100" alt="Financial View">
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                                <i class="fas fa-caret-left fa-3x text-dark"></i>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                                <i class="fas fa-caret-right fa-3x text-dark"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                          </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </header>
+
+        <main>
+
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="my-3">Overview</h2>
+                            <p class="text-justify">Appointment Scheduler is an Application developed in Java/JavaFX with MYSQL that helps clinics manage their time and data. This software makes the clinics secretary's life easier by presenting a clean and organize information. Beyond that, the financial transactions are stored to provide earnings insights in form of interactive graphs and numbers. The data generated in the scheduler can be easily exported to CSV, JSON, XML or even xlsx file.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="gray-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="my-3">Requirements</h2>
+                            <ul type="disc">
+                                <li>Windows, Mac or Linux</li>
+                                <li>Java Runtime Enviroment 8</li>
+                                <li>MySQL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="inst-guide">
+                <div class="container">
+                    <div class="row">
+                        <h2>Instalation Guide</h2>
+                        <ul type="disc">
+                            <li><a href="https://drive.google.com/file/d/1aUAX96EiEpw1dzyMQHnkI_kivD-YGijp/view" target="_blank">Download</a> the executable JAR file</li>
+                            <li>Run the queries of <a href="https://github.com/C0lliNN/AppointmentScheduler/blob/master/query.sql" target="_blank">query.sql</a> in your <a href="https://www.mysql.com/" target="_blank">MySQL</a> Database</li>
+                            <li>Run the JAR File</li>
+                            <li>Setup Database and User Credentials</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="my-3">Core Functionalities</h2>
+                            <ul type="disc">
+                                <li>Store Patients, Doctor and Appointments Data</li>
+                                <li>Appointment Management</li>
+                                <li>Financial Analysis</li>
+                                <li>Data Exportation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="gray-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="my-3">Frameworks/Tools used</h2>
+                            <ul type="disc">
+                                <li><a href="https://openjfx.io/" target="_blank">JavaFX</a></li>
+                                <li><a href="https://github.com/jfoenixadmin/JFoenix" target="_blank">JFoenix</a></li>
+                                <li><a href="https://poi.apache.org/" target="_blank">Apache POI</a></li>
+                                <li><a href="https://junit.org/junit5/docs/current/user-guide/" target="_blank">JUnit</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="my-3">Database Design</h2>
+                            <img src="img/database_erd.png" class="d-block w-100">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+
+        </main>
+        
+
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ba15e68dc1.js" crossorigin="anonymous"></script>
+</html>
+
